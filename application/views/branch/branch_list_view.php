@@ -59,7 +59,7 @@
 
 <!-- Modal Create New Branch -->
 <div id="modal_create_branch" class="modal fixed-left fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-aside" role="document">
+  <div class="modal-dialog modal-dialog-aside side-modal-size" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Buat Data Cabang Baru</h5>
@@ -102,8 +102,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-        <button type="button" id="submitBranch" value="Simpan" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
+        <button type="button" id="submitBranch" value="Simpan" class="btn btn-primary">
+          <i class="fa fa-save"></i>&nbsp;Simpan
+        </button>
       </div>
     </div>
   </div> <!-- modal-bialog .// -->

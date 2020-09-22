@@ -13,3 +13,36 @@
 .modal.fixed-left .modal-dialog-aside{ margin-left:auto;  transform: translateX(100%); }
 .modal.fixed-right .modal-dialog-aside{ margin-right:auto; transform: translateX(-100%); }
 .modal.show .modal-dialog-aside{ transform: translateX(0);  }
+
+.side-modal-size {
+	width: 40%!important;
+}
+
+/* SMARTPHONES PORTRAIT */
+@media only screen and (min-width: 300px) {
+	.side-modal-size {
+		width: 100%!important;
+	}
+}
+
+/* SMARTPHONES LANDSCAPE */
+@media only screen and (min-width: 480px) {
+	.side-modal-size {
+		width: 40%!important;
+	}
+}
+
+/* TABLETS PORTRAIT */
+@media only screen and (min-width: 768px) {
+	.side-modal-size {
+		width: 40%!important;
+	}
+}
+
+
+/* TABLET LANDSCAPE / DESKTOP */
+@media only screen and (min-width: 1024px) {
+	.side-modal-size {
+		width: 40%!important;
+	}
+}    

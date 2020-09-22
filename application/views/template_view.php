@@ -354,6 +354,18 @@
           submitBranch();
         }
       });
+
+      $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
+        $('body').css('padding-right','0');
+      });
+
+      $('#modal_create_branch').on('show.bs.modal', function (e) {
+        e.stopPropagation();
+        
+        setTimeout(function() {
+          $('#modal_create_branch').css('padding-right','0px');
+        }, 100);
+      }); 
   });
 
   function submitBranch() {
