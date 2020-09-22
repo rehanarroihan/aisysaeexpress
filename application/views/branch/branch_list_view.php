@@ -40,8 +40,8 @@
                       <td><?php echo $item->full_name ?></td>
                       <td><?php echo $item->username ?></td>
                       <td>
-                        <a href="#" class="btn btn-secondary">
-                          <i class="fa fa-edit"></i> Edit
+                        <a href="#" class="btn btn-success">
+                          <i class="fa fa-edit"></i>
                         </a>
                       </td>
                     </tr>

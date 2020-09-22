@@ -35,13 +35,12 @@ class Branch extends CI_Controller {
 		}
 
 		$insertedBranchId = $this->Branch_model->create();
-		if ($this->User_model->insert($insertedBranchId)) {
-			echo json_encode(array(
-				'status' => true,
-				'message' => 'Berhasil menyimpan data cabang baru'
-			));
-			return;
-		}
+		$insertedBranchAdminData = $this->User_model->insert($insertedBranchId);
+		echo json_encode(array(
+			'status' => true,
+			'message' => 'Berhasil menyimpan data cabang baru',
+			'data' => $insertedBranchAdminData
+		));
 	}
 
 	public function logout(){

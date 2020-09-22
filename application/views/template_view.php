@@ -248,11 +248,12 @@
       <div class="main-sidebar">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html">Stisla</a>
+            <a href="index.html">Aisy<b>Sae</b>Express</a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html">St</a>
           </div>
+          
           <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="<?php if ($this->uri->segment(2) == '') { echo 'active'; } ?>">
@@ -260,6 +261,7 @@
                 <i class="fas fa-fire"></i> <span>Dashboard</span>
               </a>
             </li>
+            <?php if ($this->session->userdata('role') == 1): ?>
             <li class="menu-header">Data Utama</li>
             <li class="<?php if ($this->uri->segment(2) == 'branch') { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/branch">
@@ -271,6 +273,20 @@
                 <i class="fas fa-car"></i> <span>Kendaraan</span>
               </a>
             </li>
+            <?php endif; ?>
+            <?php if ($this->session->userdata('role') == 2): ?>
+            <li class="menu-header">Data Utama</li>
+            <li class="<?php if ($this->uri->segment(2) == 'transaction') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/transaction">
+                <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+              </a>
+            </li>
+            <li class="<?php if ($this->uri->segment(2) == 'vehicle') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/vehicle">
+                <i class="fas fa-car"></i> <span>Kendaraan</span>
+              </a>
+            </li>
+            <?php endif; ?>
           </ul>
         </aside>
       </div>
@@ -388,7 +404,18 @@
         }).show();
 
         $('#modal_create_branch').modal('toggle');
-        location.reload();
+        
+        // INFO : append inserted data to table
+        let table = $('#table-1').DataTable();
+        console.log(table);
+        table.row.add( [
+          table.rows().data().length +1,
+          res.data.name,
+          res.data.address,
+          res.data.full_name,
+          res.data.username,
+          "<a href='#' class='btn btn-success'><i class='fa fa-edit'></i></a>"
+        ]).draw( true );
       },
       error: function (jqXhr, textStatus, errorMessage) {
         

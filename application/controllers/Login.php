@@ -24,7 +24,7 @@ class Login extends CI_Controller {
         }
 
         if ($this->User_model->login()) {
-            redirect('dashboard/branch');
+            redirect('dashboard');
             return;
         }
 

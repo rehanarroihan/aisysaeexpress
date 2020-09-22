@@ -14,7 +14,13 @@ class User_model extends CI_Model {
 			'updated_at'	=> date("Y-m-d h:m:s")
         );
         $this->db->insert('users', $data);
-        return $this->db->affected_rows() > 0;
+        // NOTE : returning last inserted data row
+        return $this->db
+                ->select('users.id AS user_id, branch.id AS branch_id, branch.name, branch.address, users.full_name, users.username')
+                ->join('branch','branch.id = users.branch_id')
+                ->where('users.id', $this->db->insert_id())
+                ->get('users')
+                ->row();
     }
 
     public function checkUsernameAvailability($username) {
