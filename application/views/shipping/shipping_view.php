@@ -16,7 +16,7 @@
         Daftar data pengiriman</a>.
       </p>
       <div class="row">
-        <div class="col-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
               <h4 class="text-muted">Daftar Data Pengiriman</h4>
@@ -64,119 +64,118 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label>Nomor Tracking</label>
+          <label>Nomor Tracking / No. Resi</label>
           <input id="trackingNumber" readonly value="SBY-220920001" type="text" class="form-control" required>
         </div>
+        
         <div class="row">
-          <div class="col-6">
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <h6 class="text-primary">Detail Pengirim</h6>
             <div class="form-group">
               <label>Nama Pengirim</label>
               <input id="senderName" type="text" class="form-control" required>
             </div>
             <div class="form-group">
+              <label>Alamat Pengirim</label>
+              <textarea style="height: 64px" id="receiverAddress" type="text" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
               <label>Nomor Telepon</label>
-              <input id="senderPhone" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Alamat</label>
-              <input id="senderAddress" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input id="senderPhone" type="text" class="form-control" required>
+              <input id="senderPhone" type="text" class="form-control phone-mask" required>
             </div>
           </div>
-          <div class="col-6">
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <h6 class="text-primary">Detail Penerima</h6>
             <div class="form-group">
               <label>Nama Penerima</label>
               <input id="receiverName" type="text" class="form-control" required>
             </div>
             <div class="form-group">
+              <label>Alamat Penerima</label>
+              <textarea style="height: 64px" id="receiverAddress" type="text" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
               <label>Nomor Telepon</label>
-              <input id="receiverPhone" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Alamat</label>
-              <input id="receiverAddress" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input id="receiverPhone" type="text" class="form-control" required>
+              <input id="receiverPhone" type="text" class="form-control phone-mask" required>
             </div>
           </div>
         </div>
-        <h6 class="text-primary">Detail Pengiriman</h6>
+
+        <h6 class="text-primary">Detail Barang</h6>
         <div class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label>Jenis Pengiriman</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Jenis Pengiriman --</option>
-                <option>One Day Service</option>
-                <option>One Cargo</option>
-                <option>Carter</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Berat</label>
-              <input id="senderPhone" type="text" class="form-control" required>
-            </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
               <label>Isi Barang</label>
               <input id="senderAddress" type="text" class="form-control" required>
             </div>
             <div class="form-group">
-              <label>Banyak Colly</label>
-              <input id="senderPhone" type="text" class="form-control" required>
+              <label>Jumlah Colly</label>
+              <input id="collyCount" type="text" class="form-control" required>
             </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Berat</label>
+              <input id="weight" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>No. Referensi</label>
+              <input id="referenceNumber" type="text" class="form-control" required>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="text-primary">Detail Pengiriman</h6>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Pelayanan</label>
+              <select id="inputState" class="form-control">
+                <option selected>-- Pilih Jenis Pelayanan --</option>
+                <option>One Day Service</option>
+                <option>Cargo</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
               <label>Moda</label>
               <select id="inputState" class="form-control">
                 <option selected>-- Pilih Moda --</option>
-                <option>Truk</option>
+                <option>Trucking</option>
                 <option>Kereta</option>
+                <option>Pesawat</option>
                 <option>Kapal Laut</option>
-                <option>Pesawat Udara</option>
               </select>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label>Biaya</label>
-              <input id="receiverName" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Pembayaran</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Pembayaran --</option>
-                <option>Lunas</option>
-                <option>FBB</option>
-                <option>Bayar Tujuan</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Pengangkut</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Pengangkut --</option>
-                <option>Door to Door</option>
-                <option>Ambil Kantor Cabang</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Asal</label>
-              <input id="receiverAddress" readonly value="Surabaya" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Tujuan</label>
-              <input id="receiverPhone" type="text" class="form-control" required>
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Komentar / Keterangan</label>
-          <textarea id="branchAddress" class="form-control" style="height: 80px" required></textarea>
+
+        <h6 class="text-primary">Detail Pembayaran</h6>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+            <label>Biaya</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Rp</div>
+                </div>
+                <input type="text" class="form-control" id="price">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="form-group">
+            <label>Pembayaran</label>
+              <select id="inputState" class="form-control">
+                <option selected>-- Pilih Pembayaran --</option>
+                <option>FBB</option>
+                <option>COD</option>
+                <option>Cash</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
