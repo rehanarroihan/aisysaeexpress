@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Reset Password &mdash; Stisla</title>
+  <title>404 Not Found &mdash; AisySaeExpress</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,46 +20,38 @@
   <div id="app">
     <section class="section">
       <div class="container mt-5">
-        <div class="row">
-          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-              <img src="https://aisysaeexpress.com/wp-content/uploads/2020/08/cropped-Logo-192x192.jpg" style="border: 4px solid #f4f6f9;" alt="logo" width="125" class="shadow-dark rounded-circle">
+        <div class="page-error">
+          <div class="page-inner">
+            <h1>404</h1>
+            <div class="page-description">
+              Halaman yang anda tuju tidak ditemukan
             </div>
-
-            <div class="card card-primary">
-              <div class="card-header"><h4>Masuk ke Dashboard</h4></div>
-
-              <div class="card-body">
-                <form method="POST" action="<?php echo base_url() ?>login/submit">
-                    <?php if(!empty($this->session->flashdata('announce'))): ?>
-                        <div class="alert alert-warning">
-                            <?php echo $this->session->flashdata('announce') ?>
-                        </div>
-                    <?php endif; ?>
-                  <div class="form-group">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" class="form-control" name="username" tabindex="1" required autofocus>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" tabindex="2" required>
-                    <div id="pwindicator" class="pwindicator">
-                      <div class="bar"></div>
-                      <div class="label"></div>
+            <div class="page-search">
+              <!-- <form>
+                <div class="form-group floating-addon floating-addon-not-append">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-search"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-lg">
+                        Search
+                      </button>
                     </div>
                   </div>
-
-                  <div class="form-group">
-                    <input type="submit" namespace="login" class="btn btn-primary btn-lg btn-block" tabindex="4" value="Masuk">
-                  </div>
-                </form>
+                </div>
+              </form> -->
+              <div class="mt-3">
+                <a href="<?php echo base_url() ?>">Kembali ke halaman utama</a>
               </div>
             </div>
-            <div class="simple-footer">
-              Copyright &copy; Stisla 2018
-            </div>
           </div>
+        </div>
+        <div class="simple-footer mt-5">
+          Copyright &copy; Stisla 2018
         </div>
       </div>
     </section>
@@ -71,7 +63,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script src="<?php echo base_url() ?>assets/js/stisla.js"></script>
+  <script src="../assets/js/stisla.js"></script>
 
   <!-- JS Libraies -->
 

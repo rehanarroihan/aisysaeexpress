@@ -11,6 +11,10 @@ class Branch extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) {
 			redirect('login');
 		}
+
+		if ($this->session->userdata('role') != 1) {
+			redirect('dashboard');
+		}
 	}
 
 	public function index() {
@@ -41,10 +45,5 @@ class Branch extends CI_Controller {
 			'message' => 'Berhasil menyimpan data cabang baru',
 			'data' => $insertedBranchAdminData
 		));
-	}
-
-	public function logout(){
-		$this->session->sess_destroy();
-		redirect('login');
 	}
 }

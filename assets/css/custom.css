@@ -18,6 +18,10 @@
 	width: 40%!important;
 }
 
+.side-trx-modal-size {
+	width: 50%!important;
+}
+
 /* SMARTPHONES PORTRAIT */
 @media only screen and (min-width: 300px) {
 	.side-modal-size {

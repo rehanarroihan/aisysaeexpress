@@ -2,6 +2,12 @@
   <section class="section">
     <div class="section-header">
       <h1><?php echo $page_title; ?></h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active">
+          <a href="<?php echo base_url() ?>dashboard">Dashboard</a>
+        </div>
+        <div class="breadcrumb-item">Cabang</div>
+      </div>
     </div>
 
     <div class="section-body">
@@ -58,7 +64,7 @@
 </div>
 
 <!-- Modal Create New Branch -->
-<div id="modal_create_branch" class="modal fixed-left fade" tabindex="-1" role="dialog">
+<div id="modal_create_branch" class="modal side-modal fixed-left fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-aside side-modal-size" role="document">
     <div class="modal-content">
       <div class="modal-header">
