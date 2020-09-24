@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
 
+    protected $tableName = "users";
+
     public function insert($branchId) {
         $data = array(
 			'branch_id'     => $branchId,
@@ -19,14 +21,14 @@ class User_model extends CI_Model {
                 ->select('users.id AS user_id, branch.id AS branch_id, branch.name, branch.address, users.full_name, users.username')
                 ->join('branch','branch.id = users.branch_id')
                 ->where('users.id', $this->db->insert_id())
-                ->get('users')
+                ->get($this->tableName)
                 ->row();
     }
 
     public function checkUsernameAvailability($username) {
         return $this->db
                     ->where('username', $username)
-                    ->get('users')
+                    ->get($this->tableName)
                     ->num_rows();
     }
 
@@ -37,7 +39,7 @@ class User_model extends CI_Model {
         $query = $this->db
                     ->where('username', $username)
                     ->where('password', md5($password))
-                    ->get('users');
+                    ->get($this->tableName);
 
         if ($query->num_rows() == 0) {
             return false;
@@ -47,7 +49,8 @@ class User_model extends CI_Model {
             'full_name'	=> $query->row()->full_name,
             'username'	=> $query->row()->username,
             'logged_in'	=> true,
-            'role'		=> $query->row()->role
+            'role'		=> $query->row()->role,
+            'branch_id'	=> $query->row()->branch_id
         );
         
         $this->session->set_userdata($data);

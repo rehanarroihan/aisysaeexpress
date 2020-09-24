@@ -36,12 +36,4 @@ class Dashboard extends CI_Controller {
 		);
 		$this->load->view('template_view', $viewData);
 	}
-	
-	public function shipping() {
-        $viewData = array(
-			'page_title' => 'Pengiriman',
-			'primary_view' => 'shipping/shipping_view'
-		);
-		$this->load->view('template_view', $viewData);
-    }
 }

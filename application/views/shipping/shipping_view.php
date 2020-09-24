@@ -63,124 +63,146 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label>Nomor Tracking / No. Resi</label>
-          <input id="trackingNumber" readonly value="SBY-220920001" type="text" class="form-control" required>
-        </div>
-        
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <h6 class="text-primary">Detail Pengirim</h6>
-            <div class="form-group">
-              <label>Nama Pengirim</label>
-              <input id="senderName" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Alamat Pengirim</label>
-              <textarea style="height: 64px" id="receiverAddress" type="text" class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-              <label>Nomor Telepon</label>
-              <input id="senderPhone" type="text" class="form-control phone-mask" required>
-            </div>
+        <form id="shippingForm">
+          <div class="form-group">
+            <label>Nomor Tracking / No. Resi</label>
+            <input id="trackingNumber" readonly value="SBY-220920001" type="text" class="form-control">
           </div>
-
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <h6 class="text-primary">Detail Penerima</h6>
-            <div class="form-group">
-              <label>Nama Penerima</label>
-              <input id="receiverName" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Alamat Penerima</label>
-              <textarea style="height: 64px" id="receiverAddress" type="text" class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-              <label>Nomor Telepon</label>
-              <input id="receiverPhone" type="text" class="form-control phone-mask" required>
-            </div>
+          <div class="form-group">
+            <label>Status Pengiriman</label>
+            <select id="statusSelect" class="form-control">
+              <option selected value="">-- Pilih Status Pengiriman --</option>
+              <option value="order-masuk">Order Masuk</option>
+              <option value="perjalanan">Perjalanan ke Kota Tujuan</option>
+              <option value="transit">Transit</option>
+              <option value="diterima">Diterima Dengan Baik</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
           </div>
-        </div>
-
-        <h6 class="text-primary">Detail Barang</h6>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="form-group">
-              <label>Isi Barang</label>
-              <input id="senderAddress" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Jumlah Colly</label>
-              <input id="collyCount" type="text" class="form-control" required>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="form-group">
-              <label>Berat</label>
-              <input id="weight" type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>No. Referensi</label>
-              <input id="referenceNumber" type="text" class="form-control" required>
-            </div>
-          </div>
-        </div>
-
-        <h6 class="text-primary">Detail Pengiriman</h6>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="form-group">
-              <label>Pelayanan</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Jenis Pelayanan --</option>
-                <option>One Day Service</option>
-                <option>Cargo</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="form-group">
-              <label>Moda</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Moda --</option>
-                <option>Trucking</option>
-                <option>Kereta</option>
-                <option>Pesawat</option>
-                <option>Kapal Laut</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <h6 class="text-primary">Detail Pembayaran</h6>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="form-group">
-            <label>Biaya</label>
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Rp</div>
+          
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <h6 class="text-primary">Detail Pengirim</h6>
+              <div class="form-group">
+                <label>Nama Pengirim</label>
+                <input id="senderName" type="text" class="form-control" required>
+                <div class="invalid-feedback">
+                  Nama pengirim harus di isi
                 </div>
-                <input type="text" class="form-control" id="price">
+              </div>
+              <div class="form-group">
+                <label>Alamat Pengirim</label>
+                <textarea style="height: 64px" id="senderAddress" type="text" class="form-control" required></textarea>
+                <div class="invalid-feedback">
+                  Alamat pengirim harus di isi
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Nomor Telepon</label>
+                <input id="senderPhone" type="text" class="form-control phone-mask" required>
+                <div class="invalid-feedback">
+                  Nomor telepon pengirim harus di isi
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <h6 class="text-primary">Detail Penerima</h6>
+              <div class="form-group">
+                <label>Nama Penerima</label>
+                <input id="receiverName" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Alamat Penerima</label>
+                <textarea style="height: 64px" id="receiverAddress" type="text" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Nomor Telepon</label>
+                <input id="receiverPhone" type="text" class="form-control phone-mask">
               </div>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="form-group">
-            <label>Pembayaran</label>
-              <select id="inputState" class="form-control">
-                <option selected>-- Pilih Pembayaran --</option>
-                <option>FBB</option>
-                <option>COD</option>
-                <option>Cash</option>
-              </select>
+
+          <h6 class="text-primary">Detail Barang</h6>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Isi Barang</label>
+                <input id="stuffContent" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Jumlah Colly</label>
+                <input id="stuffColly" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Berat</label>
+                <input id="stuffWeight" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>No. Referensi</label>
+                <input id="stuffRefNo" type="text" class="form-control">
+              </div>
             </div>
           </div>
-        </div>
+
+          <h6 class="text-primary">Detail Pengiriman</h6>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Pelayanan</label>
+                <select id="serviceSelect" class="form-control">
+                  <option selected value="">-- Pilih Jenis Pelayanan --</option>
+                  <option value="one-day-service">One Day Service</option>
+                  <option value="cargo">Cargo</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Moda</label>
+                <select id="modeSelect" class="form-control">
+                  <option selected value="">-- Pilih Moda --</option>
+                  <option value="trucking">Trucking</option>
+                  <option value="kereta">Kereta</option>
+                  <option value="pesawat">Pesawat</option>
+                  <option value="kapal-laut">Kapal Laut</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <h6 class="text-primary">Detail Pembayaran</h6>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+              <label>Biaya</label>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Rp</div>
+                  </div>
+                  <input type="text" class="form-control" id="price">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Pembayaran</label>
+                <select id="payment" class="form-control">
+                  <option selected value="">-- Pilih Pembayaran --</option>
+                  <option value="tagihan">Tagihan</option>
+                  <option value="cod">COD</option>
+                  <option value="cash">Cash</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
-        <button type="button" id="submitBranch" value="Simpan" class="btn btn-primary">
+        <button type="button" id="submitShipping" value="Simpan" class="btn btn-primary">
           <i class="fa fa-save"></i>&nbsp;Simpan
         </button>
       </div>

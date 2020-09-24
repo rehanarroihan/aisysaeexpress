@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Branch_model extends CI_Model {
 
+    protected $tableName = "branch";
+
     public function create() {
         $data = array(
 			'name'      	=> $this->input->post('branch_name'),
@@ -10,7 +12,7 @@ class Branch_model extends CI_Model {
 			'created_at'	=> date("Y-m-d h:m:s"),
 			'updated_at'	=> date("Y-m-d h:m:s")
         );
-        $this->db->insert('branch', $data);
+        $this->db->insert($this->tableName, $data);
         // NOTE : returning last inserted id
         return $this->db->insert_id();
     }
@@ -19,7 +21,7 @@ class Branch_model extends CI_Model {
 		return $this->db
                     ->join('users','users.branch_id = branch.id', 'right')
                     ->where('role !=', 1)
-                    ->get('branch')
+                    ->get($this->tableName)
                     ->result();
     }
 }
