@@ -46,9 +46,8 @@
                       <td><?php echo $item->full_name ?></td>
                       <td><?php echo $item->username ?></td>
                       <td>
-                        <a href="#" class="btn btn-success">
-                          <i class="fa fa-edit"></i>
-                        </a>
+                        <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
+                        <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
                       </td>
                     </tr>
                     <?php $i++; endforeach; ?>

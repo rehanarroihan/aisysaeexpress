@@ -246,7 +246,9 @@ function submitShipping() {
       $('#modal_create_shipping').modal('toggle');
 
       // INFO : append inserted data to table
+      <?php if (isset($this->shippingStatus)): ?>
       const ss = JSON.stringify(<?php echo json_encode($this->shippingStatus) ?>);
+      <?php endif; ?>
       const shippingStatus = JSON.parse(ss);
       let statusTitle = '';
       let statusBadgeColorClass = ''; 
@@ -266,7 +268,6 @@ function submitShipping() {
           }
         }
       });
-
       let table = $('#shippingTable').DataTable();
       table.row.add([
         table.rows().data().length +1,
