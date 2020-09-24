@@ -234,7 +234,49 @@ function submitShipping() {
         timeout: 3000
       }).show();
 
+      // INFO : resetting form value
+      $('#statusSelect').val(""); $('#serviceSelect').val("");
+      $('#modeSelect').val(""); $('#price').val("");
+      $('#payment').val(""); $('#senderName').val("");
+      $('#senderAddress').val(""); $('#senderPhone').val("");
+      $('#receiverName').val(""); $('#receiverAddress').val("");
+      $('#receiverPhone').val(""); $('#stuffContent').val("");
+      $('#stuffWeight').val(""); $('#stuffColly').val(""); $('#stuffRefNo').val("");
+
       $('#modal_create_shipping').modal('toggle');
+
+      // INFO : append inserted data to table
+      const ss = JSON.stringify(<?php echo json_encode($this->shippingStatus) ?>);
+      const shippingStatus = JSON.parse(ss);
+      let statusTitle = '';
+      let statusBadgeColorClass = ''; 
+      shippingStatus.forEach((status) => {
+        if (status.id == res.data.status) {
+          statusTitle = status.badge_title;
+          if (status.id == 1) {
+            statusBadgeColorClass = "info";
+          } else if (status.id == 2) {
+            statusBadgeColorClass = "warning";
+          } else if (status.id == 3) {
+            statusBadgeColorClass = "primary";
+          } else if (status.id == 4) {
+            statusBadgeColorClass = "success";
+          } else if (status.id == 5) {
+            statusBadgeColorClass = "danger";
+          }
+        }
+      });
+
+      let table = $('#shippingTable').DataTable();
+      table.row.add([
+        table.rows().data().length +1,
+        res.data.tracking_no,
+        res.data.sender_name,
+        res.data.receiver_name,
+        res.data.created_at,
+        "<span class='badge badge-" + statusBadgeColorClass + "'>" + statusTitle +"</span>",
+        "<button data-toggle='tooltip' title='Edit' class='btn btn-link text-success'><i class='fa fa-edit'></i></button><button data-toggle='tooltip' title='Print' class='btn btn-link text-info'><i class='fa fa-print'></i></button><button data-toggle='tooltip' title='Hapus' class='btn btn-link text-danger'><i class='fa fa-trash'></i></button>"
+      ]).draw( true );
 
       maskSomeShippingForm();
     },
