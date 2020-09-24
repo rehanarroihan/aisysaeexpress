@@ -24,14 +24,13 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped" id="shippingTable">
                   <thead>
                     <tr>
                       <th class="text-center">
                         #
                       </th>
                       <th>No Tracking</th>
-                      <th>Agent</th>
                       <th>Nama Pengirim</th>
                       <th>Nama Penerima</th>
                       <th>Date</th>
@@ -40,7 +39,46 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
+                    <?php $i=1;foreach($shipping_data_list as $shipping): ?>
+                    <tr>
+                      <td><?php echo $i ?></td>
+                      <td><?php echo $shipping->tracking_no ?></td>
+                      <td><?php echo $shipping->sender_name ?></td>
+                      <td><?php echo $shipping->receiver_name ?></td>
+                      <td><?php echo $shipping->created_at ?></td>
+                      <td class="text-center">
+                        <?php
+                          $statusTitle = "";
+                          $statusBadgeColorClass = "";
+                          foreach ($this->shippingStatus as $status) {
+                            if ($status['id'] == $shipping->status) {
+                              $statusTitle = $status['badge_title'];
+                              if ($status['id'] == 1) {
+                                $statusBadgeColorClass = "info";
+                              } else if ($status['id'] == 2) {
+                                $statusBadgeColorClass = "warning";
+                              } else if ($status['id'] == 3) {
+                                $statusBadgeColorClass = "primary";
+                              } else if ($status['id'] == 4) {
+                                $statusBadgeColorClass = "success";
+                              } else if ($status['id'] == 5) {
+                                $statusBadgeColorClass = "danger";
+                              }
+                              break;
+                            }
+                          }
+                        ?>
+                        <span class="badge <?php echo 'badge-'.$statusBadgeColorClass ?>">
+                          <?php echo $statusTitle ?>
+                        </span>
+                      </td>
+                      <td>
+                        <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
+                        <button data-toggle="tooltip" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></button>
+                        <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
+                      </td>
+                    </tr>
+                    <?php $i++;endforeach; ?>
                   </tbody>
                 </table>
               </div>
@@ -71,12 +109,12 @@
           <div class="form-group">
             <label>Status Pengiriman</label>
             <select id="statusSelect" class="form-control">
-              <option selected value="">-- Pilih Status Pengiriman --</option>
-              <option value="order-masuk">Order Masuk</option>
-              <option value="perjalanan">Perjalanan ke Kota Tujuan</option>
-              <option value="transit">Transit</option>
-              <option value="diterima">Diterima Dengan Baik</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="" selected>-- Pilih Status Pengiriman --</option>
+              <?php foreach($this->shippingStatus as $status): ?>
+                <option value="<?php echo $status['id'] ?>">
+                  <?php echo $status['title'] ?>
+                </option>
+              <?php endforeach; ?>
             </select>
           </div>
           
@@ -154,8 +192,11 @@
                 <label>Pelayanan</label>
                 <select id="serviceSelect" class="form-control">
                   <option selected value="">-- Pilih Jenis Pelayanan --</option>
-                  <option value="one-day-service">One Day Service</option>
-                  <option value="cargo">Cargo</option>
+                  <?php foreach($this->shippingType as $type): ?>
+                    <option value="<?php echo $type['id'] ?>">
+                      <?php echo $type['title'] ?>
+                    </option>
+                  <?php endforeach; ?>
                 </select>
               </div>
             </div>
@@ -164,10 +205,11 @@
                 <label>Moda</label>
                 <select id="modeSelect" class="form-control">
                   <option selected value="">-- Pilih Moda --</option>
-                  <option value="trucking">Trucking</option>
-                  <option value="kereta">Kereta</option>
-                  <option value="pesawat">Pesawat</option>
-                  <option value="kapal-laut">Kapal Laut</option>
+                  <?php foreach($this->shippingMode as $mode): ?>
+                    <option value="<?php echo $mode['id'] ?>">
+                      <?php echo $mode['title'] ?>
+                    </option>
+                  <?php endforeach; ?>
                 </select>
               </div>
             </div>
@@ -190,11 +232,16 @@
             <div class="form-group">
               <label>Pembayaran</label>
                 <select id="payment" class="form-control">
-                  <option selected value="">-- Pilih Pembayaran --</option>
-                  <option value="tagihan">Tagihan</option>
-                  <option value="cod">COD</option>
-                  <option value="cash">Cash</option>
+                  <option selected value="">-- Pilih Tipe Pembayaran --</option>
+                  <?php foreach($this->shippingPaymentType as $paymentType): ?>
+                    <option value="<?php echo $paymentType['id'] ?>">
+                      <?php echo $paymentType['title'] ?>
+                    </option>
+                  <?php endforeach; ?>
                 </select>
+                <div class="invalid-feedback">
+                  Tipe Pembayaran harus di pilih
+                </div>
               </div>
             </div>
           </div>

@@ -13,7 +13,7 @@
     });
 
     // ----------- Branch Section ----------- //
-    $("#table-1").dataTable({
+    $("#branchTable").dataTable({
       "columnDefs": [
         { "sortable": false, "targets": [5] }
       ]
@@ -44,6 +44,12 @@
     });
 
     // ----------- Shipping Section ----------- //
+    $("#shippingTable").dataTable({
+      "columnDefs": [
+        { "sortable": false, "targets": [6] }
+      ]
+    });
+
     shippingFormValidation();
 
     $("#submitShipping").click(function() {
@@ -56,6 +62,7 @@
 function shippingFormValidation() {
   $('#senderName').addClass('is-invalid');
   $('#senderAddress').addClass('is-invalid');
+  $('#payment').addClass('is-invalid');
 
   $("#senderName").on("change paste keyup", function() {
     if (!$('#senderName').val()) {
@@ -70,6 +77,14 @@ function shippingFormValidation() {
       $('#senderAddress').addClass('is-invalid');
     } else {
       $('#senderAddress').removeClass('is-invalid');
+    }
+  });
+
+  $("#payment").change(function(){
+    if (!$('#payment').val()) {
+      $('#payment').addClass('is-invalid');
+    } else {
+      $('#payment').removeClass('is-invalid');
     }
   });
 }
@@ -101,7 +116,7 @@ function submitBranch() {
   $.ajax('<?php echo base_url() ?>dashboard/branch/submit', {
     type: 'POST',
     data: {
-      branch_name: branchName, 
+      branch_name: branchName,
       branch_address: branchAddress,
       full_name: fullName,
       username: username,
@@ -130,8 +145,7 @@ function submitBranch() {
       $('#modal_create_branch').modal('toggle');
       
       // INFO : append inserted data to table
-      let table = $('#table-1').DataTable();
-      console.log(table);
+      let table = $('#branchTable').DataTable();
       table.row.add( [
         table.rows().data().length +1,
         res.data.name,
@@ -159,8 +173,9 @@ function submitShipping() {
   $('#receiverPhone').unmask();
   $('#senderPhone').unmask();
 
+  var branchId = "<?php echo $this->session->userdata('branch_id') ?>";
   var shippingData = {
-    branch_id: <?php echo $this->session->userdata('branch_id') ?>,
+    branch_id: branchId,
     tracking_no: $('#trackingNumber').val(),
     status: $('#statusSelect').val(),
     service: $('#serviceSelect').val(),
@@ -182,10 +197,17 @@ function submitShipping() {
   // Run some validation
   if (!shippingData.sender_name) {
     $('#senderName').focus();
+    maskSomeShippingForm();
     return;
   }
   if (!shippingData.sender_address) {
     $('#senderAddress').focus();
+    maskSomeShippingForm();
+    return;
+  }
+  if (!shippingData.payment) {
+    $('#payment').focus();
+    maskSomeShippingForm();
     return;
   }
 

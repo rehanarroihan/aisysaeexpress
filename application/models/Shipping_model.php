@@ -13,7 +13,7 @@ class Shipping_model extends CI_Model {
 			'service'		    => $this->input->post('service'),
 			'mode'		        => $this->input->post('mode'),
 			'price'		        => $this->input->post('price'),
-			'payment'		    => $this->input->post('payment'),
+			'payment_type'		=> $this->input->post('payment'),
 			'sender_name'		=> $this->input->post('sender_name'),
 			'sender_address'	=> $this->input->post('sender_address'),
 			'sender_phone'		=> $this->input->post('sender_phone'),
@@ -36,5 +36,11 @@ class Shipping_model extends CI_Model {
         return $this->db->where('id', $shipping_id)
                         ->get($this->tableName)
                         ->row();
+    }
+
+    public function getShippingDataList($branchId) {
+        return $branchId != null
+                ? $this->db->where('branch_id', $branchId)->get($this->tableName)->result()
+                : $this->db->get($this->tableName)->result();
     }
 }
