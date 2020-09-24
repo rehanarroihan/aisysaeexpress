@@ -299,6 +299,7 @@ function submitShipping() {
       $('#receiverName').val(""); $('#receiverAddress').val("");
       $('#receiverPhone').val(""); $('#stuffContent').val("");
       $('#stuffWeight').val(""); $('#stuffColly').val(""); $('#stuffRefNo').val("");
+      shippingFormValidation();
 
       $("#submitShipping").removeClass('disabled btn-progress');
       $('#modal_create_shipping').modal('toggle');
