@@ -20,7 +20,7 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between">
               <h4 class="text-muted">Daftar Data Pengiriman</h4>
-              <button data-toggle="modal" data-target="#modal_create_shipping" class="btn btn-primary" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
+              <button data-toggle="modal" id="open_shipping_button" data-target="#modal_create_shipping" class="btn btn-primary" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
             </div>
             <div class="card-body">
               <div class="table-responsive">

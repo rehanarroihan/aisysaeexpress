@@ -52,4 +52,22 @@ class Shipping_model extends CI_Model {
                 ? $this->db->where('branch_id', $branchId)->get($this->tableName)->result()
                 : $this->db->get($this->tableName)->result();
     }
+
+    public function getTrackingNoSequence($branchId) {
+        $query = $this->db
+                    ->where('MONTH(shipping.created_at)', Date('m'))
+                    ->get($this->tableName);
+
+        if ($query->num_rows() == 0) {
+            return "001";
+        }
+
+        $lastTrackingNo = $query->row()->tracking_no;
+        $lastTrackingNoSequence = substr(
+            $lastTrackingNo, strlen($lastTrackingNo) - 3, strlen($lastTrackingNo)
+        );
+        $addedOne = (int) $lastTrackingNoSequence + 1;
+
+        return sprintf("%03s", $addedOne);
+    }
 }

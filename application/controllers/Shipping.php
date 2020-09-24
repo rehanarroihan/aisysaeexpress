@@ -29,9 +29,9 @@ class Shipping extends CI_Controller {
             "title" => 'Cancelled',
             "badge_title" => 'Cancelled'
         )
-   );
+    );
 
-   public $shippingType = array(
+    public $shippingType = array(
         array(
             "id" => 1,
             "title" => 'One Day Service'
@@ -80,6 +80,7 @@ class Shipping extends CI_Controller {
         parent::__construct();
         
         $this->load->model('Shipping_model');
+        $this->load->model('Branch_model');
     }
     
     public function index() {
@@ -99,6 +100,28 @@ class Shipping extends CI_Controller {
 			'status' => $result['status'],
 			'message' => $result['message'],
 			'data' => $result['data']
+        ));
+    }
+
+    public function generateResi() {
+        $branchId = $this->input->post('branch_id');
+        if ($branchId == null) {
+            echo json_encode(array(
+                'status' => false,
+                'message' => 'Invalid parameter'
+            ));
+            return;
+        }
+
+        $branchRegCode = $this->Branch_model->getBranchRegCode($branchId);
+        $sequence = $this->Shipping_model->getTrackingNoSequence($branchId);
+
+        $trackingNo = $branchRegCode.'-'.Date('ym').''.$sequence;
+
+        echo json_encode(array(
+			'status' => true,
+			'message' => 'Berhasil generate nomor resi',
+			'data' => $trackingNo
         ));
     }
 }

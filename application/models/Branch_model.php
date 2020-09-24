@@ -32,4 +32,11 @@ class Branch_model extends CI_Model {
                     ->get($this->tableName)
                     ->result();
     }
+
+    public function getBranchRegCode($branch_id) {
+        return $this->db->where('id', $branch_id)
+                        ->get($this->tableName)
+                        ->row()
+                        ->registration_code;
+    }
 }

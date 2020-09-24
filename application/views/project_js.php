@@ -49,6 +49,10 @@
       ]
     });
 
+    $("#open_shipping_button").click(function() {
+      generateResi();
+    });
+
     shippingFormValidation();
 
     $("#submitShipping").click(function() {
@@ -92,6 +96,45 @@ function maskSomeShippingForm() {
   $('#price').mask('000.000.000', {reverse: true});
   $('#senderPhone').mask('0000-0000-0000 000');
   $('#receiverPhone').mask('0000-0000-0000 000');
+}
+
+function generateResi() {
+  $('#trackingNumber').val('Sedang memuat...');
+
+  $.ajax('<?php echo base_url() ?>dashboard/shipping/resi', {
+    type: 'POST',
+    data: {
+      branch_id: "<?php echo $this->session->userdata('branch_id') ?>",
+    },
+    success: function (data, status, xhr) {
+      const res = JSON.parse(data);
+      
+      if (!res.status) {
+        new Noty({
+          theme: 'metroui',
+          type: 'error',
+          text: 'Gagal mendapatkan data resi, mohon refresh',
+          timeout: 3000
+        }).show();
+
+        $('#trackingNumber').val("Gagal mendapatkan data, mohon refresh");
+
+        return;
+      }
+
+      $('#trackingNumber').val(res.data);
+    },
+    error: function (jqXhr, textStatus, errorMessage) {
+      new Noty({
+        theme: 'metroui',
+        type: 'error',
+        text: 'Gagal mendapatkan data resi, mohon refresh',
+        timeout: 3000
+      }).show();
+
+      $('#trackingNumber').val("Gagal mendapatkan data, mohon refresh");
+    }
+  });
 }
 
 function submitBranch() {
