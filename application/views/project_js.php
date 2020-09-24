@@ -36,7 +36,6 @@
       submitBranch();
     });
 
-
     $("#adminPassword").keypress(function(e) {
       if (e.which == 13) {
         submitBranch();
@@ -97,13 +96,14 @@ function maskSomeShippingForm() {
 
 function submitBranch() {
   let branchName = $("#branchName").val();
+  let registrationCode = $("#registrationCode").val();
   let branchAddress = $("#branchAddress").val();
   let fullName = $("#adminName").val();
   let username = $("#adminUsername").val();
   let password = $("#adminPassword").val();
-  
+   
   // NOTE : run validation
-  if (!(branchName && branchAddress && fullName && username && password)) {
+  if (!(branchName && registrationCode && branchAddress && fullName && username && password)) {
     new Noty({
       theme: 'metroui',
       type: 'warning',
@@ -113,17 +113,22 @@ function submitBranch() {
     return;
   }
 
+  $("#submitBranch").addClass('disabled btn-progress');
+
   $.ajax('<?php echo base_url() ?>dashboard/branch/submit', {
     type: 'POST',
     data: {
       branch_name: branchName,
       branch_address: branchAddress,
+      registration_code: registrationCode.toUpperCase(),
       full_name: fullName,
       username: username,
       password: password
     },
     success: function (data, status, xhr) {
       const res = JSON.parse(data);
+
+      $("#submitBranch").removeClass('disabled btn-progress');
       
       if (!res.status) {
         new Noty({
@@ -152,17 +157,24 @@ function submitBranch() {
         res.data.address,
         res.data.full_name,
         res.data.username,
-        "<a href='#' class='btn btn-success'><i class='fa fa-edit'></i></a>"
+        "<button data-toggle='tooltip' title='Edit' class='btn btn-link text-success'><i class='fa fa-edit'></i></button><button data-toggle='tooltip' title='Hapus' class='btn btn-link text-danger'><i class='fa fa-trash'></i></button>"
       ]).draw( true );
 
       $("#branchName").val('');
+      $("#registrationCode").val('');
       $("#branchAddress").val('');
       $("#adminName").val('');
       $("#adminUsername").val('');
       $("#adminPassword").val('');
     },
     error: function (jqXhr, textStatus, errorMessage) {
-      
+      new Noty({
+        theme: 'metroui',
+        type: 'error',
+        text: errorMessage,
+        timeout: 3000
+      }).show();
+      $("#submitBranch").removeClass('disabled btn-progress');
     }
   });
 }
@@ -211,6 +223,8 @@ function submitShipping() {
     return;
   }
 
+  $("#submitShipping").addClass('disabled btn-progress');
+
   $.ajax('<?php echo base_url() ?>dashboard/shipping/submit', {
     type: 'POST',
     data: shippingData,
@@ -243,6 +257,7 @@ function submitShipping() {
       $('#receiverPhone').val(""); $('#stuffContent').val("");
       $('#stuffWeight').val(""); $('#stuffColly').val(""); $('#stuffRefNo').val("");
 
+      $("#submitShipping").removeClass('disabled btn-progress');
       $('#modal_create_shipping').modal('toggle');
 
       // INFO : append inserted data to table
@@ -282,6 +297,13 @@ function submitShipping() {
       maskSomeShippingForm();
     },
     error: function (jqXhr, textStatus, errorMessage) {
+      new Noty({
+        theme: 'metroui',
+        type: 'error',
+        text: errorMessage,
+        timeout: 3000
+      }).show();
+      $("#submitShipping").removeClass('disabled btn-progress');
       maskSomeShippingForm();
     }
   });

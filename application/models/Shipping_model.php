@@ -29,7 +29,16 @@ class Shipping_model extends CI_Model {
         );
         $this->db->insert($this->tableName, $data);
         $status = $this->db->affected_rows() > 0;
-        return $this->getShippingById($this->db->insert_id());
+
+        return array(
+            "status"    => $status,
+            "message"   => $status 
+                            ? 'Berhasil membuat data pengiriman baru'
+                            : 'Gagal membuat data pengiriman baru',
+            "data"      => $status 
+                            ? $this->getShippingById($this->db->insert_id()) 
+                            : $this->db->error()
+        );
     }
 
     public function getShippingById($shipping_id) {

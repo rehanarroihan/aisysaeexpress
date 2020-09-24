@@ -27,9 +27,20 @@ class Branch extends CI_Controller {
 	}
 
 	public function submit() {
+		$regCodeAvail = $this->Branch_model->checkRegistrationCodeAvailability(
+			$this->input->post('registration_code')
+		);
 		$usernameAvail = $this->User_model->checkUsernameAvailability(
 			$this->input->post('username')
 		);
+
+		if ($regCodeAvail > 0) {
+			echo json_encode(array(
+				'status' => false,
+				'message' => 'Kode registrasi cabang tidak tersedia'
+			));
+			return;
+		}
 		if ($usernameAvail > 0) {
 			echo json_encode(array(
 				'status' => false,

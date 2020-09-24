@@ -7,14 +7,22 @@ class Branch_model extends CI_Model {
 
     public function create() {
         $data = array(
-			'name'      	=> $this->input->post('branch_name'),
-			'address'		=> $this->input->post('branch_address'),
-			'created_at'	=> date("Y-m-d h:m:s"),
-			'updated_at'	=> date("Y-m-d h:m:s")
+			'name'              => $this->input->post('branch_name'),
+			'address'           => $this->input->post('branch_address'),
+			'registration_code' => $this->input->post('registration_code'),
+			'created_at'        => date("Y-m-d h:m:s"),
+			'updated_at'        => date("Y-m-d h:m:s")
         );
         $this->db->insert($this->tableName, $data);
         // NOTE : returning last inserted id
         return $this->db->insert_id();
+    }
+
+    public function checkRegistrationCodeAvailability($regCode) {
+        return $this->db
+                    ->where('registration_code', $regCode)
+                    ->get($this->tableName)
+                    ->num_rows();
     }
 
     public function getAdminBranchList() {

@@ -96,9 +96,9 @@ class Shipping extends CI_Controller {
     public function submit() {
         $result = $this->Shipping_model->insert();
         echo json_encode(array(
-			'status' => true,
-			'message' => 'Berhasil menyimpan data pengiriman baru',
-			'data' => $result
+			'status' => $result['status'],
+			'message' => $result['message'],
+			'data' => $result['data']
         ));
     }
 }

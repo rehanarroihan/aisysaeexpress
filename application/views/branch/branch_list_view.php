@@ -53,7 +53,7 @@
                     <?php $i++; endforeach; ?>
                   </tbody>
                 </table>
-              </div>
+              </div>  
             </div>
           </div>
         </div>
@@ -73,9 +73,23 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label>Nama Cabang</label>
-          <input id="branchName" type="text" class="form-control" required>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Nama Cabang</label>
+              <input id="branchName" type="text" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Kode Registrasi Cabang</label>
+              <input style="text-transform: uppercase" maxlength="4" id="registrationCode" type="text" class="form-control" required>
+              <label class="text-muted">
+                <span class="text-danger">*</span> 
+                digunakan untuk prefix nomor resi, tidak dapat di sunting kembali
+              </label>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Alamat Cabang</label>
