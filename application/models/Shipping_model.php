@@ -56,6 +56,8 @@ class Shipping_model extends CI_Model {
     public function getTrackingNoSequence($branchId) {
         $query = $this->db
                     ->where('MONTH(shipping.created_at)', Date('m'))
+                    ->order_by('created_at',"desc")
+                    ->limit(1)
                     ->get($this->tableName);
 
         if ($query->num_rows() == 0) {
