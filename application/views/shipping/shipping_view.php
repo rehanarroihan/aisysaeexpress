@@ -192,13 +192,23 @@
               </div>
               <div class="form-group">
                 <label>Jumlah Colly</label>
-                <input id="stuffColly" type="text" class="form-control">
+                <div class="input-group">
+                  <input id="stuffColly" type="text" class="form-control text-right">
+                  <div class="input-group-append">
+                    <div class="input-group-text">Koli</div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
                 <label>Berat</label>
-                <input id="stuffWeight" type="text" class="form-control">
+                <div class="input-group">
+                  <input id="stuffWeight" type="text" class="form-control text-right">
+                  <div class="input-group-append">
+                    <div class="input-group-text">Kg</div>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>No. Referensi</label>
@@ -241,7 +251,7 @@
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
-              <label>Biaya</label>
+                <label>Biaya</label>
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text">Rp</div>
@@ -294,7 +304,7 @@
       </div>
       <div class="modal-footer bg-whitesmoke br">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+        <button type="button" id="goPrintManifestButton" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
       </div>
     </div>
   </div>

@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Shipping extends CI_Controller {
 
     public $shippingStatus = array(
@@ -123,5 +126,24 @@ class Shipping extends CI_Controller {
 			'message' => 'Berhasil generate nomor resi',
 			'data' => $trackingNo
         ));
+    }
+
+    public function manifest() {
+        $viewData = array(
+            "shippingList" => $this->Shipping_model->loadShippingByIds(
+                $this->input->post('ids')
+            )
+        );
+        // header("Content-type: application/vnd-ms-excel");
+        // header("Content-Disposition: attachment; filename=hasil.xls");
+
+        $this->load->view('excel', $viewData);
+
+        // $pdf = new FPDF();
+        // $pdf->AddPage();
+        // $pdf->SetFont('Arial','B',16);
+        // //$pdf->Cell(40,10,'Halo PDF!!!');
+        // $pdf->MultiCell(190, 10, $pdf->WriteHTML($this->load->view('excel', $viewData)));
+        // $pdf->Output();
     }
 }

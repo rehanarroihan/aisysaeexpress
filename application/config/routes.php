@@ -63,6 +63,7 @@ $route['dashboard/vehicle'] = 'dashboard/vehicle';
 $route['dashboard/shipping'] = 'shipping/index';
 $route['dashboard/shipping/resi'] = 'shipping/generateResi';
 $route['dashboard/shipping/submit'] = 'shipping/submit';
+$route['dashboard/shipping/manifest'] = 'shipping/manifest';
 
 $route['dashboard/report'] = 'dashboard/report';
 

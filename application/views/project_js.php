@@ -63,6 +63,14 @@
 
     maskSomeShippingForm();
 
+    var ids = "";
+    $("#goPrintManifestButton").click(function() {
+      $('<form action="<?php echo base_url() ?>dashboard/shipping/manifest" method="post"><input type="hidden" name="ids" value="'+ids+'"></input></form>')
+        .appendTo('body')
+        .submit()
+        .remove();
+    });
+
     var manifestList = [];
     $("[data-checkboxes]").each(function() {
       var me = $(this),
@@ -92,14 +100,11 @@
 
         checkedItems = [];
         checked.each((index, value) => {
-          checkedItems.push(
-            {
-              shipping_id: value.attributes.shipping.value,
-              tracking_id: value.attributes.resi.value,
-            }
-          )
+          checkedItems.push(value.attributes.shipping.value);
         })
+
         manifestList = checkedItems;
+        ids = manifestList.join();
 
         if (checkedItems.length == 0) {
           // hide cetaik manifest button
@@ -147,6 +152,9 @@ function maskSomeShippingForm() {
   $('#price').mask('000.000.000', {reverse: true});
   $('#senderPhone').mask('0000-0000-0000 000');
   $('#receiverPhone').mask('0000-0000-0000 000');
+
+  $('#stuffWeight').mask('000000000');
+  $('#stuffColly').mask('000000000');
 }
 
 function generateResi() {

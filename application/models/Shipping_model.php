@@ -73,4 +73,58 @@ class Shipping_model extends CI_Model {
 
         return sprintf("%03s", $addedOne);
     }
+
+    public function loadShippingByIds($ids) {
+        $result = array();
+        $idList = explode(",", $ids);
+
+        // Getting shipping data list
+        foreach ($idList as $id) {
+            $query = $this->db
+                        ->where("id", $id)
+                        ->get($this->tableName)
+                        ->result();
+            
+            if (isset($query[0])) {
+                $result[] = $query[0];
+            }
+        }
+
+        // Counting total
+        $totalWeight = 0;
+        $totalColly = 0;
+        $totalCashCount = 0;
+        $totalCodCount = 0;
+        $totalDeliveryCount = 0;
+        foreach ($result as $data) {
+            if ($data->stuff_weight != "") {
+                $totalWeight += (int) $data->stuff_weight;
+            }
+
+            if ($data->stuff_colly != "") {
+                $totalColly += (int) $data->stuff_colly;
+            }
+
+            if ($data->payment_type == 1) {
+                $totalCashCount += 1;
+            }
+
+            if ($data->payment_type == 2) {
+                $totalCodCount += 1;
+            }
+
+            if ($data->payment_type == 3) {
+                $totalDeliveryCount += 1;
+            }
+        }
+
+        return array (
+            "shippingList"       => $result, 
+            "totalWeight"        => $totalWeight,
+            "totalColly"         => $totalColly,
+            "totalCashCount"     => $totalCashCount,
+            "totalCodCount"      => $totalCodCount,
+            "totalDeliveryCount" => $totalDeliveryCount
+        );
+    }
 }
