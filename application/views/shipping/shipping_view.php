@@ -20,13 +20,22 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between">
               <h4 class="text-muted">Daftar Data Pengiriman</h4>
-              <button data-toggle="modal" id="open_shipping_button" data-target="#modal_create_shipping" class="btn btn-primary" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
+              <div class="d-flex">
+                <button data-toggle="modal" id="printManifestButton" data-target="#exampleModal" class="btn btn-warning" type="button"><i class="fas fa-tag"></i>&nbsp;Cetak Manifest</button>
+                <button data-toggle="modal" id="open_shipping_button" data-target="#modal_create_shipping" class="btn btn-primary ml-2" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-striped" id="shippingTable">
                   <thead>
                     <tr>
+                      <th class="text-center">
+                        <!-- <div class="custom-checkbox custom-control ml-23">
+                          <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                          <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                        </div> -->
+                      </th>
                       <th class="text-center">
                         #
                       </th>
@@ -41,6 +50,19 @@
                   <tbody>
                     <?php $i=1;foreach($shipping_data_list as $shipping): ?>
                     <tr>
+                      <td class="text-center">
+                        <div class="custom-checkbox custom-control">
+                          <input
+                            type="checkbox"
+                            data-checkboxes="mygroup"
+                            shipping="<?php echo $shipping->id ?>"
+                            resi="<?php echo $shipping->tracking_no ?>"
+                            class="custom-control-input"
+                            id="checkbox<?php echo $i ?>"
+                          >
+                          <label for="checkbox<?php echo $i ?>" class="custom-control-label">&nbsp;</label>
+                        </div>
+                      </td>
                       <td><?php echo $i ?></td>
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->sender_name ?></td>
@@ -256,3 +278,24 @@
     </div>
   </div> <!-- modal-bialog .// -->
 </div> <!-- modal.// -->
+
+<!-- Modal Print Manifest -->
+<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cetak Manifes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Dengan menekan tombol cetak, maka <span id="dataCount"></span> resi akan di ubah statusnya menjadi <span class="text-info">Perjalanan ke Kota Tujuan</span></p>
+      </div>
+      <div class="modal-footer bg-whitesmoke br">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+      </div>
+    </div>
+  </div>
+</div>
