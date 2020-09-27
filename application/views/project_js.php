@@ -46,6 +46,7 @@
 
     // ----------- Shipping Section ----------- //
     $("#shippingTable").dataTable({
+      responsive: true,
       "columnDefs": [
         { "sortable": false, "targets": [0, 7] },
       ]
@@ -388,13 +389,14 @@ function submitShipping() {
       });
       let table = $('#shippingTable').DataTable();
       table.row.add([
+        "<div class='custom-checkbox custom-control'><input type='checkbox' data-checkboxes='mygroup' shipping="+ res.data.id +" resi="+ res.data.tracking_no +" class='custom-control-input' id='checkbox"+ (table.rows().data().length + 1) +"'><label for='checkbox"+ (table.rows().data().length + 1) +"' class='custom-control-label'>&nbsp;</label></div>",
         table.rows().data().length +1,
         res.data.tracking_no,
         res.data.sender_name,
         res.data.receiver_name,
         res.data.created_at,
         "<span class='badge badge-" + statusBadgeColorClass + "'>" + statusTitle +"</span>",
-        "<button data-toggle='tooltip' title='Edit' class='btn btn-link text-success'><i class='fa fa-edit'></i></button><button data-toggle='tooltip' title='Print' class='btn btn-link text-info'><i class='fa fa-print'></i></button><button data-toggle='tooltip' title='Hapus' class='btn btn-link text-danger'><i class='fa fa-trash'></i></button>"
+        "<button data-toggle='tooltip' title='Edit' class='btn btn-link text-success'><i class='fa fa-edit'></i></button><a href='<?php echo base_url() ?>dashboard/shipping/print/"+ res.data.id +"' data-toggle='tooltip' title='Print' class='btn btn-link text-info' shippingid="+ res.data.id +"><i class='fa fa-print'></i></a><button data-toggle='tooltip' title='Hapus' class='btn btn-link text-danger'><i class='fa fa-trash'></i></button>"
       ]).draw( true );
 
       maskSomeShippingForm();

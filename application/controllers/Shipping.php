@@ -81,6 +81,10 @@ class Shipping extends CI_Controller {
 
 	public function __construct(){
         parent::__construct();
+
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
         
         $this->load->model('Shipping_model');
         $this->load->model('Branch_model');
@@ -134,10 +138,11 @@ class Shipping extends CI_Controller {
                 $this->input->post('ids')
             )
         );
-        // header("Content-type: application/vnd-ms-excel");
-        // header("Content-Disposition: attachment; filename=hasil.xls");
 
-        $this->load->view('excel', $viewData);
+        //header("Content-type: application/vnd-ms-excel");
+        //header("Content-Disposition: attachment; filename=hasil.xlsx");
+
+        $this->load->view('shipping/manifest_table_view', $viewData);
 
         // $pdf = new FPDF();
         // $pdf->AddPage();
@@ -145,5 +150,12 @@ class Shipping extends CI_Controller {
         // //$pdf->Cell(40,10,'Halo PDF!!!');
         // $pdf->MultiCell(190, 10, $pdf->WriteHTML($this->load->view('excel', $viewData)));
         // $pdf->Output();
+    }
+
+    public function printWayBill($shippingId) {
+        $viewData = array(
+            "data"  => $this->Shipping_model->getShippingById($shippingId)
+        );
+        $this->load->view('shipping/shipping_waybill_view', $viewData);
     }
 }

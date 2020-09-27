@@ -96,7 +96,7 @@
                       </td>
                       <td>
                         <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
-                        <button data-toggle="tooltip" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></button>
+                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
                         <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
                       </td>
                     </tr>
