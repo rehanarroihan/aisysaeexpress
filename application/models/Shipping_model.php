@@ -105,15 +105,15 @@ class Shipping_model extends CI_Model {
             }
 
             if ($data->payment_type == 1) {
-                $totalCashCount += 1;
+                $totalCashCount += (int) $data->price;
             }
 
             if ($data->payment_type == 2) {
-                $totalCodCount += 1;
+                $totalCodCount += (int) $data->price;
             }
 
             if ($data->payment_type == 3) {
-                $totalDeliveryCount += 1;
+                $totalDeliveryCount += (int) $data->price;
             }
         }
 

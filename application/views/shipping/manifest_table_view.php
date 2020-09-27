@@ -1,4 +1,4 @@
-<table width="100%">
+<table width="100%" style="">
     <tr height="30px">
         <td colspan="3">MANIFES DAFTAR MUAT</td>
     </tr>
@@ -8,7 +8,7 @@
         <td>SUPIR & KERNET: </td>
     </tr>
 </table>
-<table border="1">
+<table border="1" style="border-collapse: collapse; text-align: center">
     <tr>
         <th rowspan="2">NO. RESI</th>
         <th rowspan="2">PENGIRIM</th>
@@ -28,29 +28,37 @@
 
     <?php foreach($shippingList["shippingList"] as $shipping): ?>
     <tr>
-        <th><?php echo $shipping->tracking_no ?></th>
-        <th><?php echo $shipping->sender_name ?></th>
-        <th><?php echo $shipping->receiver_name ?></th>
-        <th></th>
-        <th><?php echo $shipping->stuff_content ?></th>
-        <th><?php echo $shipping->stuff_weight ?></th>
-        <th><?php echo $shipping->stuff_colly ?></th>
+        <td><?php echo $shipping->tracking_no ?></td>
+        <td><?php echo $shipping->sender_name ?></td>
+        <td><?php echo $shipping->receiver_name ?></td>
+        <td></th>
+        <td><?php echo $shipping->stuff_content ?></td>
+        <td><?php echo $shipping->stuff_weight ?></td>
+        <td><?php echo $shipping->stuff_colly ?></td>
         <!-- CASH / COD / DELIVERY -->
-        <th><?php if ($shipping->payment_type == 1) { echo "&#10003;"; } ?></th>
-        <th><?php if ($shipping->payment_type == 2) { echo "&#10003;"; } ?></th>
-        <th><?php if ($shipping->payment_type == 3) { echo "&#10003;"; } ?></th>
-        <th></th>
+        <td><?php if ($shipping->payment_type == 1) { echo $shipping->price; } ?></td>
+        <td><?php if ($shipping->payment_type == 2) { echo $shipping->price; } ?></td>
+        <td><?php if ($shipping->payment_type == 3) { echo $shipping->price; } ?></td>
+        <td></td>
     </tr>
     <?php endforeach; ?>
 
     <tr>
-        <th colspan="4"></th>
-        <th>Total</th>
-        <th><?php echo $shippingList["totalWeight"] ?></th>
-        <th><?php echo $shippingList["totalColly"] ?></th>
-        <th><?php echo $shippingList["totalCashCount"] ?></th>
-        <th><?php echo $shippingList["totalCodCount"] ?></th>
-        <th><?php echo $shippingList["totalDeliveryCount"] ?></th>
-        <th border="0"></th>
+        <td colspan="4"></td>
+        <td>Total</td>
+        <td><?php echo $shippingList["totalWeight"] ?></td>
+        <td><?php echo $shippingList["totalColly"] ?></td>
+        <td><?php echo $shippingList["totalCashCount"] ?></td>
+        <td><?php echo $shippingList["totalCodCount"] ?></td>
+        <td><?php echo $shippingList["totalDeliveryCount"] ?></td>
+        <td border="0"></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"></td>
+        <td colspan="3">Total pendapatan manifes</td>
+        <?php $total = (int) $shippingList["totalCashCount"] + (int) $shippingList["totalCodCount"] + (int) $shippingList["totalDeliveryCount"] ?>
+        <td colspan="3">Rp. <?php echo number_format($total) ?></td>
+        <td></td>
     </tr>
 </table>
