@@ -256,7 +256,7 @@ function submitBranch() {
       let table = $('#branchTable').DataTable();
       table.row.add( [
         table.rows().data().length +1,
-        res.data.name,
+        res.data.name + ' (' + res.data.registration_code + ')',
         res.data.address,
         res.data.full_name,
         res.data.username,

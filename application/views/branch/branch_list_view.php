@@ -41,7 +41,7 @@
                     <?php $i=1; foreach($branchList as $item): ?>
                     <tr>
                       <td><?php echo $i ?></td>
-                      <td><?php echo $item->name ?></td>
+                      <td><?php echo $item->name.' ('.$item->registration_code.')' ?></td>
                       <td><?php echo $item->address ?></td>
                       <td><?php echo $item->full_name ?></td>
                       <td><?php echo $item->username ?></td>
