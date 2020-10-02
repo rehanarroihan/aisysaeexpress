@@ -25,6 +25,22 @@ class Branch_model extends CI_Model {
                     ->row();
     }
 
+    public function getDestBranchList() {
+        $branchList = $this->db->get($this->tableName)->result();
+        
+        $loggedInBranchId = $this->session->userdata('branch_id');
+        
+        if (isset($loggedInBranchId)) {
+            for ($i=0; $i < count($branchList); $i++) {
+                if ($branchList[$i]->id == $loggedInBranchId) {
+                    unset($branchList[$i]);
+                }
+            }
+        }
+        
+        return $branchList;
+    }
+
     public function checkRegistrationCodeAvailability($regCode) {
         return $this->db
                     ->where('registration_code', $regCode)

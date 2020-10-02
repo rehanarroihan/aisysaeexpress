@@ -92,11 +92,20 @@ class Shipping extends CI_Controller {
     
     public function index() {
         $viewData = array(
-			'page_title' => 'Pengiriman',
-			'primary_view' => 'shipping/shipping_view',
-			'shipping_data_list' => $this->Shipping_model->getShippingDataList(
-                $this->session->userdata('branch_id')
-            )
+			'page_title'            => 'Pengiriman',
+            'primary_view'          => 'shipping/shipping_view',
+            'dest_branch_list'      => $this->Branch_model->getDestBranchList(),
+			'shipping_data_list'    => $this->Shipping_model->getShippingDataList($this->session->userdata('branch_id'))
+		);
+		$this->load->view('template_view', $viewData);
+    }
+
+    public function incoming() {
+        $viewData = array(
+			'page_title'                => 'Daftar Tugas',
+            'primary_view'              => 'shipping/incoming_shipping_view',
+            'dest_branch_list'          => $this->Branch_model->getDestBranchList(),
+			'incoming_shipping_list'    => $this->Shipping_model->getIncomingShippingDataList($this->session->userdata('branch_id'))
 		);
 		$this->load->view('template_view', $viewData);
     }

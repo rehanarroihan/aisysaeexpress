@@ -13,7 +13,9 @@
     <div class="section-body">
       <h2 class="section-title">Data Pengiriman Barang</h2>
       <p class="section-lead">
-        Daftar data pengiriman</a>.
+        Daftar data pengiriman dari cabang
+        <b><?php echo $this->session->userdata('branch_name') ?>
+        (<?php echo $this->session->userdata('branch_regist') ?>)</b>
       </p>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -41,10 +43,10 @@
                       </th>
                       <th>No Tracking</th>
                       <th>Nama Pengirim</th>
-                      <th>Nama Penerima</th>
-                      <th>Date</th>
+                      <th>Cabang Tujuan</th>
+                      <th>Tanggal Masuk</th>
                       <th>Status</th>
-                      <th>Action</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -66,8 +68,12 @@
                       <td><?php echo $i ?></td>
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->sender_name ?></td>
-                      <td><?php echo $shipping->receiver_name ?></td>
-                      <td><?php echo $shipping->created_at ?></td>
+                      <td><?php echo $shipping->dest_branch_name ?> (<?php echo $shipping->dest_branch_code ?>)</td>
+                      <td><?php
+                        setlocale (LC_TIME, 'INDONESIA');
+                        $tanggal = date("D, d M Y", strtotime($shipping->created_at)); 
+                        echo $tanggal; 
+                      ?></td>
                       <td class="text-center">
                         <?php
                           $statusTitle = "";
@@ -128,16 +134,40 @@
             <label>Nomor Tracking / No. Resi</label>
             <input id="trackingNumber" readonly value="SBY-220920001" type="text" class="form-control">
           </div>
-          <div class="form-group">
-            <label>Status Pengiriman</label>
-            <select id="statusSelect" class="form-control">
-              <option value="" selected>-- Pilih Status Pengiriman --</option>
-              <?php foreach($this->shippingStatus as $status): ?>
-                <option value="<?php echo $status['id'] ?>">
-                  <?php echo $status['title'] ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Cabang Tujuan</label>
+                <select id="destBranchSelect" class="form-control">
+                  <option value="" selected>-- Pilih Cabang Tujuan --</option>
+                  <?php foreach($dest_branch_list as $branch): ?>
+                    <option value="<?php echo $branch->id ?>">
+                      <?php echo $branch->name ?> (<?php echo $branch->registration_code ?>)
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Status Pengiriman</label>
+                <select id="statusSelect" class="form-control" readonly>
+                  <option value="" disabled>-- Pilih Status Pengiriman --</option>
+                  <?php foreach($this->shippingStatus as $status): ?>
+                    <?php if ($status['id'] == 1): ?>
+                      <option value="<?php echo $status['id'] ?>" selected>
+                        <?php echo $status['title'] ?>
+                      </option>
+                    <?php else: ?>
+                      <option value="<?php echo $status['id'] ?>" disabled>
+                        <?php echo $status['title'] ?>
+                      </option>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
           </div>
           
           <div class="row">

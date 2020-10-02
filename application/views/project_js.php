@@ -18,7 +18,10 @@
     $("#branchTable").dataTable({
       "columnDefs": [
         { "sortable": false, "targets": [5] }
-      ]
+      ],
+      "language": {
+        "emptyTable": "Belum ada data cabang"
+      }
     });
 
     $("#show_hide_password a").on('click', function(event) {
@@ -49,7 +52,20 @@
       responsive: true,
       "columnDefs": [
         { "sortable": false, "targets": [0, 7] },
-      ]
+      ],
+      "language": {
+        "emptyTable": "Belum ada data pengiriman dari cabang <?php echo $this->session->userdata('branch_name') ?> (<?php echo $this->session->userdata('branch_regist') ?>)"
+      }
+    });
+
+    $("#incomingShippingTable").dataTable({
+      responsive: true,
+      "columnDefs": [
+        { "sortable": false, "targets": [0, 7] },
+      ],
+      "language": {
+        "emptyTable": "Belum ada pengiriman ke cabang <?php echo $this->session->userdata('branch_name') ?> (<?php echo $this->session->userdata('branch_regist') ?>)"
+      }
     });
 
     $("#open_shipping_button").click(function() {
@@ -290,7 +306,8 @@ function submitShipping() {
 
   var branchId = "<?php echo $this->session->userdata('branch_id') ?>";
   var shippingData = {
-    branch_id: branchId,
+    origin_branch_id: branchId,
+    destination_branch_id: $('#destBranchSelect').val(),
     tracking_no: $('#trackingNumber').val(),
     status: $('#statusSelect').val(),
     service: $('#serviceSelect').val(),
@@ -364,42 +381,11 @@ function submitShipping() {
       $("#submitShipping").removeClass('disabled btn-progress');
       $('#modal_create_shipping').modal('toggle');
 
-      // INFO : append inserted data to table
-      <?php if (isset($this->shippingStatus)): ?>
-      const ss = JSON.stringify(<?php echo json_encode($this->shippingStatus) ?>);
-      <?php endif; ?>
-      const shippingStatus = JSON.parse(ss);
-      let statusTitle = '';
-      let statusBadgeColorClass = ''; 
-      shippingStatus.forEach((status) => {
-        if (status.id == res.data.status) {
-          statusTitle = status.badge_title;
-          if (status.id == 1) {
-            statusBadgeColorClass = "info";
-          } else if (status.id == 2) {
-            statusBadgeColorClass = "warning";
-          } else if (status.id == 3) {
-            statusBadgeColorClass = "primary";
-          } else if (status.id == 4) {
-            statusBadgeColorClass = "success";
-          } else if (status.id == 5) {
-            statusBadgeColorClass = "danger";
-          }
-        }
-      });
-      let table = $('#shippingTable').DataTable();
-      table.row.add([
-        "<div class='custom-checkbox custom-control'><input type='checkbox' data-checkboxes='mygroup' shipping="+ res.data.id +" resi="+ res.data.tracking_no +" class='custom-control-input' id='checkbox"+ (table.rows().data().length + 1) +"'><label for='checkbox"+ (table.rows().data().length + 1) +"' class='custom-control-label'>&nbsp;</label></div>",
-        table.rows().data().length +1,
-        res.data.tracking_no,
-        res.data.sender_name,
-        res.data.receiver_name,
-        res.data.created_at,
-        "<span class='badge badge-" + statusBadgeColorClass + "'>" + statusTitle +"</span>",
-        "<button data-toggle='tooltip' title='Edit' class='btn btn-link text-success'><i class='fa fa-edit'></i></button><a href='<?php echo base_url() ?>dashboard/shipping/print/"+ res.data.id +"' data-toggle='tooltip' title='Print' class='btn btn-link text-info' shippingid="+ res.data.id +"><i class='fa fa-print'></i></a><button data-toggle='tooltip' title='Hapus' class='btn btn-link text-danger'><i class='fa fa-trash'></i></button>"
-      ]).draw( true );
-
       maskSomeShippingForm();
+
+      setTimeout(() => {
+        location.reload();
+      }, 600);
     },
     error: function (jqXhr, textStatus, errorMessage) {
       new Noty({

@@ -21,9 +21,9 @@
         <th rowspan="2">KETERANGAN</th>
     </tr>
     <tr>
-        <th>CASH</th>
+        <th>TAGIHAN</th>
         <th>COD</th>
-        <th>DELIVERY</th>
+        <th>CASH</th>
     </tr>
 
     <?php foreach($shippingList["shippingList"] as $shipping): ?>
@@ -36,9 +36,9 @@
         <td><?php echo $shipping->stuff_weight ?></td>
         <td><?php echo $shipping->stuff_colly ?></td>
         <!-- CASH / COD / DELIVERY -->
-        <td><?php if ($shipping->payment_type == 1) { echo $shipping->price; } ?></td>
-        <td><?php if ($shipping->payment_type == 2) { echo $shipping->price; } ?></td>
-        <td><?php if ($shipping->payment_type == 3) { echo $shipping->price; } ?></td>
+        <td><?php if ($shipping->payment_type == 1) { echo 'Rp. '.number_format($shipping->price); } ?></td>
+        <td><?php if ($shipping->payment_type == 2) { echo 'Rp. '.number_format($shipping->price); } ?></td>
+        <td><?php if ($shipping->payment_type == 3) { echo 'Rp. '.number_format($shipping->price); } ?></td>
         <td></td>
     </tr>
     <?php endforeach; ?>
@@ -48,9 +48,9 @@
         <td>Total</td>
         <td><?php echo $shippingList["totalWeight"] ?></td>
         <td><?php echo $shippingList["totalColly"] ?></td>
-        <td><?php echo $shippingList["totalCashCount"] ?></td>
-        <td><?php echo $shippingList["totalCodCount"] ?></td>
-        <td><?php echo $shippingList["totalDeliveryCount"] ?></td>
+        <td><?php echo 'Rp. '.number_format($shippingList["totalCashCount"]) ?></td>
+        <td><?php echo 'Rp. '.number_format($shippingList["totalCodCount"]) ?></td>
+        <td><?php echo 'Rp. '.number_format($shippingList["totalDeliveryCount"]) ?></td>
         <td border="0"></td>
     </tr>
 

@@ -5,6 +5,10 @@ class Shipping_model extends CI_Model {
 
     protected $tableName = "shipping";
 
+    public function __construct() {
+        $this->load->model('Shipping_history_model');
+    }
+
     public function insert() {
         $data = array(
 			'origin_branch_id'      => $this->input->post('origin_branch_id'),
@@ -29,6 +33,10 @@ class Shipping_model extends CI_Model {
 			'updated_at'            => date("Y-m-d h:m:s")
         );
         $this->db->insert($this->tableName, $data);
+
+        // Inserting history for resi tracking
+        $this->Shipping_history_model->insert($this->db->insert_id(), 1);
+
         $status = $this->db->affected_rows() > 0;
 
         return array(
@@ -49,9 +57,31 @@ class Shipping_model extends CI_Model {
     }
 
     public function getShippingDataList($branchId) {
-        return $branchId != null
-                ? $this->db->where('origin_branch_id', $branchId)->get($this->tableName)->result()
-                : $this->db->get($this->tableName)->result();
+        if ($branchId == null) {
+            $query = $this->db
+                        ->select('shipping.id, tracking_no, branch.name AS dest_branch_name, branch.registration_code AS dest_branch_code, sender_name, shipping.created_at, status')
+                        ->join('branch', 'destination_branch_id = branch.id')
+                        ->get($this->tableName)
+                        ->result();
+        } else {
+            $query = $this->db
+                        ->select('shipping.id, tracking_no, branch.name AS dest_branch_name, branch.registration_code AS dest_branch_code, sender_name, shipping.created_at, status')
+                        ->join('branch', 'destination_branch_id = branch.id')
+                        ->where('shipping.origin_branch_id', $branchId)
+                        ->get($this->tableName)
+                        ->result();
+        }
+
+        return $query;
+    }
+
+    public function getIncomingShippingDataList($branchId) {
+        return $this->db
+                    ->select('shipping.id, tracking_no, branch.name AS origin_branch_name, branch.registration_code AS origin_branch_code, receiver_name, shipping.created_at, status')
+                    ->join('branch', 'origin_branch_id = branch.id')
+                    ->where('shipping.destination_branch_id', $branchId)
+                    ->get($this->tableName)
+                    ->result();
     }
 
     public function getTrackingNoSequence($branchId) {
@@ -62,7 +92,7 @@ class Shipping_model extends CI_Model {
                     ->get($this->tableName);
 
         if ($query->num_rows() == 0) {
-            return "001";
+            return "0001";
         }
 
         $lastTrackingNo = $query->row()->tracking_no;
@@ -71,7 +101,7 @@ class Shipping_model extends CI_Model {
         );
         $addedOne = (int) $lastTrackingNoSequence + 1;
 
-        return sprintf("%03s", $addedOne);
+        return sprintf("%04s", $addedOne);
     }
 
     public function loadShippingByIds($ids) {
