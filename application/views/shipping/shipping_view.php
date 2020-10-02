@@ -330,6 +330,13 @@
         </button>
       </div>
       <div class="modal-body">
+        <div class="form-group">
+          <input type="text" id="driverInput" class="form-control" placeholder="Supir & Kernet">
+        </div>
+        <div class="form-group">
+          <input type="text" id="nopolInput" class="form-control" placeholder="Nopol">
+        </div>
+        
         <p>Dengan menekan tombol cetak, maka <span id="dataCount"></span> resi akan di ubah statusnya menjadi <span class="text-info">Perjalanan ke Kota Tujuan</span></p>
       </div>
       <div class="modal-footer bg-whitesmoke br">

@@ -1,11 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+			font-family: "Segoe UI"
+		}
+    </style>
+</head>
+<body>
 <table width="100%" style="">
     <tr height="30px">
         <td colspan="3">MANIFES DAFTAR MUAT</td>
     </tr>
     <tr height="30px">
-        <td>TANGGAL: </td>
-        <td>NOPOL: </td>
-        <td>SUPIR & KERNET: </td>
+        <td>TANGGAL: <?php echo Date('l, d F Y') ?></td>
+        <td>NOPOL: <?php echo $this->input->post('nopol') ?></td>
+        <td>SUPIR & KERNET: <?php echo $this->input->post('driver') ?></td>
     </tr>
 </table>
 <table border="1" style="border-collapse: collapse; text-align: center">
@@ -62,3 +75,5 @@
         <td></td>
     </tr>
 </table>
+</body>
+</html>

@@ -82,7 +82,7 @@
 
     var ids = "";
     $("#goPrintManifestButton").click(function() {
-      $('<form action="<?php echo base_url() ?>dashboard/shipping/manifest" method="post"><input type="hidden" name="ids" value="'+ids+'"></input></form>')
+      $('<form action="<?php echo base_url() ?>dashboard/shipping/manifest" method="post"><input type="hidden" name="ids" value="'+ids+'"></input><input type="hidden" name="driver" value="'+$('#driverInput').val()+'"></input><input type="hidden" name="nopol" value="'+$('#nopolInput').val()+'"></input></form>')
         .appendTo('body')
         .submit()
         .remove();
