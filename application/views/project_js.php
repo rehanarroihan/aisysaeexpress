@@ -82,10 +82,48 @@
 
     var ids = "";
     $("#goPrintManifestButton").click(function() {
+      // Updating status and insert history
+      $("#goPrintManifestButton").addClass('disabled btn-progress');
+      $.ajax('<?php echo base_url() ?>dashboard/shipping/premanifest', {
+        type: 'POST',
+        data: { ids: ids },
+        success: function (data, status, xhr) {
+          $("#goPrintManifestButton").removeClass('disabled btn-progress');
+
+          const res = JSON.parse(data);
+          
+          if (!res.status) {
+            new Noty({
+              theme: 'metroui',
+              type: 'error',
+              text: 'Gagal melakukan aksi',
+              timeout: 3000
+            }).show();
+            
+            return;
+          }
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          new Noty({
+            theme: 'metroui',
+            type: 'error',
+            text: 'Gagal melakukan aksi',
+            timeout: 3000
+          }).show();
+
+          $("#goPrintManifestButton").removeClass('disabled btn-progress');
+        }
+      });
+
+      // Sending POST data to show manifest file
       $('<form action="<?php echo base_url() ?>dashboard/shipping/manifest" method="post"><input type="hidden" name="ids" value="'+ids+'"></input><input type="hidden" name="driver" value="'+$('#driverInput').val()+'"></input><input type="hidden" name="nopol" value="'+$('#nopolInput').val()+'"></input></form>')
         .appendTo('body')
         .submit()
         .remove();
+
+        setTimeout(() => {
+          location.reload();
+        }, 600);
     });
 
     var manifestList = [];

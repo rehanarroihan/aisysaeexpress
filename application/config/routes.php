@@ -63,6 +63,7 @@ $route['dashboard/vehicle'] = 'dashboard/vehicle';
 $route['dashboard/shipping'] = 'shipping/index';
 $route['dashboard/shipping/resi'] = 'shipping/generateResi';
 $route['dashboard/shipping/submit'] = 'shipping/submit';
+$route['dashboard/shipping/premanifest'] = 'shipping/prePrintManifest';
 $route['dashboard/shipping/manifest'] = 'shipping/manifest';
 $route['dashboard/shipping/print/(:num)'] = 'shipping/printWaybill/$1';
 

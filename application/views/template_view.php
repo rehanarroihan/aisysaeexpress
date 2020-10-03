@@ -94,12 +94,12 @@
             <li class="menu-header">Data Utama</li>
             <li class="<?php if ($this->uri->segment(2) == 'shipping' && $this->uri->segment(3) == null) { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/shipping">
-                <i class="fas fa-exchange-alt"></i> <span>Pengiriman</span>
+                <i class="fas fa-shipping-fast"></i> <span>Pengiriman</span>
               </a>
             </li>
             <li class="<?php if ($this->uri->segment(2) == 'shipping' && $this->uri->segment(3) == 'incoming') { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/shipping/incoming">
-                <i class="fas fa-box"></i> <span>Daftar Tugas</span>
+                <i class="fas fa-people-carry"></i> <span>Daftar Tugas</span>
               </a>
             </li>
             <?php endif; ?>

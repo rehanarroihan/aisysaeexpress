@@ -157,4 +157,19 @@ class Shipping_model extends CI_Model {
             "totalDeliveryCount" => $totalDeliveryCount
         );
     }
+
+    public function updateStatusInsertHistory($shippingIds) {
+        $shippingIdList = explode(",", $shippingIds);
+        foreach ($shippingIdList as $shippingId) {
+            $shippingDetail = $this->getShippingById($shippingId);
+            if ($shippingDetail->status == 1) {
+                $this->db->set('status', 2)
+                        ->where('id', $shippingId)
+                        ->update($this->tableName);
+
+                $this->Shipping_history_model->insert($shippingId, 2);
+            }
+        }
+        return $this->db->affected_rows() > 0;
+    }
 }

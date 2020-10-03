@@ -148,10 +148,10 @@ class Shipping extends CI_Controller {
             )
         );
 
-        // header("Content-Type: application/xls");   
-        // header("Content-Disposition: attachment; filename=hasil".date('ymdhs').".xlsx");
-        // header("Pragma: no-cache");
-        // header("Expires: 0");
+        header("Content-Type: application/xls");   
+        header("Content-Disposition: attachment; filename=hasil".date('ymdhs').".xlsx");
+        header("Pragma: no-cache");
+        header("Expires: 0");
 
         $this->load->view('shipping/manifest_table_view', $viewData);
 
@@ -161,6 +161,15 @@ class Shipping extends CI_Controller {
         // //$pdf->Cell(40,10,'Halo PDF!!!');
         // $pdf->MultiCell(190, 10, $pdf->WriteHTML($this->load->view('excel', $viewData)));
         // $pdf->Output();
+    }
+
+    public function prePrintManifest() {
+        $actionStatus = $this->Shipping_model->updateStatusInsertHistory($this->input->post('ids'));
+
+        echo json_encode(array(
+			'status' => $actionStatus,
+			'message' => $actionStatus ? 'Action successful' : 'Action failed'
+        ));
     }
 
     public function printWayBill($shippingId) {
