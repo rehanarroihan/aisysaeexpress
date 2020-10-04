@@ -148,10 +148,10 @@ class Shipping extends CI_Controller {
             )
         );
 
-        header("Content-Type: application/xls");   
-        header("Content-Disposition: attachment; filename=hasil".date('ymdhs').".xlsx");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        // header("Content-Type: application/xls");   
+        // header("Content-Disposition: attachment; filename=hasil".date('ymdhs').".xlsx");
+        // header("Pragma: no-cache");
+        // header("Expires: 0");
 
         $this->load->view('shipping/manifest_table_view', $viewData);
 
