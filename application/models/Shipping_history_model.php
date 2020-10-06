@@ -9,7 +9,7 @@ class Shipping_history_model extends CI_Model {
         $data = array(
             'shipping_id'   => $shippingId,
             'status_id'     => $statusId,
-            'created_at'	=> date("Y-m-d h:m:s"),
+            'created_at'	=> date("Y-m-d H:m:s"),
         );
 
         $this->db->insert($this->tableName, $data);

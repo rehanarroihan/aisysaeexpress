@@ -171,6 +171,35 @@
         }
       });
     });
+
+    // ----------- Report Section ----------- //
+    $('.daterange-btn').daterangepicker({
+      ranges: {
+        'Hari Ini'       : [moment(), moment()],
+        'Kemarin'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        '7 Hari Terakhir' : [moment().subtract(6, 'days'), moment()],
+        '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+        'Bulan Ini'  : [moment().startOf('month'), moment().endOf('month')],
+        'Bulan Kemarin'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      },
+      startDate: moment().subtract(29, 'days'),
+      endDate  : moment()
+    }, function (start, end) {
+      $('.daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      $('#daterangepreview').html('('+start.format('D MMMM YYYY') + ' s/d ' + end.format('D MMMM YYYY')+')');
+      window.location.href = "<?php echo base_url() ?>dashboard/report/sales-trx?startDate=" + encodeURIComponent(start.format('YYYY-MM-DD HH:mm:ss')) + "&endDate=" + encodeURIComponent(end.format('YYYY-MM-DD HH:mm:ss'));
+    });
+
+    $("#transactionReportTable").dataTable({
+      responsive: true,
+      dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+        ],
+      "language": {
+        "emptyTable": "Tidak ada data pengiriman dalam jangka waktu ini"
+      },
+    });
 });
 
 function shippingFormValidation() {

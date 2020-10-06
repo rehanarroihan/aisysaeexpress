@@ -28,12 +28,4 @@ class Dashboard extends CI_Controller {
 		);
 		$this->load->view('template_view', $viewData);
     }
-
-    public function report() {
-        $viewData = array(
-			'page_title' => 'Laporan',
-			'primary_view' => 'report/report_view'
-		);
-		$this->load->view('template_view', $viewData);
-	}
 }

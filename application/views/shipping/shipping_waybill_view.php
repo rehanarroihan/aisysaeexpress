@@ -6,16 +6,15 @@
 	<title>Document</title>
 
 	<style>
+		html {
+			margin: 12px;
+		}
+
 		body {
 			font-family: "Segoe UI";
 			display: flex;
 			flex-wrap: wrap;
 			align-content: flex-start;
-		}
-
-		.tbl {
-			margin-right: 16px;
-			margin-bottom: 16px;
 		}
 
 		.bg-yellow {
@@ -31,19 +30,6 @@
 			background-color: blue;
 			color: white;
 		}
-
-		.height-40 {
-			height: 40px;
-		}
-
-		.height-ten-percent {
-			height: 14%;
-		}
-
-		.height-64 {
-			height: 64px;
-		}
-
 		.main-table {
 			width: 560px;
 			text-align: center;

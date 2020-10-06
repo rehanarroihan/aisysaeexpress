@@ -103,7 +103,9 @@
                       <td>
                         <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
                         <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
+                        <?php if ($shipping->status < 2): ?>
                         <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
+                        <?php endif; ?>
                       </td>
                     </tr>
                     <?php $i++;endforeach; ?>

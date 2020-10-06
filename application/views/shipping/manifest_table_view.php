@@ -61,16 +61,16 @@
         <td>Total</td>
         <td><?php echo $shippingList["totalWeight"] ?></td>
         <td><?php echo $shippingList["totalColly"] ?></td>
-        <td><?php echo 'Rp. '.number_format($shippingList["totalCashCount"]) ?></td>
+        <td><?php echo 'Rp. '.number_format($shippingList["totalInvoiceCount"]) ?></td>
         <td><?php echo 'Rp. '.number_format($shippingList["totalCodCount"]) ?></td>
-        <td><?php echo 'Rp. '.number_format($shippingList["totalDeliveryCount"]) ?></td>
+        <td><?php echo 'Rp. '.number_format($shippingList["totalCashCount"]) ?></td>
         <td border="0"></td>
     </tr>
 
     <tr>
         <td colspan="4"></td>
         <td colspan="3">Total pendapatan manifes</td>
-        <?php $total = (int) $shippingList["totalCashCount"] + (int) $shippingList["totalCodCount"] + (int) $shippingList["totalDeliveryCount"] ?>
+        <?php $total = (int) $shippingList["totalCashCount"] + (int) $shippingList["totalCodCount"] + (int) $shippingList["totalInvoiceCount"] ?>
         <td colspan="3">Rp. <?php echo number_format($total) ?></td>
         <td></td>
     </tr>

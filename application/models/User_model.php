@@ -16,8 +16,8 @@ class User_model extends CI_Model {
 			'full_name'	    => $this->input->post('full_name'),
 			'password'	    => md5($this->input->post('password')),
 			'role'	        => 2,
-			'created_at'	=> date("Y-m-d h:m:s"),
-			'updated_at'	=> date("Y-m-d h:m:s")
+			'created_at'	=> date("Y-m-d H:m:s"),
+			'updated_at'	=> date("Y-m-d H:m:s")
         );
         $this->db->insert('users', $data);
         // NOTE : returning last inserted data row

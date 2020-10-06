@@ -29,8 +29,8 @@ class Shipping_model extends CI_Model {
 			'stuff_weight'		    => $this->input->post('stuff_weight'),
 			'stuff_colly'		    => $this->input->post('stuff_colly'),
 			'stuff_reference_no'    => $this->input->post('stuff_reference_no'),
-			'created_at'            => date("Y-m-d h:m:s"),
-			'updated_at'            => date("Y-m-d h:m:s")
+			'created_at'            => date("Y-m-d H:m:s"),
+			'updated_at'            => date("Y-m-d H:m:s")
         );
         $this->db->insert($this->tableName, $data);
 
@@ -104,20 +104,33 @@ class Shipping_model extends CI_Model {
         return sprintf("%04s", $addedOne);
     }
 
-    public function loadShippingByIds($ids) {
+    public function getShippingListWithCount($ids=null, $startDate=null, $endDate=null) {
         $result = array();
-        $idList = explode(",", $ids);
 
-        // Getting shipping data list
-        foreach ($idList as $id) {
-            $query = $this->db
-                        ->where("id", $id)
+        // Getting shipping data list by ids
+        if ($ids != null) {
+            $idList = $ids != null ? explode(",", $ids) : array();
+            foreach ($idList as $id) {
+                $query = $this->db
+                            ->where("id", $id)
+                            ->get($this->tableName)
+                            ->result();
+                
+                if (isset($query[0])) {
+                    $result[] = $query[0];
+                }
+            }
+        }
+
+        // Getting shipping data by date range
+        if ($startDate != null && $endDate != null) {
+            $result = $this->db
+                        ->join('branch', 'destination_branch_id = branch.id')
+                        ->where('shipping.created_at >=', $startDate)
+                        ->where('shipping.created_at <=', $endDate)
+                        ->where('shipping.origin_branch_id', $this->session->userdata('branch_id'))
                         ->get($this->tableName)
                         ->result();
-            
-            if (isset($query[0])) {
-                $result[] = $query[0];
-            }
         }
 
         // Counting total
@@ -125,7 +138,7 @@ class Shipping_model extends CI_Model {
         $totalColly = 0;
         $totalCashCount = 0;
         $totalCodCount = 0;
-        $totalDeliveryCount = 0;
+        $totalInvoiceCount = 0;
         foreach ($result as $data) {
             if ($data->stuff_weight != "") {
                 $totalWeight += (int) $data->stuff_weight;
@@ -136,7 +149,7 @@ class Shipping_model extends CI_Model {
             }
 
             if ($data->payment_type == 1) {
-                $totalCashCount += (int) $data->price;
+                $totalInvoiceCount += (int) $data->price;
             }
 
             if ($data->payment_type == 2) {
@@ -144,18 +157,20 @@ class Shipping_model extends CI_Model {
             }
 
             if ($data->payment_type == 3) {
-                $totalDeliveryCount += (int) $data->price;
+                $totalCashCount += (int) $data->price;
             }
         }
 
-        return array (
+        $res = array(
             "shippingList"       => $result, 
             "totalWeight"        => $totalWeight,
             "totalColly"         => $totalColly,
             "totalCashCount"     => $totalCashCount,
             "totalCodCount"      => $totalCodCount,
-            "totalDeliveryCount" => $totalDeliveryCount
+            "totalInvoiceCount"  => $totalInvoiceCount
         );
+
+        return $res;
     }
 
     public function updateStatusInsertHistory($shippingIds) {

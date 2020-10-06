@@ -143,14 +143,14 @@ class Shipping extends CI_Controller {
 
     public function manifest() {
         $viewData = array(
-            "shippingList" => $this->Shipping_model->loadShippingByIds(
+            "shippingList" => $this->Shipping_model->getShippingListWithCount(
                 $this->input->post('ids')
             )
         );
 
         $this->load->library('pdf');
         $this->pdf->setPaper('A4', 'landscape');
-        $this->pdf->filename = "laporan-petanikode.pdf";
+        $this->pdf->filename = "manifest".time().".pdf";
         $this->pdf->load_view('shipping/manifest_table_view', $viewData);
     }
 
@@ -167,6 +167,10 @@ class Shipping extends CI_Controller {
         $viewData = array(
             "data"  => $this->Shipping_model->getShippingById($shippingId)
         );
-        $this->load->view('shipping/shipping_waybill_view', $viewData);
+
+        $this->load->library('pdf');
+        $this->pdf->setPaper('A4', 'landscape');
+        $this->pdf->filename = "d".time().".pdf";
+        $this->pdf->load_view('shipping/shipping_waybill_view', $viewData);
     }
 }
