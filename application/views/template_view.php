@@ -99,7 +99,23 @@
             </li>
             <li class="<?php if ($this->uri->segment(2) == 'shipping' && $this->uri->segment(3) == 'incoming') { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/shipping/incoming">
-                <i class="fas fa-people-carry"></i> <span>Daftar Tugas</span>
+                <i class="fas fa-tasks"></i> <span>Daftar Tugas</span>
+              </a>
+            </li>
+            <li class="menu-header">Laporan</li>
+            <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'manifest') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/report/manifest">
+                <i class="fas fa-stream"></i> <span>Manifes Tercetak</span>
+              </a>
+            </li>
+            <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'cash-statement') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/report/cash-statement">
+                <i class="fas fa-money-bill-alt"></i> <span>Laporan Kas</span>
+              </a>
+            </li>
+            <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'sales-trx') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/report/sales-trx">
+                <i class="fas fa-hand-holding-usd"></i> <span>Transaksi Penjualan</span>
               </a>
             </li>
             <?php endif; ?>

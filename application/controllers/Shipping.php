@@ -148,19 +148,10 @@ class Shipping extends CI_Controller {
             )
         );
 
-        // header("Content-Type: application/xls");   
-        // header("Content-Disposition: attachment; filename=hasil".date('ymdhs').".xlsx");
-        // header("Pragma: no-cache");
-        // header("Expires: 0");
-
-        $this->load->view('shipping/manifest_table_view', $viewData);
-
-        // $pdf = new FPDF();
-        // $pdf->AddPage();
-        // $pdf->SetFont('Arial','B',16);
-        // //$pdf->Cell(40,10,'Halo PDF!!!');
-        // $pdf->MultiCell(190, 10, $pdf->WriteHTML($this->load->view('excel', $viewData)));
-        // $pdf->Output();
+        $this->load->library('pdf');
+        $this->pdf->setPaper('A4', 'landscape');
+        $this->pdf->filename = "laporan-petanikode.pdf";
+        $this->pdf->load_view('shipping/manifest_table_view', $viewData);
     }
 
     public function prePrintManifest() {

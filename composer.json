@@ -12,8 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"setasign/fpdf": "1.8.1",
-		"phpoffice/phpspreadsheet": "^1.14"
+		"phpoffice/phpspreadsheet": "^1.14",
+		"dompdf/dompdf": "^0.8.6"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
