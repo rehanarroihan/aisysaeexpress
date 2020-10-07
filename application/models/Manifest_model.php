@@ -24,6 +24,8 @@ class Manifest_model extends CI_Model {
         $branchId = $this->session->userdata('branch_id');
         return $this->db->query("SELECT 
             mn.file_name, 
+            mn.driver,
+            mn.license_plate_number,
             sh.manifest_id, 
             mn.created_at,
             GROUP_CONCAT(DISTINCT br.name SEPARATOR', ') AS 'destination_list',

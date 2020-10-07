@@ -30,6 +30,8 @@
                     <tr>
                       <th>#</th>
                       <th>Tanggal Dicetak</th>
+                      <th>Driver</th>
+                      <th>Nopol</th>
                       <th>Tujuan</th>
                       <th>Jumlah Resi</th>
                       <th>Aksi</th>
@@ -38,10 +40,12 @@
                   <tbody>
                     <?php $no=1;foreach($manifest_data as $manifest): ?>
                     <tr>
-                      <td><?php echo $no ?></td>
-                      <td><?php echo $manifest->created_at ?></td>
+                      <td class="text-center"><?php echo $no ?></td>
+                      <td><?php echo date_create($manifest->created_at)->format('d F Y') ?></td>
+                      <td><?php echo $manifest->driver ?></td>
+                      <td><?php echo $manifest->license_plate_number ?></td>
                       <td><?php echo count(explode(',', $manifest->destination_list)); ?> Tujuan (<?php echo $manifest->destination_list ?>)</td>
-                      <td><?php echo count(explode(',', $manifest->tracking_no_list)); ?></td>
+                      <td class="text-center"><?php echo count(explode(',', $manifest->tracking_no_list)); ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>assets/generated-manifest/<?php echo $manifest->file_name ?>"target="_blank" class="btn btn-danger"><i class="fa fa-pdf"></i> Download PDF</a>
                       </td>

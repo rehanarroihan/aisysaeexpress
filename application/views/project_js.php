@@ -228,6 +228,9 @@
     });
 
     $("#printedManifestList").dataTable({
+      "columnDefs": [
+        { "sortable": false, "targets": [6] }
+      ],
       "language": {
         "emptyTable": "Tidak ada manifest tercetak dari cabang ini"
       },
