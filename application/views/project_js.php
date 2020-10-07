@@ -81,6 +81,30 @@
     maskSomeShippingForm();
 
     var ids = "";
+    var checkedShippingSts = [];
+    $("#printManifestButton").click(function() {
+      // Checking only status 1 that can print manifest
+      for (var i of checkedShippingSts) {
+        if (i != 1) {
+          swal({
+            title: "Peringatan",
+            text: "Cetak manifest hanya bisa di lakukan untuk pengiriman ber-status Order Masuk",
+            icon: 'error',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            focusCancel: true
+          });
+          
+          return;
+        }
+      }
+      $("#manifestDetailDialogModal").modal('toggle');
+    });
+      
     $("#goPrintManifestButton").click(function() {
       // Updating status and insert history
       $("#goPrintManifestButton").addClass('disabled btn-progress');
@@ -154,13 +178,15 @@
         }
 
         checkedItems = [];
+        checkedIItemsStatus = [];
         checked.each((index, value) => {
           checkedItems.push(value.attributes.shipping.value);
+          checkedIItemsStatus.push(value.attributes.status.value);
         })
 
         manifestList = checkedItems;
         ids = manifestList.join();
-
+        checkedShippingSts = checkedIItemsStatus;
         if (checkedItems.length == 0) {
           // hide cetaik manifest button
           $("#printManifestButton").hide();
@@ -198,6 +224,12 @@
         ],
       "language": {
         "emptyTable": "Tidak ada data pengiriman dalam jangka waktu ini"
+      },
+    });
+
+    $("#printedManifestList").dataTable({
+      "language": {
+        "emptyTable": "Tidak ada manifest tercetak dari cabang ini"
       },
     });
 });

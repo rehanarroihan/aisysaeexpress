@@ -23,7 +23,7 @@
             <div class="card-header d-flex justify-content-between">
               <h4 class="text-muted">Daftar Data Pengiriman</h4>
               <div class="d-flex">
-                <button data-toggle="modal" id="printManifestButton" data-target="#exampleModal" class="btn btn-warning" type="button"><i class="fas fa-tag"></i>&nbsp;Cetak Manifest</button>
+                <button id="printManifestButton" class="btn btn-warning" type="button"><i class="fas fa-tag"></i>&nbsp;Cetak Manifest</button>
                 <button data-toggle="modal" id="open_shipping_button" data-target="#modal_create_shipping" class="btn btn-primary ml-2" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
               </div>
             </div>
@@ -58,6 +58,7 @@
                             type="checkbox"
                             data-checkboxes="mygroup"
                             shipping="<?php echo $shipping->id ?>"
+                            status="<?php echo $shipping->status ?>"
                             resi="<?php echo $shipping->tracking_no ?>"
                             class="custom-control-input"
                             id="checkbox<?php echo $i ?>"
@@ -322,7 +323,7 @@
 </div> <!-- modal.// -->
 
 <!-- Modal Print Manifest -->
-<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="manifestDetailDialogModal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

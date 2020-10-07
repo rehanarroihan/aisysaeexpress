@@ -88,6 +88,7 @@ class Shipping extends CI_Controller {
         
         $this->load->model('Shipping_model');
         $this->load->model('Branch_model');
+        $this->load->model('Manifest_model');
     }
     
     public function index() {
@@ -148,14 +149,25 @@ class Shipping extends CI_Controller {
             )
         );
 
+        // TODO : generating PDF, save to server and record in manifest table
         $this->load->library('pdf');
         $this->pdf->setPaper('A4', 'landscape');
         $this->pdf->filename = "manifest".time().".pdf";
+
+        $fileName = "manifest".time().".pdf";
+
+        $insertedManifestId = $this->Manifest_model->insert($this->session->userdata('branch_id'), $fileName);
+        $this->Shipping_model->batchUpdateManifestId($this->input->post('ids'), $insertedManifestId);
+
+        file_put_contents("assets/generated-manifest/".$fileName, $this->pdf->output());
+
         $this->pdf->load_view('shipping/manifest_table_view', $viewData);
     }
 
     public function prePrintManifest() {
+        // TODO : updating shipping status and insert history
         $actionStatus = $this->Shipping_model->updateStatusInsertHistory($this->input->post('ids'));
+        
 
         echo json_encode(array(
 			'status' => $actionStatus,

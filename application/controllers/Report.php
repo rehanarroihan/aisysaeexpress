@@ -5,7 +5,7 @@ class Report extends CI_Controller {
 
     public function __construct() {
 		parent::__construct();
-		$this->load->model('Branch_model');
+		$this->load->model('Manifest_model');
 		$this->load->model('Shipping_model');
 
 		if (!$this->session->userdata('logged_in')) {
@@ -15,9 +15,11 @@ class Report extends CI_Controller {
 
     public function manifest() {
         $viewData = array(
-			'page_title' => 'Laporan',
-			'primary_view' => 'report/report_view'
+			'page_title'	=> 'Manifest Tercetak',
+			'primary_view'	=> 'report/manifest_view',
+			'manifest_data'	=> $this->Manifest_model->get()
 		);
+
 		$this->load->view('template_view', $viewData);
     }
     
@@ -36,11 +38,11 @@ class Report extends CI_Controller {
 		$endDate = $this->input->get('endDate') != null
 						? $this->input->get('endDate')
 						: Date('Y-m-d');
-
+		
         $viewData = array(
 			'page_title'	=> 'Transaksi Penjualan',
 			'primary_view'	=> 'report/sales_trx_view',
-			'trxList'		=> $this->Shipping_model->getShippingListWithCount(null, $startDate, $endDate)
+			'trxList'		=> $this->Shipping_model->getShippingListWithCount($startDate, $endDate)
 		);
 		$this->load->view('template_view', $viewData);
 	}

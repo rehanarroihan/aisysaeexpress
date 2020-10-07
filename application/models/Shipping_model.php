@@ -41,7 +41,7 @@ class Shipping_model extends CI_Model {
 
         return array(
             "status"    => $status,
-            "message"   => $status 
+            "message"   => $status
                             ? 'Berhasil membuat data pengiriman baru'
                             : 'Gagal membuat data pengiriman baru',
             "data"      => $status 
@@ -104,7 +104,7 @@ class Shipping_model extends CI_Model {
         return sprintf("%04s", $addedOne);
     }
 
-    public function getShippingListWithCount($ids=null, $startDate=null, $endDate=null) {
+    public function getShippingListWithCount($ids=NULL, $startDate=NULL, $endDate=NULL) {
         $result = array();
 
         // Getting shipping data list by ids
@@ -186,5 +186,15 @@ class Shipping_model extends CI_Model {
             }
         }
         return $this->db->affected_rows() > 0;
+    }
+
+    public function batchUpdateManifestId($shippingIds, $manifestId) {
+        $shippingIdList = explode(",", $shippingIds);
+        foreach ($shippingIdList as $shippingId) {
+            $this->db
+                ->set('manifest_id', $manifestId)
+                ->where('id', $shippingId)
+                ->update($this->tableName);
+        }
     }
 }
