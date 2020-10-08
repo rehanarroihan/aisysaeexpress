@@ -31,12 +31,6 @@
                   <thead>
                     <tr>
                       <th class="text-center">
-                        <!-- <div class="custom-checkbox custom-control ml-23">
-                          <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                          <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                        </div> -->
-                      </th>
-                      <th class="text-center">
                         #
                       </th>
                       <th>No Tracking</th>
@@ -50,58 +44,22 @@
                   <tbody>
                     <?php $i=1;foreach($incoming_shipping_list as $shipping): ?>
                     <tr>
-                      <td class="text-center">
-                        <div class="custom-checkbox custom-control">
-                          <input
-                            type="checkbox"
-                            data-checkboxes="mygroup"
-                            shipping="<?php echo $shipping->id ?>"
-                            resi="<?php echo $shipping->tracking_no ?>"
-                            class="custom-control-input"
-                            id="checkbox<?php echo $i ?>"
-                          >
-                          <label for="checkbox<?php echo $i ?>" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </td>
-                      <td><?php echo $i ?></td>
+                      <td class="text-center"><?php echo $i ?></td>
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->origin_branch_name ?> (<?php echo $shipping->origin_branch_code ?>)</td>
                       <td><?php echo $shipping->receiver_name ?></td>
                       <td><?php
-                        setlocale (LC_TIME, 'INDONESIA');
                         $tanggal = date("D, d M Y", strtotime($shipping->created_at)); 
                         echo $tanggal; 
                       ?></td>
                       <td class="text-center">
-                        <?php
-                          $statusTitle = "";
-                          $statusBadgeColorClass = "";
-                          foreach ($this->shippingStatus as $status) {
-                            if ($status['id'] == $shipping->status) {
-                              $statusTitle = $status['badge_title'];
-                              if ($status['id'] == 1) {
-                                $statusBadgeColorClass = "info";
-                              } else if ($status['id'] == 2) {
-                                $statusBadgeColorClass = "warning";
-                              } else if ($status['id'] == 3) {
-                                $statusBadgeColorClass = "primary";
-                              } else if ($status['id'] == 4) {
-                                $statusBadgeColorClass = "success";
-                              } else if ($status['id'] == 5) {
-                                $statusBadgeColorClass = "danger";
-                              }
-                              break;
-                            }
-                          }
-                        ?>
-                        <span class="badge <?php echo 'badge-'.$statusBadgeColorClass ?>">
-                          <?php echo $statusTitle ?>
+                        <span class="badge <?php echo 'badge-'.$this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[1] ?>">
+                          <?php echo $this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[0] ?>
                         </span>
                       </td>
                       <td>
-                        <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
-                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
-                        <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
+                        <button data-toggle="tooltip" shippingId="<?php echo $shipping->id ?>" title="Update Status" class="btn btn-link text-info btnOpenShippingDetail"><i class="fa fa-location-arrow"></i></button>
+                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
                       </td>
                     </tr>
                     <?php $i++;endforeach; ?>
@@ -114,4 +72,54 @@
       </div>
     </div>
   </section>
+</div>
+
+<!-- Modal Print Manifest -->
+<div class="modal fade" tabindex="-1" role="dialog" id="updateStatusModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailTitle">Detail Pengiriman</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <span><b>Nama Pengirim:</b><br><span id="detailSenderName"></span></span><br><br>
+            <span><b>Telpon Pengirim:</b><br><span id="detailSenderPhone"></span></span><br><br>
+            <span><b>Alamat Pengirim:</b><br><span id="detailSenderAddress"></span></span><br><br>
+            <span><b>Cabang Pengirim:</b><br><span id="detailSenderBranch"></span></span><br><br>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+          <span><b>Nama Penerima:</b><br><span id="detailReceiverName"></span></span><br><br>
+            <span><b>Telpon Penerima:</b><br><span id="detailReceiverPhone"></span></span><br><br>
+            <span><b>Alamat Penerima:</b><br><span id="detailReceiverAddress"></span></span><br><br>
+            <span><b>Cabang Penerima:</b><br><span id="detailReceiverBranch"></span></span><br><br>
+          </div>
+        </div>
+        <h6 class="text-primary">Update Status</h6>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Status Pengiriman</label>
+              <select id="updateStatusSelect" class="form-control">
+                <option value="">-- Pilih Status Pengiriman --</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label>Catatan</label>
+              <input type="text" class="form-control" id="updateRemarks">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-whitesmoke br">
+        <button type="button" id="updateStatusCTA" class="btn btn-info btn-lg btn-block"><i class="fa fa-location-arrow"></i>&nbsp;&nbsp;Update Status</button>
+      </div>
+    </div>
+  </div>
 </div>

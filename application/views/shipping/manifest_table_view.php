@@ -16,7 +16,7 @@
         <td colspan="3">MANIFES DAFTAR MUAT</td>
     </tr>
     <tr height="30px">
-        <td>TANGGAL: <?php echo Date('l, d F Y') ?></td>
+        <td>TANGGAL: <?php echo $this->ms_variable->date(Date('Y-m-d')) ?></td>
         <td>NOPOL: <?php echo $this->input->post('nopol') ?></td>
         <td>SUPIR & KERNET: <?php echo $this->input->post('driver') ?></td>
     </tr>
@@ -44,7 +44,7 @@
         <td><?php echo $shipping->tracking_no ?></td>
         <td><?php echo $shipping->sender_name ?></td>
         <td><?php echo $shipping->receiver_name ?></td>
-        <td></th>
+        <td><?php echo $shipping->name ?> (<?php echo $shipping->registration_code ?>)</th>
         <td><?php echo $shipping->stuff_content ?></td>
         <td><?php echo $shipping->stuff_weight ?></td>
         <td><?php echo $shipping->stuff_colly ?></td>

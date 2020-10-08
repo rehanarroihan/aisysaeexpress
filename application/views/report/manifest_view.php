@@ -41,13 +41,13 @@
                     <?php $no=1;foreach($manifest_data as $manifest): ?>
                     <tr>
                       <td class="text-center"><?php echo $no ?></td>
-                      <td><?php echo date_create($manifest->created_at)->format('d F Y') ?></td>
+                      <td><?php echo $this->ms_variable->date($manifest->created_at, true) ?></td>
                       <td><?php echo $manifest->driver ?></td>
                       <td><?php echo $manifest->license_plate_number ?></td>
                       <td><?php echo count(explode(',', $manifest->destination_list)); ?> Tujuan (<?php echo $manifest->destination_list ?>)</td>
                       <td class="text-center"><?php echo count(explode(',', $manifest->tracking_no_list)); ?></td>
                       <td>
-                        <a href="<?php echo base_url() ?>assets/generated-manifest/<?php echo $manifest->file_name ?>"target="_blank" class="btn btn-danger"><i class="fa fa-pdf"></i> Download PDF</a>
+                        <a href="<?php echo base_url() ?>assets/generated-manifest/<?php echo $manifest->file_name ?>"target="_blank" data-toggle="tooltip" title="Download PDF" class="btn btn-lg text-danger"><i class="fa fa-file-pdf"></i></a>
                       </td>
                     </tr>
                     <?php $no++;endforeach; ?>

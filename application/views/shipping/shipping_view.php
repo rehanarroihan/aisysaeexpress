@@ -70,40 +70,15 @@
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->sender_name ?></td>
                       <td><?php echo $shipping->dest_branch_name ?> (<?php echo $shipping->dest_branch_code ?>)</td>
-                      <td><?php
-                        setlocale (LC_TIME, 'INDONESIA');
-                        $tanggal = date("D, d M Y", strtotime($shipping->created_at)); 
-                        echo $tanggal; 
-                      ?></td>
+                      <td><?php echo $this->ms_variable->date($shipping->created_at) ?></td>
                       <td class="text-center">
-                        <?php
-                          $statusTitle = "";
-                          $statusBadgeColorClass = "";
-                          foreach ($this->shippingStatus as $status) {
-                            if ($status['id'] == $shipping->status) {
-                              $statusTitle = $status['badge_title'];
-                              if ($status['id'] == 1) {
-                                $statusBadgeColorClass = "info";
-                              } else if ($status['id'] == 2) {
-                                $statusBadgeColorClass = "warning";
-                              } else if ($status['id'] == 3) {
-                                $statusBadgeColorClass = "primary";
-                              } else if ($status['id'] == 4) {
-                                $statusBadgeColorClass = "success";
-                              } else if ($status['id'] == 5) {
-                                $statusBadgeColorClass = "danger";
-                              }
-                              break;
-                            }
-                          }
-                        ?>
-                        <span class="badge <?php echo 'badge-'.$statusBadgeColorClass ?>">
-                          <?php echo $statusTitle ?>
+                        <span class="badge <?php echo 'badge-'.$this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[1] ?>">
+                          <?php echo $this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[0] ?>
                         </span>
                       </td>
                       <td>
                         <button data-toggle="tooltip" title="Edit" class="btn btn-link text-success"><i class="fa fa-edit"></i></button>
-                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
+                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
                         <?php if ($shipping->status < 2): ?>
                         <button data-toggle="tooltip" title="Hapus" class="btn btn-link text-danger"><i class="fa fa-trash"></i></button>
                         <?php endif; ?>
@@ -157,7 +132,7 @@
                 <label>Status Pengiriman</label>
                 <select id="statusSelect" class="form-control" readonly>
                   <option value="" disabled>-- Pilih Status Pengiriman --</option>
-                  <?php foreach($this->shippingStatus as $status): ?>
+                  <?php foreach($this->ms_variable->shippingStatus as $status): ?>
                     <?php if ($status['id'] == 1): ?>
                       <option value="<?php echo $status['id'] ?>" selected>
                         <?php echo $status['title'] ?>
@@ -257,7 +232,7 @@
                 <label>Pelayanan</label>
                 <select id="serviceSelect" class="form-control">
                   <option selected value="">-- Pilih Jenis Pelayanan --</option>
-                  <?php foreach($this->shippingType as $type): ?>
+                  <?php foreach($this->ms_variable->shippingType as $type): ?>
                     <option value="<?php echo $type['id'] ?>">
                       <?php echo $type['title'] ?>
                     </option>
@@ -270,7 +245,7 @@
                 <label>Moda</label>
                 <select id="modeSelect" class="form-control">
                   <option selected value="">-- Pilih Moda --</option>
-                  <?php foreach($this->shippingMode as $mode): ?>
+                  <?php foreach($this->ms_variable->shippingMode as $mode): ?>
                     <option value="<?php echo $mode['id'] ?>">
                       <?php echo $mode['title'] ?>
                     </option>
@@ -298,7 +273,7 @@
               <label>Pembayaran</label>
                 <select id="payment" class="form-control">
                   <option selected value="">-- Pilih Tipe Pembayaran --</option>
-                  <?php foreach($this->shippingPaymentType as $paymentType): ?>
+                  <?php foreach($this->ms_variable->shippingPaymentType as $paymentType): ?>
                     <option value="<?php echo $paymentType['id'] ?>">
                       <?php echo $paymentType['title'] ?>
                     </option>

@@ -10,8 +10,8 @@ class Branch_model extends CI_Model {
 			'name'              => $this->input->post('branch_name'),
 			'address'           => $this->input->post('branch_address'),
 			'registration_code' => $this->input->post('registration_code'),
-			'created_at'        => date("Y-m-d H:m:s"),
-			'updated_at'        => date("Y-m-d H:m:s")
+			'created_at'        => date($this->ms_variable->dbDateTimeFormat),
+			'updated_at'        => date($this->ms_variable->dbDateTimeFormat)
         );
         $this->db->insert($this->tableName, $data);
         // NOTE : returning last inserted id

@@ -10,6 +10,10 @@ class Shipping_model extends CI_Model {
     }
 
     public function insert() {
+        $price = $this->input->post('price') == "" || $this->input->post('price') == NULL
+                    ? "0"
+                    : $this->input->post('price');
+
         $data = array(
 			'origin_branch_id'      => $this->input->post('origin_branch_id'),
 			'destination_branch_id' => $this->input->post('destination_branch_id'),
@@ -17,7 +21,7 @@ class Shipping_model extends CI_Model {
 			'status'		        => $this->input->post('status'),
 			'service'		        => $this->input->post('service'),
 			'mode'		            => $this->input->post('mode'),
-			'price'		            => $this->input->post('price'),
+			'price'		            => $price,
 			'payment_type'		    => $this->input->post('payment'),
 			'sender_name'		    => $this->input->post('sender_name'),
 			'sender_address'	    => $this->input->post('sender_address'),
@@ -29,13 +33,15 @@ class Shipping_model extends CI_Model {
 			'stuff_weight'		    => $this->input->post('stuff_weight'),
 			'stuff_colly'		    => $this->input->post('stuff_colly'),
 			'stuff_reference_no'    => $this->input->post('stuff_reference_no'),
-			'created_at'            => date("Y-m-d H:m:s"),
-			'updated_at'            => date("Y-m-d H:m:s")
+			'created_at'            => date($this->ms_variable->dbDateTimeFormat),
+			'updated_at'            => date($this->ms_variable->dbDateTimeFormat)
         );
         $this->db->insert($this->tableName, $data);
 
+        $insertedShippingId = $this->db->insert_id();
+
         // Inserting history for resi tracking
-        $this->Shipping_history_model->insert($this->db->insert_id(), 1);
+        $this->Shipping_history_model->insert($insertedShippingId, 1, '');
 
         $status = $this->db->affected_rows() > 0;
 
@@ -45,15 +51,27 @@ class Shipping_model extends CI_Model {
                             ? 'Berhasil membuat data pengiriman baru'
                             : 'Gagal membuat data pengiriman baru',
             "data"      => $status 
-                            ? $this->getShippingById($this->db->insert_id()) 
+                            ? $this->getShippingById($insertedShippingId) 
                             : $this->db->error()
         );
     }
 
     public function getShippingById($shipping_id) {
-        return $this->db->where('id', $shipping_id)
-                        ->get($this->tableName)
+        $shippingDetail = $this->db->select('sh.*, or.name AS origin_branch, or.registration_code AS origin_branch_code, dest.name AS destination_branch, dest.registration_code AS destination_branch_code')
+                        ->where('sh.id', $shipping_id)
+                        ->join('branch or', 'sh.origin_branch_id = or.id', 'left')
+                        ->join('branch dest', 'sh.destination_branch_id = dest.id', 'left')
+                        ->get($this->tableName.' AS sh')
                         ->row();
+
+        $shippingHistory = $this->db
+                                ->where('shipping_id', $shipping_id)
+                                ->get('shipping_history')
+                                ->result();
+
+        $shippingDetail->history = $shippingHistory;
+
+        return $shippingDetail;
     }
 
     public function getShippingDataList($branchId) {
@@ -80,6 +98,7 @@ class Shipping_model extends CI_Model {
                     ->select('shipping.id, tracking_no, branch.name AS origin_branch_name, branch.registration_code AS origin_branch_code, receiver_name, shipping.created_at, status')
                     ->join('branch', 'origin_branch_id = branch.id')
                     ->where('shipping.destination_branch_id', $branchId)
+                    ->where('shipping.status >=', 2)
                     ->get($this->tableName)
                     ->result();
     }
@@ -112,7 +131,8 @@ class Shipping_model extends CI_Model {
             $idList = $ids != null ? explode(",", $ids) : array();
             foreach ($idList as $id) {
                 $query = $this->db
-                            ->where("id", $id)
+                            ->join('branch', 'branch.id = shipping.destination_branch_id')
+                            ->where("shipping.id", $id)
                             ->get($this->tableName)
                             ->result();
                 
@@ -173,16 +193,17 @@ class Shipping_model extends CI_Model {
         return $res;
     }
 
-    public function updateStatusInsertHistory($shippingIds) {
+    public function updateStatusInsertHistory($shippingIds, $status, $remarks) {
         $shippingIdList = explode(",", $shippingIds);
         foreach ($shippingIdList as $shippingId) {
-            $shippingDetail = $this->getShippingById($shippingId);
-            if ($shippingDetail->status == 1) {
-                $this->db->set('status', 2)
+            $this->db->set('status', $status)
                         ->where('id', $shippingId)
                         ->update($this->tableName);
 
-                $this->Shipping_history_model->insert($shippingId, 2);
+            // Checking is this status already recorded on history
+            $history = $this->Shipping_history_model->getHistoryByIdAndStatus($shippingId, $status);
+            if (empty($history)) {
+                $this->Shipping_history_model->insert($shippingId, $status, $remarks);
             }
         }
         return $this->db->affected_rows() > 0;

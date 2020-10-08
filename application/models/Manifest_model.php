@@ -11,8 +11,8 @@ class Manifest_model extends CI_Model {
 			'file_name'             => $file_name,
 			'driver'                => $this->input->post('driver'),
 			'license_plate_number'  => $this->input->post('nopol'),
-			'created_at'            => date("Y-m-d H:m:s"),
-			'updated_at'            => date("Y-m-d H:m:s")
+			'created_at'            => date($this->ms_variable->dbDateTimeFormat),
+			'updated_at'            => date($this->ms_variable->dbDateTimeFormat)
         );
         
         $this->db->insert($this->tableName, $data);

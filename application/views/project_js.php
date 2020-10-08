@@ -61,7 +61,7 @@
     $("#incomingShippingTable").dataTable({
       responsive: true,
       "columnDefs": [
-        { "sortable": false, "targets": [0, 7] },
+        { "sortable": false, "targets": [0, 6] },
       ],
       "language": {
         "emptyTable": "Belum ada pengiriman ke cabang <?php echo $this->session->userdata('branch_name') ?> (<?php echo $this->session->userdata('branch_regist') ?>)"
@@ -70,6 +70,129 @@
 
     $("#open_shipping_button").click(function() {
       generateResi();
+    });
+
+    var willUpdateShippingId = "";
+    var updateStatusTo = "";
+    $(".btnOpenShippingDetail").click(function() {
+      var shippingId = $(this).attr("shippingId");
+      willUpdateShippingId = shippingId;
+
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'Memuat detail pengiriman',
+        willOpen: () => {
+          Swal.showLoading();
+          $.ajax({
+            url: "<?php echo base_url() ?>dashboard/shipping/detail/"+shippingId,
+            type: "GET",
+            success: function(data){
+              Swal.close();
+              const res = JSON.parse(data);
+              $('#detailTitle').html("Detail Pengiriman (" + res.data.tracking_no + ")");
+              
+              $('#detailSenderName').html(res.data.sender_name);
+              $('#detailSenderPhone').html(res.data.sender_phone);
+              $('#detailSenderAddress').html(res.data.sender_address);
+              $('#detailSenderBranch').html(res.data.origin_branch + " ("+res.data.origin_branch_code+")");
+
+              $('#detailReceiverName').html(res.data.receiver_name);
+              $('#detailReceiverPhone').html(res.data.receiver_phone);
+              $('#detailReceiverAddress').html(res.data.receiver_address);
+              $('#detailReceiverBranch').html(res.data.destination_branch + " ("+res.data.destination_branch_code+")");
+
+              var dropdown = $("#updateStatusSelect");
+              statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
+              // Clearing previos options 
+              $("#updateStatusSelect option").each(function() {
+                if ( $(this).val() != "" ) {
+                  $(this).remove();
+                }
+              });
+              $.each(statusList, function() {
+                if (this.id > res.data.status)
+                  dropdown.append($("<option />").val(this.id).text(this.title));
+              });
+
+              $("#updateStatusCTA").prop('disabled', true);
+              $("#updateStatusCTA").removeClass('btn-info');
+              $("#updateStatusCTA").addClass('btn-secondary');
+              $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
+
+              dropdown.change(function(val) {
+                if ($('#updateStatusSelect option:selected').val() != "") {
+                  updateStatusTo = $('#updateStatusSelect option:selected').val();
+                  $("#updateStatusCTA").prop('disabled', false);
+
+                  $("#updateStatusCTA").removeClass('btn-secondary');
+                  $("#updateStatusCTA").addClass('btn-info');
+                  $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status Menjadi <b>"+$('#updateStatusSelect option:selected').html()+"</b>");
+
+                  return;
+                }
+                // Disble button due to unselected status
+                $("#updateStatusCTA").removeClass('btn-info');
+                $("#updateStatusCTA").addClass('btn-secondary');
+                $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
+
+                $("#updateStatusCTA").prop('disabled', true);
+              });
+
+              $("#updateStatusModal").modal("show");
+            }
+          });
+        },
+      }).then((result) => {
+        
+      })
+    });
+
+    $("#updateStatusCTA").click(function() {
+      $("#updateStatusCTA").addClass('disabled btn-progress');
+
+      $.ajax('<?php echo base_url() ?>dashboard/shipping/update-status', {
+        type: 'POST',
+        data: { ids: willUpdateShippingId, status: updateStatusTo, remarks: $("#updateRemarks").val() },
+        success: function (data, status, xhr) {
+          $("#updateStatusCTA").removeClass('disabled btn-progress');
+
+          const res = JSON.parse(data);
+          
+          if (!res.status) {
+            new Noty({
+              theme: 'metroui',
+              type: 'error',
+              text: 'Gagal melakukan aksi',
+              timeout: 3000
+            }).show();
+            
+            return;
+          }
+
+          new Noty({
+            theme: 'metroui',
+            type: 'success',
+            text: 'Berhasil melakukan aksi',
+            timeout: 3000
+          }).show();
+
+          $("#updateStatusModal").modal("hide");
+
+          setTimeout(() => {
+            location.reload();
+          }, 600);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          new Noty({
+            theme: 'metroui',
+            type: 'error',
+            text: 'Gagal melakukan aksi',
+            timeout: 3000
+          }).show();
+
+          $("#updateStatusCTA").removeClass('disabled btn-progress');
+        }
+      });
     });
 
     shippingFormValidation();
@@ -86,15 +209,11 @@
       // Checking only status 1 that can print manifest
       for (var i of checkedShippingSts) {
         if (i != 1) {
-          swal({
+          Swal.fire({
             title: "Peringatan",
             text: "Cetak manifest hanya bisa di lakukan untuk pengiriman ber-status Order Masuk",
             icon: 'error',
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Confirm",
-            cancelButtonText: "Cancel",
-            showLoaderOnConfirm: true,
+            confirmButtonText: "Oke",
             allowOutsideClick: false,
             focusCancel: true
           });
@@ -108,9 +227,9 @@
     $("#goPrintManifestButton").click(function() {
       // Updating status and insert history
       $("#goPrintManifestButton").addClass('disabled btn-progress');
-      $.ajax('<?php echo base_url() ?>dashboard/shipping/premanifest', {
+      $.ajax('<?php echo base_url() ?>dashboard/shipping/update-status', {
         type: 'POST',
-        data: { ids: ids },
+        data: { ids: ids, status: 2, remarks: '' },
         success: function (data, status, xhr) {
           $("#goPrintManifestButton").removeClass('disabled btn-progress');
 

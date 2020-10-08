@@ -34,3 +34,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Custom
 application/config/config.php
 application/config/database.php
+assets/generated-manifest/*
