@@ -172,7 +172,7 @@
           new Noty({
             theme: 'metroui',
             type: 'success',
-            text: 'Berhasil melakukan aksi',
+            text: 'Berhasil update staus pengiriman',
             timeout: 3000
           }).show();
 
@@ -222,6 +222,75 @@
         }
       }
       $("#manifestDetailDialogModal").modal('toggle');
+    });
+
+    $(".btnDeleteShipping").click(function() {
+      const willDeleteShippingId =  $(this).attr("shippingId");
+      
+      Swal.fire({
+        title: 'Peringatan',
+        text: "Apakah anda yakin ingin menghapus data ini ?\nData yang tela dihapus tidak dapat dikembalikan",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Silahkan Tunggu',
+            html: 'menghapus data pengiriman...',
+            willOpen: () => {
+              Swal.showLoading();
+              $.ajax('<?php echo base_url() ?>dashboard/shipping/delete', {
+                type: 'POST',
+                data: { shipping_id: willDeleteShippingId },
+                success: function (data, status, xhr) {
+                  Swal.close();
+
+                  const res = JSON.parse(data);
+                  
+                  if (!res.status) {
+                    new Noty({
+                      theme: 'metroui',
+                      type: 'error',
+                      text: 'Gagal melakukan aksi',
+                      timeout: 3000
+                    }).show();
+                    
+                    return;
+                  }
+
+                  new Noty({
+                    theme: 'metroui',
+                    type: 'success',
+                    text: 'Berhasil menghapus data',
+                    timeout: 3000
+                  }).show();
+                  
+                  setTimeout(() => {
+                    location.reload();
+                  }, 600);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                  Swal.close();
+
+                  new Noty({
+                    theme: 'metroui',
+                    type: 'error',
+                    text: 'Gagal melakukan aksi',
+                    timeout: 3000
+                  }).show();
+
+                  $("#goPrintManifestButton").removeClass('disabled btn-progress');
+                }
+              });
+            },
+          }).then((result) => {
+            
+          })
+        }
+      })
     });
       
     $("#goPrintManifestButton").click(function() {

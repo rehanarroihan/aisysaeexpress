@@ -56,6 +56,14 @@ class Shipping_model extends CI_Model {
         );
     }
 
+    public function delete($shippingId) {
+        if ($this->getShippingById($shippingId)->status == 1) {
+            $this->db->where('id', $shippingId)->delete($this->tableName);
+        }
+
+        return $this->db->affected_rows() > 0;
+    }
+
     public function getShippingById($shipping_id) {
         $shippingDetail = $this->db->select('sh.*, or.name AS origin_branch, or.registration_code AS origin_branch_code, dest.name AS destination_branch, dest.registration_code AS destination_branch_code')
                         ->where('sh.id', $shipping_id)
