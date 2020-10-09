@@ -46,6 +46,15 @@ class Shipping extends CI_Controller {
         ));
     }
 
+    public function update() {
+        $result = $this->Shipping_model->update();
+        echo json_encode(array(
+			'status' => $result['status'],
+			'message' => $result['message'],
+			'data' => $result['data']
+        ));
+    }
+
     public function delete() {
         if ($this->input->post('shipping_id')) {
             $res = $this->Shipping_model->delete($this->input->post('shipping_id'));

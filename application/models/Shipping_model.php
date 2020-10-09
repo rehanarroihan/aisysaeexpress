@@ -56,6 +56,51 @@ class Shipping_model extends CI_Model {
         );
     }
 
+    public function update() {
+        $price = $this->input->post('price') == "" || $this->input->post('price') == NULL
+                    ? "0"
+                    : $this->input->post('price');
+
+        $id = $this->input->post('id');
+
+        $data = array(
+			'origin_branch_id'      => $this->input->post('origin_branch_id'),
+			'destination_branch_id' => $this->input->post('destination_branch_id'),
+			'tracking_no'		    => $this->input->post('tracking_no'),
+			'status'		        => $this->input->post('status'),
+			'service'		        => $this->input->post('service'),
+			'mode'		            => $this->input->post('mode'),
+			'price'		            => $price,
+			'payment_type'		    => $this->input->post('payment'),
+			'sender_name'		    => $this->input->post('sender_name'),
+			'sender_address'	    => $this->input->post('sender_address'),
+			'sender_phone'		    => $this->input->post('sender_phone'),
+			'receiver_name'		    => $this->input->post('receiver_name'),
+			'receiver_address'	    => $this->input->post('receiver_address'),
+			'receiver_phone'	    => $this->input->post('receiver_phone'),
+			'stuff_content'		    => $this->input->post('stuff_content'),
+			'stuff_weight'		    => $this->input->post('stuff_weight'),
+			'stuff_colly'		    => $this->input->post('stuff_colly'),
+			'stuff_reference_no'    => $this->input->post('stuff_reference_no'),
+			'created_at'            => date($this->ms_variable->dbDateTimeFormat),
+			'updated_at'            => date($this->ms_variable->dbDateTimeFormat)
+        );
+
+        $this->db->where('id', $id)->update($this->tableName, $data);
+
+        $status = $this->db->affected_rows() > 0;
+
+        return array(
+            "status"    => $status,
+            "message"   => $status
+                            ? 'Berhasil update data pengiriman'
+                            : 'Gagal update data pengiriman',
+            "data"      => $status 
+                            ? $this->getShippingById($id) 
+                            : $this->db->error()
+        );
+    }
+
     public function delete($shippingId) {
         if ($this->getShippingById($shippingId)->status == 1) {
             $this->db->where('id', $shippingId)->delete($this->tableName);

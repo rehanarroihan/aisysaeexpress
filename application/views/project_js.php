@@ -217,6 +217,54 @@
       $("#manifestDetailDialogModal").modal('toggle');
     });
 
+    var willUpdateShipId = "";
+    $(".btnEditShipping").click(function() {
+      const shipid =  $(this).attr("shippingId");
+      willUpdateShipId = shipid;
+
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'sedang memuat data...',
+        willOpen: async () => {
+          Swal.showLoading();
+          const res = await getShippingDetailById(shipid);
+          Swal.close();
+
+          // Inject data to form
+          maskSomeShippingEditForm();
+          $("#editTrackingNumber").val(res.data.tracking_no);
+          $("#editDestBranchSelect").val(res.data.destination_branch_id);
+          $("#editStatusSelect").val(res.data.status);
+          $("#editSenderName").val(res.data.sender_name);
+          $("#editSenderAddress").val(res.data.sender_address);
+          $("#editSenderPhone").val(res.data.sender_phone);
+          $("#editReceiverName").val(res.data.receiver_name);
+          $("#editReceiverAddress").val(res.data.receiver_address);
+          $("#editReceiverPhone").val(res.data.receiver_phone);
+          $("#editStuffContent").val(res.data.stuff_content);
+          $("#editStuffColly").val(res.data.stuff_colly);
+          $("#editStuffWeight").val(res.data.stuff_weight);
+          $("#editStuffRefNo").val(res.data.stuff_reference_no);
+          $("#editServiceSelect").val(res.data.service);
+          $("#editModeSelect").val(res.data.mode);
+          $("#editPrice").val(res.data.price);
+          $("#editPayment").val(res.data.payment_type);
+
+          $('#editPrice').trigger('input');
+          $('#editSenderPhone').trigger('input');
+          $('#editReceiverPhone').trigger('input');
+          $('#editStuffWeight').trigger('input');
+          $('#editStuffColly').trigger('input');
+          
+          $('#modal_edit_shipping').modal('show');
+        },
+      });
+    });
+
+    $("#submitEditShipping").click(function() {
+      submitShippingEdit(willUpdateShipId);
+    });
+
     $(".btnDeleteShipping").click(function() {
       const willDeleteShippingId =  $(this).attr("shippingId");
       deleteShippingById(willDeleteShippingId);
@@ -389,6 +437,15 @@ function maskSomeShippingForm() {
 
   $('#stuffWeight').mask('000000000');
   $('#stuffColly').mask('000000000');
+}
+
+function maskSomeShippingEditForm() {
+  $('#editPrice').mask('000.000.000', {reverse: true});
+  $('#editSenderPhone').mask('0000-0000-0000 000');
+  $('#editReceiverPhone').mask('0000-0000-0000 000');
+
+  $('#editStuffWeight').mask('000000000');
+  $('#editStuffColly').mask('000000000');
 }
 
 function generateResi() {
@@ -597,6 +654,97 @@ function submitShipping() {
 
       $("#submitShipping").removeClass('disabled btn-progress');
       $('#modal_create_shipping').modal('toggle');
+
+      maskSomeShippingForm();
+
+      reloadPageInSix();
+    },
+    error: function (jqXhr, textStatus, errorMessage) {
+      new Noty({
+        theme: 'metroui',
+        type: 'error',
+        text: errorMessage,
+        timeout: 3000
+      }).show();
+      $("#submitShipping").removeClass('disabled btn-progress');
+      maskSomeShippingForm();
+    }
+  });
+}
+
+function submitShippingEdit(shippingId) {
+  // Unmask some field for a while to get pure input
+  $('#editPrice').unmask();
+  $('#editReceiverPhone').unmask();
+  $('#editSenderPhone').unmask();
+
+  var branchId = "<?php echo $this->session->userdata('branch_id') ?>";
+  var shippingData = {
+    id: shippingId,
+    origin_branch_id: branchId,
+    destination_branch_id: $('#editDestBranchSelect').val(),
+    tracking_no: $('#editTrackingNumber').val(),
+    status: $('#editStatusSelect').val(),
+    service: $('#editServiceSelect').val(),
+    mode: $('#editModeSelect').val(),
+    price: $('#editPrice').val(),
+    payment: $('#editPayment').val(),
+    sender_name: $('#editSenderName').val(),
+    sender_address: $('#editSenderAddress').val(),
+    sender_phone: $('#editSenderPhone').val(),
+    receiver_name: $('#editReceiverName').val(),
+    receiver_address: $('#editReceiverAddress').val(),
+    receiver_phone: $('#editReceiverPhone').val(),
+    stuff_content: $('#editStuffContent').val(),
+    stuff_weight: $('#editStuffWeight').val(),
+    stuff_colly: $('#editStuffColly').val(),
+    stuff_reference_no: $('#editStuffRefNo').val()
+  };
+
+  // Run some validation
+  if (!shippingData.sender_name) {
+    $('#editSenderName').focus();
+    maskSomeShippingEditForm();
+    return;
+  }
+  if (!shippingData.sender_address) {
+    $('#editSenderAddress').focus();
+    maskSomeShippingEditForm();
+    return;
+  }
+  if (!shippingData.payment) {
+    $('#editPayment').focus();
+    maskSomeShippingEditForm();
+    return;
+  }
+
+  $("#submitEditShipping").addClass('disabled btn-progress');
+
+  $.ajax('<?php echo base_url() ?>dashboard/shipping/update', {
+    type: 'POST',
+    data: shippingData,
+    success: function (data, status, xhr) {
+      const res = JSON.parse(data);
+      
+      if (!res.status) {
+        new Noty({
+          theme: 'metroui',
+          type: 'error',
+          text: res.message,
+          timeout: 3000
+        }).show();
+        return;
+      }
+
+      new Noty({
+        theme: 'metroui',
+        type: 'success',
+        text: res.message,
+        timeout: 3000
+      }).show();
+
+      $("#submitEditShipping").removeClass('disabled btn-progress');
+      $('#modal_edit_shipping').modal('toggle');
 
       maskSomeShippingForm();
 
