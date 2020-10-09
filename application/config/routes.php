@@ -72,6 +72,8 @@ $route['dashboard/shipping/print/(:num)'] = 'shipping/printWaybill/$1';
 
 $route['dashboard/shipping/incoming'] = 'shipping/incoming';
 
+$route['tracking'] = 'welcome/tracking';
+
 $route['dashboard/report/manifest'] = 'report/manifest';
 $route['dashboard/report/cash-statement'] = 'report/cashStatement';
 $route['dashboard/report/sales-trx'] = 'report/salesTrx';

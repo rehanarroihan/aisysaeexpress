@@ -19,4 +19,8 @@ class Welcome extends CI_Controller {
 	public function notfound() {
 		$this->load->view('404_view');
 	}
+
+	public function tracking() {
+		$this->load->view('tracking_view');
+	}
 }
