@@ -48,10 +48,7 @@
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->origin_branch_name ?> (<?php echo $shipping->origin_branch_code ?>)</td>
                       <td><?php echo $shipping->receiver_name ?></td>
-                      <td><?php
-                        $tanggal = date("D, d M Y", strtotime($shipping->created_at)); 
-                        echo $tanggal; 
-                      ?></td>
+                      <td><?php echo $this->ms_variable->date($shipping->created_at); ?></td>
                       <td class="text-center">
                         <span class="badge <?php echo 'badge-'.$this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[1] ?>">
                           <?php echo $this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[0] ?>

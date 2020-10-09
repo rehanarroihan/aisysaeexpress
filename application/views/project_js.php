@@ -81,66 +81,61 @@
       Swal.fire({
         title: 'Silahkan Tunggu',
         html: 'Memuat detail pengiriman',
-        willOpen: () => {
+        willOpen: async () => {
           Swal.showLoading();
-          $.ajax({
-            url: "<?php echo base_url() ?>dashboard/shipping/detail/"+shippingId,
-            type: "GET",
-            success: function(data){
-              Swal.close();
-              const res = JSON.parse(data);
-              $('#detailTitle').html("Detail Pengiriman (" + res.data.tracking_no + ")");
-              
-              $('#detailSenderName').html(res.data.sender_name);
-              $('#detailSenderPhone').html(res.data.sender_phone);
-              $('#detailSenderAddress').html(res.data.sender_address);
-              $('#detailSenderBranch').html(res.data.origin_branch + " ("+res.data.origin_branch_code+")");
+          const res = await getShippingDetailById(shippingId);
+          Swal.close();
 
-              $('#detailReceiverName').html(res.data.receiver_name);
-              $('#detailReceiverPhone').html(res.data.receiver_phone);
-              $('#detailReceiverAddress').html(res.data.receiver_address);
-              $('#detailReceiverBranch').html(res.data.destination_branch + " ("+res.data.destination_branch_code+")");
+          $('#detailTitle').html("Detail Pengiriman (" + res.data.tracking_no + ")");
+        
+          $('#detailSenderName').html(res.data.sender_name);
+          $('#detailSenderPhone').html(res.data.sender_phone);
+          $('#detailSenderAddress').html(res.data.sender_address);
+          $('#detailSenderBranch').html(res.data.origin_branch + " ("+res.data.origin_branch_code+")");
 
-              var dropdown = $("#updateStatusSelect");
-              statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
-              // Clearing previos options 
-              $("#updateStatusSelect option").each(function() {
-                if ( $(this).val() != "" ) {
-                  $(this).remove();
-                }
-              });
-              $.each(statusList, function() {
-                if (this.id > res.data.status)
-                  dropdown.append($("<option />").val(this.id).text(this.title));
-              });
+          $('#detailReceiverName').html(res.data.receiver_name);
+          $('#detailReceiverPhone').html(res.data.receiver_phone);
+          $('#detailReceiverAddress').html(res.data.receiver_address);
+          $('#detailReceiverBranch').html(res.data.destination_branch + " ("+res.data.destination_branch_code+")");
 
-              $("#updateStatusCTA").prop('disabled', true);
-              $("#updateStatusCTA").removeClass('btn-info');
-              $("#updateStatusCTA").addClass('btn-secondary');
-              $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
-
-              dropdown.change(function(val) {
-                if ($('#updateStatusSelect option:selected').val() != "") {
-                  updateStatusTo = $('#updateStatusSelect option:selected').val();
-                  $("#updateStatusCTA").prop('disabled', false);
-
-                  $("#updateStatusCTA").removeClass('btn-secondary');
-                  $("#updateStatusCTA").addClass('btn-info');
-                  $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status Menjadi <b>"+$('#updateStatusSelect option:selected').html()+"</b>");
-
-                  return;
-                }
-                // Disble button due to unselected status
-                $("#updateStatusCTA").removeClass('btn-info');
-                $("#updateStatusCTA").addClass('btn-secondary');
-                $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
-
-                $("#updateStatusCTA").prop('disabled', true);
-              });
-
-              $("#updateStatusModal").modal("show");
+          var dropdown = $("#updateStatusSelect");
+          statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
+          // Clearing previos options 
+          $("#updateStatusSelect option").each(function() {
+            if ( $(this).val() != "" ) {
+              $(this).remove();
             }
           });
+          $.each(statusList, function() {
+            if (this.id > res.data.status)
+              dropdown.append($("<option />").val(this.id).text(this.title));
+          });
+
+          $("#updateStatusCTA").prop('disabled', true);
+          $("#updateStatusCTA").removeClass('btn-info');
+          $("#updateStatusCTA").addClass('btn-secondary');
+          $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
+
+          dropdown.change(function(val) {
+            if ($('#updateStatusSelect option:selected').val() != "") {
+              updateStatusTo = $('#updateStatusSelect option:selected').val();
+              $("#updateStatusCTA").prop('disabled', false);
+
+              $("#updateStatusCTA").removeClass('btn-secondary');
+              $("#updateStatusCTA").addClass('btn-info');
+              $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status Menjadi <b>"+$('#updateStatusSelect option:selected').html()+"</b>");
+
+              return;
+            }
+            // Disble button due to unselected status
+            $("#updateStatusCTA").removeClass('btn-info');
+            $("#updateStatusCTA").addClass('btn-secondary');
+            $("#updateStatusCTA").html("<i class='fa fa-location-arrow'></i>&nbsp;&nbsp;Update Status");
+
+            $("#updateStatusCTA").prop('disabled', true);
+          });
+
+          $("#updateStatusModal").modal("show");
         },
       }).then((result) => {
         
@@ -178,9 +173,7 @@
 
           $("#updateStatusModal").modal("hide");
 
-          setTimeout(() => {
-            location.reload();
-          }, 600);
+          reloadPageInSix();
         },
         error: function (jqXhr, textStatus, errorMessage) {
           new Noty({
@@ -226,71 +219,7 @@
 
     $(".btnDeleteShipping").click(function() {
       const willDeleteShippingId =  $(this).attr("shippingId");
-      
-      Swal.fire({
-        title: 'Peringatan',
-        text: "Apakah anda yakin ingin menghapus data ini ?\nData yang tela dihapus tidak dapat dikembalikan",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: 'Silahkan Tunggu',
-            html: 'menghapus data pengiriman...',
-            willOpen: () => {
-              Swal.showLoading();
-              $.ajax('<?php echo base_url() ?>dashboard/shipping/delete', {
-                type: 'POST',
-                data: { shipping_id: willDeleteShippingId },
-                success: function (data, status, xhr) {
-                  Swal.close();
-
-                  const res = JSON.parse(data);
-                  
-                  if (!res.status) {
-                    new Noty({
-                      theme: 'metroui',
-                      type: 'error',
-                      text: 'Gagal melakukan aksi',
-                      timeout: 3000
-                    }).show();
-                    
-                    return;
-                  }
-
-                  new Noty({
-                    theme: 'metroui',
-                    type: 'success',
-                    text: 'Berhasil menghapus data',
-                    timeout: 3000
-                  }).show();
-                  
-                  setTimeout(() => {
-                    location.reload();
-                  }, 600);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                  Swal.close();
-
-                  new Noty({
-                    theme: 'metroui',
-                    type: 'error',
-                    text: 'Gagal melakukan aksi',
-                    timeout: 3000
-                  }).show();
-
-                  $("#goPrintManifestButton").removeClass('disabled btn-progress');
-                }
-              });
-            },
-          }).then((result) => {
-            
-          })
-        }
-      })
+      deleteShippingById(willDeleteShippingId);
     });
       
     $("#goPrintManifestButton").click(function() {
@@ -333,9 +262,7 @@
         .submit()
         .remove();
 
-        setTimeout(() => {
-          location.reload();
-        }, 600);
+        reloadPageInSix();
     });
 
     var manifestList = [];
@@ -673,9 +600,7 @@ function submitShipping() {
 
       maskSomeShippingForm();
 
-      setTimeout(() => {
-        location.reload();
-      }, 600);
+      reloadPageInSix();
     },
     error: function (jqXhr, textStatus, errorMessage) {
       new Noty({
@@ -687,6 +612,92 @@ function submitShipping() {
       $("#submitShipping").removeClass('disabled btn-progress');
       maskSomeShippingForm();
     }
+  });
+}
+
+function reloadPageInSix() {
+  setTimeout(() => {
+    location.reload();
+  }, 600);
+}
+
+function deleteShippingById(shippingId) {
+  Swal.fire({
+    title: 'Peringatan',
+    text: "Apakah anda yakin ingin menghapus data ini ?\nData yang tela dihapus tidak dapat dikembalikan",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Hapus',
+    cancelButtonText: 'Batal',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'menghapus data pengiriman...',
+        willOpen: () => {
+          Swal.showLoading();
+          $.ajax('<?php echo base_url() ?>dashboard/shipping/delete', {
+            type: 'POST',
+            data: { shipping_id: shippingId },
+            success: function (data, status, xhr) {
+              Swal.close();
+
+              const res = JSON.parse(data);
+              
+              if (!res.status) {
+                new Noty({
+                  theme: 'metroui',
+                  type: 'error',
+                  text: 'Gagal melakukan aksi',
+                  timeout: 3000
+                }).show();
+                
+                return;
+              }
+
+              new Noty({
+                theme: 'metroui',
+                type: 'success',
+                text: 'Berhasil menghapus data',
+                timeout: 3000
+              }).show();
+
+              reloadPageInSix();
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              Swal.close();
+
+              new Noty({
+                theme: 'metroui',
+                type: 'error',
+                text: 'Gagal melakukan aksi',
+                timeout: 3000
+              }).show();
+
+              $("#goPrintManifestButton").removeClass('disabled btn-progress');
+            }
+          });
+        },
+      }).then((result) => {
+        
+      })
+    }
+  })
+}
+
+async function getShippingDetailById(shippingId) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "<?php echo base_url() ?>dashboard/shipping/detail/"+shippingId,
+      type: "GET",
+      success: function(data){
+        resolve(JSON.parse(data));
+      },
+      error: function (jqXhr, textStatus, errorMessage) { // error callback 
+        reject(errorMessage);
+      }
+    });
   });
 }
 </script>
