@@ -253,11 +253,7 @@ class Shipping_model extends CI_Model {
                         ->where('id', $shippingId)
                         ->update($this->tableName);
 
-            // Checking is this status already recorded on history
-            $history = $this->Shipping_history_model->getHistoryByIdAndStatus($shippingId, $status);
-            if (empty($history)) {
-                $this->Shipping_history_model->insert($shippingId, $status, $remarks);
-            }
+            $this->Shipping_history_model->insert($shippingId, $status, $remarks);
         }
         return $this->db->affected_rows() > 0;
     }

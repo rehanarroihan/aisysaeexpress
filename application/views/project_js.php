@@ -106,7 +106,14 @@
               $(this).remove();
             }
           });
+          
+          if (res.data.status == "3") {
+            // if transit, then show "Perjalanan"
+            dropdown.append($("<option />").val("2").text("Perjalanan ke Kota Tujuan"));
+          }
           $.each(statusList, function() {
+            // Insert status that can be use for update status
+
             if (this.id > res.data.status)
               dropdown.append($("<option />").val(this.id).text(this.title));
           });
