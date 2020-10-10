@@ -127,6 +127,30 @@ class Shipping_model extends CI_Model {
         return $shippingDetail;
     }
 
+    public function isShippingByTrackingNoAvailable($trackingNo) {
+        return $this->db->where('tracking_no', $trackingNo)->get($this->tableName)->num_rows() > 0;
+    }
+
+    public function getShippingByTrackingNo($tracking_no) {
+        $shippingIdByTracking = $this->db->where('tracking_no', $tracking_no)->get($this->tableName)->row()->id;
+
+        $shippingDetail = $this->db->select('sh.*, or.name AS origin_branch, or.registration_code AS origin_branch_code, dest.name AS destination_branch, dest.registration_code AS destination_branch_code')
+                        ->where('sh.tracking_no', $tracking_no)
+                        ->join('branch or', 'sh.origin_branch_id = or.id', 'left')
+                        ->join('branch dest', 'sh.destination_branch_id = dest.id', 'left')
+                        ->get($this->tableName.' AS sh')
+                        ->row();
+
+        $shippingHistory = $this->db
+                                ->where('shipping_id', $shippingIdByTracking)
+                                ->get('shipping_history')
+                                ->result();
+
+        $shippingDetail->history = $shippingHistory;
+
+        return $shippingDetail;
+    }
+
     public function getShippingDataList($branchId) {
         if ($branchId == null) {
             $query = $this->db

@@ -52,16 +52,50 @@
 <body style="background-color: white">
   <div id="app">
     <div class="container">
-      <div class="form-group">
-        <label>Nomor Resi</label>
-        <input id="trackingNumber" type="text" class="form-control" placeholder="Masukkan 12 Digit Nomor Resi (Cnth: SUB-20157213)">
+      <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-12">
+          <img src="https://aisysaeexpress.com/wp-content/uploads/2020/08/Logo-Banner-768x295.jpg" alt="" height="120px" class="mt-2" srcset="">
+        </div>
+        <div class="col-lg-8 col-md-9 col-sm-12">
+          <div class="form-group">
+            <label>Nomor Resi</label>
+            <input id="trackingNumber" type="text" class="form-control" placeholder="Masukkan 12 Digit Nomor Resi (Contoh: SUB-20157213)">
+          </div>
+          <button class="btn btn-info btn-block" id="btnCekResi"><i class="fa fa-edit"></i> Cek Resi</button>
+        </div>
       </div>
-      <button class="btn btn-info btn-block"><i class="fa fa-edit"></i> Cek Resi</button>
     </div>
     <div class="container mt-5 mb-5">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <h4>Latest News</h4>
+        <div class="col-lg-4 col-md-4 col-sm-12 text-right">
+          <h4 class="mb-4">Keterangan Paket</h4>
+          <div>
+            <h6>Kota Asal</h6>
+            <p>Surabaya</p>
+          </div>
+          <div>
+            <h6>Kota Tujuan</h6>
+            <p>Jakarta</p>
+          </div>
+          <div>
+            <h6>Pengirim</h6>
+            <p>
+              Jau*** *** <br>
+              Jl. Raha*** *** <br>
+              0821******
+            </p>
+          </div>
+          <div>
+            <h6>Penerima</h6>
+            <p>
+              Jau*** *** <br>
+              Jl. Raha*** *** <br>
+              0821******
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-9 col-sm-12">
+          <h4>Status Terakhir</h4>
           <ul class="timeline">
             <li>
               <a target="_blank" href="https://www.totoprayogo.com/#">New Web Design</a>
@@ -99,5 +133,34 @@
   <script src="<?php echo base_url() ?>assets/js/custom.js"></script>
 
   <!-- Page Specific JS File -->
+  <script>
+    $(document).ready(function() {
+      $("#btnCekResi").click(function() {
+        if (!$("#trackingNumber").val()) {
+          return;
+        }
+
+        $("#btnCekResi").addClass('disabled btn-progress');
+        $.ajax('<?php echo base_url() ?>tracking/check', {
+          type: 'POST',
+          data: { tracking_no: $("#trackingNumber").val() },
+          success: function (data, status, xhr) {
+            $("#btnCekResi").removeClass('disabled btn-progress');
+
+            const res = JSON.parse(data);
+            
+            if (!res.status) {
+              
+            }
+
+            
+          },
+          error: function (jqXhr, textStatus, errorMessage) {
+            
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
