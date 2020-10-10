@@ -53,10 +53,10 @@
   <div id="app">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-3 col-sm-12">
+        <div class="col-lg-4 col-md-12 col-sm-12">
           <img src="https://aisysaeexpress.com/wp-content/uploads/2020/08/Logo-Banner-768x295.jpg" alt="" height="120px" class="mt-2" srcset="">
         </div>
-        <div class="col-lg-8 col-md-9 col-sm-12">
+        <div class="col-lg-8 col-md-12 col-sm-12">
           <div class="form-group">
             <label>Nomor Resi</label>
             <input id="trackingNumber" type="text" class="form-control" placeholder="Masukkan 12 Digit Nomor Resi (Contoh: SUB-20157213)">
@@ -67,7 +67,7 @@
     </div>
     <div class="container mt-5 mb-5">
       <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12 text-right">
+        <div class="col-lg-4 col-md-12 col-sm-12 text-right">
           <h4 class="mb-4">Keterangan Paket</h4>
           <div>
             <h6>Kota Asal</h6>
@@ -94,7 +94,7 @@
             </p>
           </div>
         </div>
-        <div class="col-lg-8 col-md-9 col-sm-12">
+        <div class="col-lg-8 col-md-12 col-sm-12">
           <h4>Status Terakhir</h4>
           <ul class="timeline">
             <li>
