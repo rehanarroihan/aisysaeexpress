@@ -61,11 +61,14 @@
             <label>Nomor Resi</label>
             <input id="trackingNumber" type="text" class="form-control" placeholder="Masukkan 12 Digit Nomor Resi (Contoh: SUB-20157213)">
           </div>
-          <button class="btn btn-info btn-block" id="btnCekResi"><i class="fa fa-edit"></i> Cek Resi</button>
+          <button class="btn btn-info btn-block" id="btnCekResi"><i class="fa fa-location-arrow"></i>&nbsp;&nbsp;Cek Resi</button>
         </div>
       </div>
     </div>
     <div class="container mt-5 mb-5">
+      <div class="error-state text-center mt-4 mb-4">
+        <h4>Resi Tidak di Temukan</h4>
+      </div>
       <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12 text-right">
           <h4 class="mb-4">Keterangan Paket</h4>
@@ -74,7 +77,7 @@
             <p>Surabaya</p>
           </div>
           <div>
-            <h6>Kota Tujuan</h6>
+            <h6>Cabang Tujuan</h6>
             <p>Jakarta</p>
           </div>
           <div>

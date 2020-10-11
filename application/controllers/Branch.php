@@ -37,14 +37,14 @@ class Branch extends CI_Controller {
 		if ($regCodeAvail > 0) {
 			echo json_encode(array(
 				'status' => false,
-				'message' => 'Kode registrasi cabang tidak tersedia'
+				'message' => 'Kode registrasi cabang telah digunakan'
 			));
 			return;
 		}
 		if ($usernameAvail > 0) {
 			echo json_encode(array(
 				'status' => false,
-				'message' => 'Username tidak tersedia'
+				'message' => 'Username telah digunakan'
 			));
 			return;
 		}

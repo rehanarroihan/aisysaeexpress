@@ -283,8 +283,7 @@
       $.ajax('<?php echo base_url() ?>dashboard/shipping/update-status', {
         type: 'POST',
         data: { ids: ids, status: 2, remarks: '' },
-        success: function (data, status, xhr) {
-          $("#goPrintManifestButton").removeClass('disabled btn-progress');
+        success: function (data, status, xhr) {          
 
           const res = JSON.parse(data);
           
@@ -298,6 +297,20 @@
             
             return;
           }
+
+          $.ajax('<?php echo base_url() ?>dashboard/shipping/manifest', {
+            type: 'POST',
+            data: { ids: ids, driver: $('#driverInput').val(), nopol: $('#nopolInput').val() },
+            success: function (data, status, xhr) {
+              $("#goPrintManifestButton").removeClass('disabled btn-progress');
+              window.open(data);
+              reloadPageInSix();
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              $("#goPrintManifestButton").removeClass('disabled btn-progress');
+            }
+          });
+
         },
         error: function (jqXhr, textStatus, errorMessage) {
           new Noty({
@@ -311,13 +324,6 @@
         }
       });
 
-      // Sending POST data to show manifest file
-      $('<form action="<?php echo base_url() ?>dashboard/shipping/manifest" method="post"><input type="hidden" name="ids" value="'+ids+'"></input><input type="hidden" name="driver" value="'+$('#driverInput').val()+'"></input><input type="hidden" name="nopol" value="'+$('#nopolInput').val()+'"></input></form>')
-        .appendTo('body')
-        .submit()
-        .remove();
-
-        reloadPageInSix();
     });
 
     var manifestList = [];
