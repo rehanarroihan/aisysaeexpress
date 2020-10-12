@@ -42,12 +42,21 @@ class Pdf extends Dompdf{
      * @param    array    $data The view data
      * @return    void
      */
+
+     // Without showing on page
     public function load_view($view, $data = array()){
         $html = $this->ci()->load->view($view, $data, TRUE);
         $this->load_html($html);
         // Render the PDF
         $this->render();
+    }
+
+    public function show_pdf($view, $data = array()){
+        $html = $this->ci()->load->view($view, $data, TRUE);
+        $this->load_html($html);
+        // Render the PDF
+        $this->render();
         // Output the generated PDF to Browser
-        //$this->stream($this->filename, array("Attachment" => false));
+        $this->stream($this->filename, array("Attachment" => false));
     }
 }

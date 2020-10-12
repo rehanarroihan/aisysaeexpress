@@ -140,6 +140,6 @@ class Shipping extends CI_Controller {
         $this->load->library('pdf');
         $this->pdf->setPaper('A4', 'landscape');
         $this->pdf->filename = "d".time().".pdf";
-        $this->pdf->load_view('shipping/shipping_waybill_view', $viewData);
+        $this->pdf->show_pdf('shipping/shipping_waybill_view', $viewData);
     }
 }
