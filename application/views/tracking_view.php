@@ -65,57 +65,43 @@
         </div>
       </div>
     </div>
-    <div class="container mt-5 mb-5">
-      <div class="error-state text-center mt-4 mb-4">
+    <div class="container mt-5 mb-5" id="emptySection" style="display:none">
+      <div class="text-center mt-4 mb-4">
         <h4>Resi Tidak di Temukan</h4>
       </div>
+    </div>
+    <div class="container mt-5 mb-5" id="resultSection" style="display:none">
       <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12 text-right">
           <h4 class="mb-4">Keterangan Paket</h4>
           <div>
             <h6>Kota Asal</h6>
-            <p>Surabaya</p>
+            <p id="originBranch"></p>
           </div>
           <div>
             <h6>Cabang Tujuan</h6>
-            <p>Jakarta</p>
+            <p id="destBranch"></p>
           </div>
           <div>
             <h6>Pengirim</h6>
             <p>
-              Jau*** *** <br>
-              Jl. Raha*** *** <br>
-              0821******
+              <span id="senderName"></span> <br>
+              <span id="senderAddress"></span> <br>
+              <span id="senderPhone"></span>
             </p>
           </div>
           <div>
             <h6>Penerima</h6>
             <p>
-              Jau*** *** <br>
-              Jl. Raha*** *** <br>
-              0821******
+              <span id="receiverName"></span> <br>
+              <span id="receiverAddress"></span> <br>
+              <span id="receiverPhone"></span>
             </p>
           </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12">
           <h4>Status Terakhir</h4>
-          <ul class="timeline">
-            <li>
-              <a target="_blank" href="https://www.totoprayogo.com/#">New Web Design</a>
-              <a href="#" class="float-right">21 March, 2014</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-            </li>
-            <li>
-              <a href="#">21 000 Job Seekers</a>
-              <a href="#" class="float-right">4 March, 2014</a>
-              <p>Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-          </ul>
+          <ul class="timeline" id="timeline"></ul>
         </div>
       </div>
     </div>
@@ -127,6 +113,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/id.min.js" integrity="sha512-he8U4ic6kf3kustvJfiERUpojM8barHoz0WYpAUDWQVn61efpm3aVAD8RWL8OloaDDzMZ1gZiubF9OSdYBqHfQ==" crossorigin="anonymous"></script>
   <script src="<?php echo base_url() ?>assets/js/stisla.js"></script>
 
   <!-- JS Libraies -->
@@ -143,6 +130,9 @@
           return;
         }
 
+        $("#resultSection").hide();
+        $("#emptySection").hide();
+
         $("#btnCekResi").addClass('disabled btn-progress');
         $.ajax('<?php echo base_url() ?>tracking/check', {
           type: 'POST',
@@ -153,13 +143,42 @@
             const res = JSON.parse(data);
             
             if (!res.status) {
-              
+              $("#resultSection").hide();
+              $("#emptySection").show();
+              return;
             }
 
-            
+            $("#resultSection").show();
+            $("#emptySection").hide();
+
+            $("#originBranch").html(res.data.origin_branch);
+            $("#destBranch").html(res.data.destination_branch);
+            $("#senderName").html(res.data.sender_name);
+            $("#senderAddress").html(res.data.sender_address);
+            $("#senderPhone").html(res.data.sender_phone);
+            $("#receiverName").html(res.data.receiver_name);
+            $("#receiverAddress").html(res.data.receiver_address);
+            $("#receiverPhone").html(res.data.receiver_phone);
+
+            // Populating histories
+            $("#timeline").empty();
+            var statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
+            res.data.history.reverse();
+            for (var milestone of res.data.history) {
+              moment.locale('id');
+              var date = moment(milestone.created_at).locale('id').format('dddd, DD MMMM YYYY, [Pukul] HH:mm');
+              var status = "";
+              for (var stats of statusList) {
+                if (stats.id == milestone.status_id) {
+                  status = stats.title;
+                }
+              }
+              $("#timeline").append("<li><a target='_blank'>"+status+"</a><a href='#' class='float-right'>"+date+"</a><p>"+milestone.remarks+"</p></li>");
+            }
           },
           error: function (jqXhr, textStatus, errorMessage) {
-            
+            $("#resultSection").hide();
+            $("#emptySection").show();
           }
         });
       });
