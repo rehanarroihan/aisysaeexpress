@@ -156,12 +156,14 @@ class Shipping_model extends CI_Model {
             $query = $this->db
                         ->select('shipping.id, tracking_no, branch.name AS dest_branch_name, branch.registration_code AS dest_branch_code, sender_name, shipping.created_at, status')
                         ->join('branch', 'destination_branch_id = branch.id')
+                        ->order_by('shipping.tracking_no', 'DESC')
                         ->get($this->tableName)
                         ->result();
         } else {
             $query = $this->db
                         ->select('shipping.id, tracking_no, branch.name AS dest_branch_name, branch.registration_code AS dest_branch_code, sender_name, shipping.created_at, status')
                         ->join('branch', 'destination_branch_id = branch.id')
+                        ->order_by('shipping.tracking_no', 'DESC')
                         ->where('shipping.origin_branch_id', $branchId)
                         ->get($this->tableName)
                         ->result();
