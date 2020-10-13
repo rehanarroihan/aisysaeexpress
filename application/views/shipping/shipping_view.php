@@ -125,6 +125,9 @@
                     </option>
                   <?php endforeach; ?>
                 </select>
+                <div class="invalid-feedback">
+                  Cabang Tujuan harus di pilih
+                </div>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -326,6 +329,9 @@
                     </option>
                   <?php endforeach; ?>
                 </select>
+                <div class="invalid-feedback">
+                  Cabang Tujuan harus di pilih
+                </div>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">

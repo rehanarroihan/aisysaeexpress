@@ -196,6 +196,7 @@
     });
 
     shippingFormValidation();
+    shippingFormEditValidation();
 
     $("#submitShipping").click(function() {
       submitShipping();
@@ -257,11 +258,23 @@
           $("#editPrice").val(res.data.price);
           $("#editPayment").val(res.data.payment_type);
 
+          // Need trigger for jquery mask auto mask, 
           $('#editPrice').trigger('input');
           $('#editSenderPhone').trigger('input');
           $('#editReceiverPhone').trigger('input');
           $('#editStuffWeight').trigger('input');
           $('#editStuffColly').trigger('input');
+          // and for validation needs
+          $('#editSnderName').trigger('paste');
+          $('#editSenderAddress').trigger('paste');
+          $('#editDestBranchSelect')
+            .find('option:nth-child(' + res.data.destination_branch_id + ')')
+            .prop('selected',true)
+            .trigger('change');
+          $('#editPayment')
+            .find('option:nth-child(' + res.data.payment_type + ')')
+            .prop('selected',true)
+            .trigger('change');
           
           $('#modal_edit_shipping').modal('show');
         },
@@ -414,9 +427,18 @@
 });
 
 function shippingFormValidation() {
+  $('#destBranchSelect').addClass('is-invalid');
   $('#senderName').addClass('is-invalid');
   $('#senderAddress').addClass('is-invalid');
   $('#payment').addClass('is-invalid');
+
+  $("#destBranchSelect").on("change paste keyup", function() {
+    if (!$('#destBranchSelect').val()) {
+      $('#destBranchSelect').addClass('is-invalid');
+    } else {
+      $('#destBranchSelect').removeClass('is-invalid');
+    }
+  });
 
   $("#senderName").on("change paste keyup", function() {
     if (!$('#senderName').val()) {
@@ -439,6 +461,45 @@ function shippingFormValidation() {
       $('#payment').addClass('is-invalid');
     } else {
       $('#payment').removeClass('is-invalid');
+    }
+  });
+}
+
+function shippingFormEditValidation() {
+  $('#editDestBranchSelect').addClass('is-invalid');
+  $('#editSnderName').addClass('is-invalid');
+  $('#editSenderAddress').addClass('is-invalid');
+  $('#editPayment').addClass('is-invalid');
+
+  $("#editDestBranchSelect").on("change paste keyup", function() {
+    if (!$('#editDestBranchSelect').val()) {
+      $('#editDestBranchSelect').addClass('is-invalid');
+    } else {
+      $('#editDestBranchSelect').removeClass('is-invalid');
+    }
+  });
+
+  $("#editSenderName").on("change paste keyup", function() {
+    if (!$('#editSenderName').val()) {
+      $('#editSenderName').addClass('is-invalid');
+    } else {
+      $('#editSenderName').removeClass('is-invalid');
+    }
+  });
+
+  $("#editSenderAddress").on("change paste keyup", function() {
+    if (!$('#editSenderAddress').val()) {
+      $('#editSenderAddress').addClass('is-invalid');
+    } else {
+      $('#editSenderAddress').removeClass('is-invalid');
+    }
+  });
+
+  $("#editPayment").change(function(){
+    if (!$('#editPayment').val()) {
+      $('#editPayment').addClass('is-invalid');
+    } else {
+      $('#editPayment').removeClass('is-invalid');
     }
   });
 }
