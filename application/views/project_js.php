@@ -58,6 +58,13 @@
       }
     });
 
+    $("#adminShippingTable").dataTable({
+      responsive: true,
+      "language": {
+        "emptyTable": "Belum ada data pengiriman dari cabang manapun"
+      }
+    });
+
     $("#incomingShippingTable").dataTable({
       responsive: true,
       "columnDefs": [

@@ -82,8 +82,8 @@
               </a>
             </li>
             <li class="<?php if ($this->uri->segment(2) == 'vehicle') { echo 'active'; } ?>">
-              <a class="nav-link" href="<?php echo base_url() ?>dashboard/vehicle">
-                <i class="fas fa-car"></i> <span>Kendaraan</span>
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/all-shipping">
+                <i class="fas fa-shipping-fast"></i> <span>Pengiriman</span>
               </a>
             </li>
             <li class="menu-header">Monitoring</li>

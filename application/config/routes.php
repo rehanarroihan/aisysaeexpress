@@ -61,6 +61,7 @@ $route['dashboard/branch/submit'] = 'branch/submit';
 $route['dashboard/vehicle'] = 'dashboard/vehicle';
 
 $route['dashboard/shipping'] = 'shipping/index';
+$route['dashboard/all-shipping'] = 'shipping/admin';
 $route['dashboard/shipping/resi'] = 'shipping/generateResi';
 $route['dashboard/shipping/submit'] = 'shipping/submit';
 $route['dashboard/shipping/update'] = 'shipping/update';

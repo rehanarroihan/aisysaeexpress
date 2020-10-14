@@ -28,6 +28,21 @@ class Shipping extends CI_Controller {
 		$this->load->view('template_view', $viewData);
     }
 
+    public function admin() {
+        // TODO: showing all shipping for admin
+        if ($this->session->userdata('role') != 1) {
+            return $this->load->view('404_view');
+        }
+
+        $viewData = array(
+			'page_title'            => 'Semua Pengiriman',
+            'primary_view'          => 'shipping/admin_shipping_view',
+            'dest_branch_list'      => $this->Branch_model->getDestBranchList(),
+			'shipping_data_list'    => $this->Shipping_model->getShippingDataList($this->session->userdata('branch_id'))
+		);
+		$this->load->view('template_view', $viewData);
+    }
+
     public function incoming() {
         $viewData = array(
 			'page_title'                => 'Daftar Tugas',
