@@ -42,8 +42,9 @@ class Report extends CI_Controller {
         $viewData = array(
 			'page_title'	=> 'Transaksi Penjualan',
 			'primary_view'	=> 'report/sales_trx_view',
-			'trxList'		=> $this->Shipping_model->getShippingListWithCount($startDate, $endDate)
+			'trxList'		=> $this->Shipping_model->getShippingListWithCount(null, $startDate, $endDate)
 		);
+		
 		$this->load->view('template_view', $viewData);
 	}
 }

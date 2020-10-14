@@ -31,7 +31,7 @@
 		<?php if ($data->stuff_content != "" && $data->stuff_content != null) {
 			echo $data->stuff_content;
 		} else {
-			echo "<span style='color:white'>White Space</span>";
+			echo "<span style='color:white; visibility: hidden'>White Space</span>";
 		} ?>
 	</td>
   </tr>
@@ -49,7 +49,7 @@
         if ($data->stuff_weight != "") {
         	echo $data->stuff_weight.' Kg';
         } else {
-			echo "<span style='color:white'>White Space</span>";
+			echo "<span style='color:white; visibility: hidden'>White Space</span>";
 		}
         ?>
     </td>
