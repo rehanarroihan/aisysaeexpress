@@ -76,31 +76,6 @@ class Ms_variable {
         ),
     );
 
-    private $bulan = array (1 =>
-        'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-    );
-
-    private $hari = array ( 1 =>
-        'Senin',
-        'Selasa',
-        'Rabu',
-        'Kamis',
-        'Jumat',
-        'Sabtu',
-        'Minggu'
-    );
-
     // convert 2020-12-24 to Kamis, 24 Desember 2020
     public function date($oldDateFormat, $includeTime = false) {
         return $includeTime 
