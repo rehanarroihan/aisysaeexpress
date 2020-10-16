@@ -17,7 +17,8 @@
 		}
 
 		html {
-			margin: 12px;
+			margin-left: 12px;
+			margin-top: 38px;
 		}
 
 		body {
