@@ -95,7 +95,7 @@
                 printable: "waybills",
                 type: 'html'
               });
-              reloadPageInSix();
+              $('#waybills').empty();
             },
             error: function (jqXhr, textStatus, errorMessage) {
               Swal.close();
