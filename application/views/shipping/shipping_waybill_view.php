@@ -57,21 +57,6 @@
 			flex-wrap: wrap;
 			flex-direction: row;
 		}
-
-		.date-box {
-			display: flex;
-			justify-content: flex-end;
-			flex-direction: column;
-			align-items: flex-end;
-		}
-
-		.date-box span {
-			display: flex;
-			border: 1px solid black;
-			width: 25px;
-    		height: 25px;
-			align-content: center;
-		}
 	</style>
 </head>
 <body>

@@ -10,13 +10,18 @@
     <td><?php echo $type ?></td>
   </tr>
   <tr>
-    <td colspan="3" style="height: 30px; text-align: left; padding-left: 12px">
-      No Ref:
-      <?php 
-        if ($data->stuff_reference_no != "") {
-        	echo $data->stuff_reference_no;
-        }
+    <td colspan="3" style="height: 30px; text-align: left; padding-left: 12px;     position: relative;">
+      <span>
+        No Ref:
+        <?php 
+          if ($data->stuff_reference_no != "") {
+            echo $data->stuff_reference_no;
+          }
         ?>
+      </span>
+      <span style="position: absolute;right: 8px;">
+        <?php echo strftime("%d-%b-%Y", strtotime($data->created_at)) ?>
+      </span>
     </td>
   </tr>
   <tr class="height-40">
@@ -70,11 +75,6 @@
         </tr>
         <tr>
           <td style="border-right: 1px solid black;"></td>
-          <td class="date-box">
-			  <span><?php echo date("d", strtotime($data->created_at)); ?></span>
-			  <span><?php echo date("m", strtotime($data->created_at)); ?></span>
-			  <span><?php echo date("y", strtotime($data->created_at)); ?></span>
-		  </td>
         </tr>
       </table>
     </td>
