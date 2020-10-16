@@ -48,9 +48,9 @@
                       <th colspan="3" class="text-center">Pembayaran</th>
                     </tr>
                     <tr class="text-center">
-                      <th>Tagihan</th>
-                      <th>Cod</th>
-                      <th>Cash</th>
+                      <th>CASH</th>
+                      <th>TAGIHAN</th>
+                      <th>COD</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -63,9 +63,9 @@
                       <th><?php echo $trx->sender_name ?></th>
                       <th><?php echo $trx->receiver_name ?></th>
                       <th><?php echo $trx->name ?> (<?php echo $trx->registration_code ?>)</th>
+                      <th><?php if ($trx->payment_type == 3) { echo 'Rp. '.number_format($trx->price); } ?></th>
                       <th><?php if ($trx->payment_type == 1) { echo 'Rp. '.number_format($trx->price); } ?></th>
                       <th><?php if ($trx->payment_type == 2) { echo 'Rp. '.number_format($trx->price); } ?></th>
-                      <th><?php if ($trx->payment_type == 3) { echo 'Rp. '.number_format($trx->price); } ?></th>
                     </tr>
                     <?php $i++; endforeach; ?>
                   </tbody>
