@@ -79,6 +79,36 @@
       generateResi();
     });
 
+    $(".printWaybill").click(function() {
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'Memuat detail pengiriman',
+        willOpen: async () => {
+          Swal.showLoading();
+          $.ajax('<?php echo base_url() ?>dashboard/shipping/print/'+$(this).attr("shippingId"), {
+            type: 'GET',
+            success: function (data, status, xhr) {
+              Swal.close();
+              $('#waybills').empty();
+              $(data).appendTo('#waybills');
+              printJS({
+                printable: "waybills",
+                type: 'html'
+              });
+              reloadPageInSix();
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              Swal.close();
+            }
+          });
+          
+        },
+      }).then((result) => {
+        
+      })
+      
+    });
+
     var willUpdateShippingId = "";
     var updateStatusTo = "";
     $(".btnOpenShippingDetail").click(function() {

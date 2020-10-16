@@ -77,16 +77,17 @@
                         </span>
                       </td>
                       <td>
-                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
+                        <button data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info printWaybill"><i class="fa fa-print"></i></button>
                         <?php if ($shipping->status == 1): ?>
-                        <button data-toggle="tooltip" shippingId="<?php echo $shipping->id ?>" title="Edit" class="btn btn-link text-success btnEditShipping"><i class="fa fa-edit"></i></button>
-                        <button data-toggle="tooltip" title="Hapus" shippingId="<?php echo $shipping->id ?>" class="btn btn-link text-danger btnDeleteShipping"><i class="fa fa-trash"></i></button>
+                          <button data-toggle="tooltip" shippingId="<?php echo $shipping->id ?>" title="Edit" class="btn btn-link text-success btnEditShipping"><i class="fa fa-edit"></i></button>
+                          <button data-toggle="tooltip" title="Hapus" shippingId="<?php echo $shipping->id ?>" class="btn btn-link text-danger btnDeleteShipping"><i class="fa fa-trash"></i></button>
                         <?php endif; ?>
                       </td>
                     </tr>
                     <?php $i++;endforeach; ?>
                   </tbody>
                 </table>
+                <div id="waybills" class="print-content"></div>
               </div>
             </div>
           </div>
