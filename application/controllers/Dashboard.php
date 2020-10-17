@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Branch_model');
 		$this->load->model('User_model');
+		$this->load->model('Dashboard_model');
 
 		if (!$this->session->userdata('logged_in')) {
 			redirect('login');
@@ -16,7 +17,8 @@ class Dashboard extends CI_Controller {
     public function index() {
         $viewData = array(
 			'page_title' => 'Dashboard',
-			'primary_view' => 'dashboard/dashboard_view'
+			'primary_view' => 'dashboard/dashboard_view',
+			'daily_data'	=> $this->Dashboard_model->getDailyData(Date('Y-m-d'))
 		);
 		$this->load->view('template_view', $viewData);
     }

@@ -72,9 +72,9 @@
                   <tfoot>
                     <tr>
                       <td colspan="7" rowspan="2" class="text-right"><b>Total Penjualan</b></td>
+                      <td class="text-center"><?php echo 'Rp. '.number_format($trxList["totalCashCount"]) ?></td>
                       <td class="text-center"><?php echo 'Rp. '.number_format($trxList["totalInvoiceCount"]) ?></td>
                       <td class="text-center"><?php echo 'Rp. '.number_format($trxList["totalCodCount"]) ?></td>
-                      <td class="text-center"><?php echo 'Rp. '.number_format($trxList["totalCashCount"]) ?></td>
                     </tr>
                     <tr>
                       <?php $total = (int) $trxList["totalCashCount"] + (int) $trxList["totalCodCount"] + (int) $trxList["totalInvoiceCount"] ?>
