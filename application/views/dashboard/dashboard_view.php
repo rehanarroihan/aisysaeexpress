@@ -141,8 +141,8 @@
               <div class="table-responsive table-invoice">
                 <table class="table table-striped">
                   <tr>
-                    <th>Resis</th>
-                    <th>Tujuans</th>
+                    <th>Resi</th>
+                    <th>Tujuan</th>
                     <th>Tanggal Masuk</th>
                     <th>Status</th>
                     <th>Action</th>
