@@ -79,8 +79,8 @@ class Ms_variable {
     // convert 2020-12-24 to Kamis, 24 Desember 2020
     public function date($oldDateFormat, $includeTime = false) {
         return $includeTime 
-            ? strftime("%A, %d %B %Y %H:%M", strtotime($oldDateFormat)) . "\n"
-            : strftime("%A, %d %B %Y", strtotime($oldDateFormat)) . "\n";
+            ? strftime("%A, %d %B %Y %H:%M", strtotime($oldDateFormat))
+            : strftime("%A, %d %B %Y", strtotime($oldDateFormat));
     }
 
     // Helper for get status title and bootstrap color class name

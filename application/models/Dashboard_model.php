@@ -13,16 +13,19 @@ class Dashboard_model extends CI_Model {
         }
 
         if ($date) {
-            $query->where('created_at', $date);
+            $query->where('DATE(`created_at`)', $date);
+            $result = $query->get()->result();
+            $result = count($result) > 0 ? $result[0] : $result;
         } else {
             // If $date are not asssigned, then get weekly datas
             $inWeekDateRange = $this->ms_variable->getDateRangeInWeek();
             $query
                 ->where('shipping.created_at >=', $inWeekDateRange[0])
                 ->where('shipping.created_at <=', $inWeekDateRange[1]);
+
+            $result = $query->get()->result();
         }
         
-        $result = $query->get()->result();
 
         // Null / underfined saver
         if (!$result) {
@@ -36,5 +39,25 @@ class Dashboard_model extends CI_Model {
         }
 
         return $result;
+    }
+
+    public function getUnfinishedTasks() {
+        $tasks = $this->db
+            ->where('status', 3)
+            ->where('origin_branch_id', $this->session->userdata('branch_id'))
+            ->get('shipping')
+            ->result();
+
+        $fiveTasks = $this->db
+            ->where('status', 3)
+            ->where('origin_branch_id', $this->session->userdata('branch_id'))
+            ->limit(5)
+            ->get('shipping')
+            ->result();
+
+        return (object) array(
+            "total" => count($tasks),
+            "data"  => $fiveTasks
+        );
     }
 }
