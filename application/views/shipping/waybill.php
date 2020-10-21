@@ -149,7 +149,11 @@
             $branchName = $this->session->userdata('branch_name');
             $branchNaming = explode(" ", $branchName);
             if (count($branchNaming) > 1) {
-              echo $branchNaming[1];
+              if (strtolower($branchNaming[0]) == 'cabang') {
+                echo $branchNaming[1];
+              } else {
+                echo $branchNaming[0];
+              }
             } else {
               echo $branchName;
             }
