@@ -22,6 +22,8 @@ class Pdf extends Dompdf{
     public $filename;
     public function __construct(){
         parent::__construct();
+        $options = $this->getOptions();
+        $options->set('isRemoteEnabled', true);
         $this->filename = "laporan.pdf";
     }
     /**

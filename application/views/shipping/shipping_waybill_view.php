@@ -6,66 +6,34 @@
 	<title>Document</title>
 
 	<style>
-		@media screen,
-			print {
-			table {
-				table-layout: fixed;
-				width: 100%;
-				margin-bottom: 22px;
-				margin-right: 22px;
-			}
+		.top-item {
+			border-bottom: 1px solid black;
+			margin-bottom: 54px;
 		}
 
-		html {
-			margin-left: 12px;
-			margin-top: 38px;
+		.bottom-item {
+			border-top: 1px solid black;
 		}
 
-		body {
-			font-family: "Segoe UI";
-			display: flex;
-			flex-wrap: wrap;
-			align-content: flex-start;
-		}
-
-		.bg-yellow {
-			background-color: yellow;
-		}
-
-		.bg-red {
-			background-color: red;
-			color: white;
-		}
-
-		.bg-blue {
-			background-color: blue;
-			color: white;
-		}
-		.main-table {
-			width: 560px;
-			text-align: center;
-			text-transform: uppercase;
-			font-weight: 600;
-			border-collapse: collapse;
-		}
-
-		.kop-logo {
-			height: 64px;
-		}
-
-		.mn {
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
+		.grayscale {
+			-webkit-filter: grayscale(100%);
+			-moz-filter: grayscale(100%);
+			filter: grayscale(100%);
 		}
 	</style>
 </head>
 <body>
-	<div class="mn">
-	<?php $this->load->view('shipping/waybill', array('type' => 'PENERIMA')) ?>
-	<?php $this->load->view('shipping/waybill', array('type' => 'PENGIRIM')) ?> 
-	<?php $this->load->view('shipping/waybill', array('type' => 'TRANSPORTER')) ?>
-	<?php $this->load->view('shipping/waybill', array('type' => 'TRANSPORTER')) ?>
+	<div class="top-item">
+		<?php $this->load->view('shipping/waybill', array('type' => 'ASLI')) ?>
 	</div>
+	<div class="bottom-item grayscale">
+		<?php $this->load->view('shipping/waybill', array('type' => 'COPY')) ?>
+	</div> 
+	<div class="top-item grayscale">
+		<?php $this->load->view('shipping/waybill', array('type' => 'COPY')) ?>
+	</div> 
+	<div class="bottom-item grayscale">
+		<?php $this->load->view('shipping/waybill', array('type' => 'COPY')) ?>
+	</div> 
 </body>
 </html>
