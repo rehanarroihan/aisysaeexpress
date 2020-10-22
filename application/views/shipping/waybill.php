@@ -159,7 +159,7 @@
       <span>PENERIMA <br><br><br><br><br></span>
       <p>(_ _ _ _ _ _ _ _)</p>
     </td>
-    <td style="vertical-align: top; font-size: 12px; line-height: 90%;" width="50%">
+    <td style="vertical-align: top; font-size: 11.5px; line-height: 90%;" width="50%">
       <b>KETENTUAN :</b> <br>
       1. Barang kiriman diserahkan oleh pengangkut sesuai alamat tertera <br>
       2. Dalam hal force majure seperti; kecelakaan, keterlambatan, kebakaran, perampokan tidak menjadi tanggung jawab pengangkut <br>
@@ -169,6 +169,7 @@
       6. Kiriman yang tidak ditanyakan dalam tempo 3 bulan, pengangkut dibebaskan dari tanggung jawab <br>
       7. Apabila penerima menolak bea angkutan, maka pengirim diwajibkan untuk membayarnya <br>
       8. Untuk pembatalan kiriman dikenakan bea pembatalan sebesar 50% dari biaya pengiriman <br>
+      <b>9. KRITIK DAN SARAN HUB. WA 081-216 286 462</b>
     </td>
     <td width="15%" style="vertical-align: top; text-align: center;">
       <span style="margin-bottom: 30px">

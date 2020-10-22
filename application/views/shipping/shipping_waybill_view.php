@@ -8,7 +8,7 @@
 	<style>
 		.top-item {
 			border-bottom: 1px solid black;
-			margin-bottom: 48px;
+			margin-bottom: 40px;
 		}
 
 		.bottom-item {
