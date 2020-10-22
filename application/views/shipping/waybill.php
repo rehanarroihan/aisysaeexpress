@@ -110,7 +110,7 @@
   </tr>
   <tr style="height: 64px">
     <td style="text-align: center">
-      <?php echo $this->ms_variable->textTruncate($data->stuff_colly, 3) ?>
+      <?php echo $this->ms_variable->textTruncate($data->stuff_colly, 10) ?>
     </td>
     <td style="vertical-align: top; padding: 4px 6px">
       <?php echo $this->ms_variable->textTruncate($data->stuff_content, 20) ?>
