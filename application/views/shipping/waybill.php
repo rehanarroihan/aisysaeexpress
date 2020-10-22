@@ -52,22 +52,50 @@
     <td width="35%"></td>
     <td width="65%">
       <div style="color:#363f93; border: 3px solid #ee1d23; display: inline-block; font-size: 24px; font-style:bold; padding: 2px 18px; margin-right: 8px">SURAT MUATAN</div>
-      <div style="padding: 2px 0px; font-size: 28px; font-style:bold; display: inline-block; color:#363f93;">(RESI)</div>
+      <div style="padding: 2px 0px; font-size: 28px; font-style:bold; display: inline-block; color:#363f93;">
+        <?php echo $data->tracking_no ?>
+      </div>
     </td>
   </tr>
 </table>
 
 <table width="100%" style="margin-bottom: 10px">
   <tr>
-    <td style="padding-left: 12px; vertical-align: top;">
+    <td style="padding-left: 12px; vertical-align: top; text-transform: capitalize">
       <b>PENGIRIM :</b> <?php echo $this->ms_variable->textTruncate($data->sender_name, 30) ?> <br>
-      <?php echo $this->ms_variable->textTruncate($data->sender_address, 20) ?> <br>
-      <?php echo $this->ms_variable->textTruncate($data->sender_phone, 13) ?>
+      <?php
+        if ($data->sender_address != "") {
+          echo $this->ms_variable->textTruncate($data->sender_address, 30);
+        } else {
+          echo "<span style='color: white; visibility:hidden'>white text</span>";
+        }
+      ?>
+      <br>
+      <?php
+        if ($data->sender_phone != "") {
+          echo $this->ms_variable->textTruncate($data->sender_phone, 13);
+        } else {
+          echo "<span style='color: white; visibility:hidden'>white text</span>";
+        }
+      ?>
     </td>
     <td style="vertical-align: top;">
       <b>PENERIMA :</b> <?php echo $this->ms_variable->textTruncate($data->receiver_name, 30) ?> <br>
-      <?php echo $this->ms_variable->textTruncate($data->receiver_address, 20) ?> <br>
-      <?php echo $this->ms_variable->textTruncate($data->receiver_phone, 13) ?>
+      <?php
+        if ($data->receiver_address != "") {
+          echo $this->ms_variable->textTruncate($data->receiver_address, 30);
+        } else {
+          echo "<span style='color: white; visibility:hidden'>white text</span>";
+        }
+      ?>
+      <br>
+      <?php
+        if ($data->receiver_phone != "") {
+          echo $this->ms_variable->textTruncate($data->receiver_phone, 13);
+        } else {
+          echo "<span style='color: white; visibility:hidden'>white text</span>";
+        }
+      ?>
     </td>
   </tr>
 </table>
