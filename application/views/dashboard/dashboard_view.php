@@ -82,19 +82,14 @@
             <div class="dropdown d-inline">
               <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#" id="orders-month"><?php echo strftime("%B", strtotime(Date('Y-m-d'))) ?></a>
               <ul class="dropdown-menu dropdown-menu-sm">
-                <li class="dropdown-title">Select Month</li>
-                <li><a href="#" class="dropdown-item">Januari</a></li>
-                <li><a href="#" class="dropdown-item">Februari</a></li>
-                <li><a href="#" class="dropdown-item">Maret</a></li>
-                <li><a href="#" class="dropdown-item">April</a></li>
-                <li><a href="#" class="dropdown-item">Mai</a></li>
-                <li><a href="#" class="dropdown-item">Juni</a></li>
-                <li><a href="#" class="dropdown-item">Juli</a></li>
-                <li><a href="#" class="dropdown-item">Agustus</a></li>
-                <li><a href="#" class="dropdown-item">September</a></li>
-                <li><a href="#" class="dropdown-item">Oktober</a></li>
-                <li><a href="#" class="dropdown-item">November</a></li>
-                <li><a href="#" class="dropdown-item">Desember</a></li>
+                <li class="dropdown-title">Pilih Bulan</li>
+                <?php foreach($this->ms_variable->months() as $month): ?>
+                <li>
+                  <a href="javascript:void(0)" class="dropdown-item month" monthId="<?php echo $month->id ?>" monthName="<?php echo $month->name ?>">
+                    <?php echo $month->name ?>
+                  </a>
+                </li>
+                <?php endforeach; ?>
               </ul>
             </div>
           </h6>
@@ -102,15 +97,30 @@
             <div class="card-stats">
               <div class="card-stats-items mt-4">
                 <div class="card-stats-item">
-                  <div class="card-stats-item-count">24</div>
+                  <div class="card-stats-item-count">
+                    <div class="spinner-grow spinner-grow-sm text-dark loader" style="display:none" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <span id="monthlyTrx" class="monthlyValue"><?php echo $monthly_data->trx_count ?></span>
+                  </div>
                   <div class="card-stats-item-label">Transaksi</div>
                 </div>
                 <div class="card-stats-item">
-                  <div class="card-stats-item-count">12</div>
+                  <div class="card-stats-item-count">
+                    <div class="spinner-grow spinner-grow-sm text-dark loader" style="display:none" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <span id="monthlyTonase" class="monthlyValue"><?php echo $monthly_data->tonnage ?></span>
+                  </div>
                   <div class="card-stats-item-label">Tonase</div>
                 </div>
                 <div class="card-stats-item">
-                  <div class="card-stats-item-count">23</div>
+                  <div class="card-stats-item-count">
+                    <div class="spinner-grow spinner-grow-sm text-dark loader" style="display:none" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <span id="monthlyColly" class="monthlyValue"><?php echo $monthly_data->colly ?></span>
+                  </div>
                   <div class="card-stats-item-label">Colly</div>
                 </div>
               </div>
@@ -123,7 +133,7 @@
                 <h4>Total Omset</h4>
               </div>
               <div class="card-body">
-                Rp.
+                Rp. <span id="monthlyTurnover"><?php echo number_format($monthly_data->turnover) ?></span>
               </div>
             </div>
           </div>

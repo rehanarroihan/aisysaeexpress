@@ -21,10 +21,19 @@ class Dashboard extends CI_Controller {
 									? 'dashboard/manager_dashboard_view'
 									: 'dashboard/dashboard_view',
 			'daily_data'	=> $this->Dashboard_model->getDailyData(Date('Y-m-d')),
+			'monthly_data'	=> $this->Dashboard_model->getMonthlyData(Date('n')),
 			'unfinished'	=> $this->Dashboard_model->getUnfinishedTasks()
 		);
 		$this->load->view('template_view', $viewData);
-    }
+	}
+	
+	public function monthly() {
+		echo json_encode(array(
+			'status' => true,
+			'message' => 'Berhasil mendapatkan data dashboard bulanan',
+			'data' => $this->Dashboard_model->getMonthlyData($this->input->get('month'))
+        ));
+	}
 
     public function vehicle() {
         $viewData = array(

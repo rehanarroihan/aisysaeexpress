@@ -128,4 +128,57 @@ class Ms_variable {
         $text = $text."...";
         return $text;
     }
+
+    public function months() {
+        return array(
+            (object) array(
+                "id"    =>  1,   
+                "name"  => "Januari"
+            ),
+            (object) array(
+                "id"    =>  2,   
+                "name"  => "Februari"
+            ),
+            (object) array(
+                "id"    =>  3,
+                "name"  => "Maret"
+            ),
+            (object) array(
+                "id"    =>  4,   
+                "name"  => "April"
+            ),
+            (object) array(
+                "id"    =>  5,   
+                "name"  => "Mei"
+            ),
+            (object) array(
+                "id"    =>  6,   
+                "name"  => "Juni"
+            ),
+            (object) array(
+                "id"    =>  7,   
+                "name"  => "Juli"
+            ),
+            (object) array(
+                "id"    =>  8,   
+                "name"  => "Agustus"
+            ),
+            (object) array(
+                "id"    =>  9,   
+                "name"  => "September"
+            ),
+            (object) array(
+                "id"    =>  10,   
+                "name"  => "Oktober"
+            ),
+            (object) array(
+                "id"    =>  11,   
+                "name"  => "November"
+            ),
+            (object) array(
+                "id"    =>  12,   
+                "name"  => "Desember"
+            ),
+        );
+    }
 }

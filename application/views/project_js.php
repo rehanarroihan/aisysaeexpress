@@ -14,6 +14,29 @@
       }, 100);
     });
 
+    // ----------- Dashboard Section ----------- //
+    $(".month").on('click', async function(event)  {
+      $("#orders-month").html($(this).attr("monthName"));
+      
+      try {
+        $(".loader").show();
+        $(".monthlyValue").hide();
+
+        const result = await getMonthlyDashboardData($(this).attr("monthId"));
+        console.log(result);
+        $(".loader").hide();
+        $(".monthlyValue").show();
+
+        $("#monthlyTrx").html(result.data.trx_count);
+        $("#monthlyTonase").html(result.data.tonnage);
+        $("#monthlyColly").html(result.data.colly);
+        
+        $("#monthlyTurnover").html(currencyIDR(result.data.turnover));
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
     // ----------- Branch Section ----------- //
     $("#branchTable").dataTable({
       "columnDefs": [
@@ -462,6 +485,34 @@
       },
     });
 });
+
+function currencyIDR(input) {
+  var	number_string = input.toString(),
+    sisa 	= number_string.length % 3,
+    rupiah 	= number_string.substr(0, sisa),
+    ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+      
+  if (ribuan) {
+    separator = sisa ? ',' : '';
+    rupiah += separator + ribuan.join(',');
+  }
+
+  return rupiah;
+}
+
+function getMonthlyDashboardData(monthNumber) {
+  return new Promise((resolve, reject) => {
+    $.ajax('<?php echo base_url() ?>dashboard/monthly?month='+monthNumber, {
+      type: 'GET',
+      success: function (data, status, xhr) {
+        resolve(JSON.parse(data));
+      },
+      error: function (jqXhr, textStatus, errorMessage) {
+        reject(errorMessage);
+      }
+    });
+  });
+}
 
 function shippingFormValidation() {
   $('#destBranchSelect').addClass('is-invalid');
