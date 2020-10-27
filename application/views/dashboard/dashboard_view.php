@@ -53,7 +53,7 @@
                 <h4>Tonase</h4>
               </div>
               <div class="card-body">
-                <?php echo number_format($daily_data->trx_count) ?>
+                <?php echo number_format($daily_data->tonnage) ?>
               </div>
             </div>
           </div>
