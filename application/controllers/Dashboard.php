@@ -17,7 +17,9 @@ class Dashboard extends CI_Controller {
     public function index() {
         $viewData = array(
 			'page_title' 	=> 'Dashboard',
-			'primary_view' 	=> 'dashboard/dashboard_view',
+			'primary_view' 	=> $this->session->userdata('role') == 1
+									? 'dashboard/manager_dashboard_view'
+									: 'dashboard/dashboard_view',
 			'daily_data'	=> $this->Dashboard_model->getDailyData(Date('Y-m-d')),
 			'unfinished'	=> $this->Dashboard_model->getUnfinishedTasks()
 		);

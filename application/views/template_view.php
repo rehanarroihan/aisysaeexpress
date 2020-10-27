@@ -56,11 +56,17 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <div style="text-align: center; margin: 10px 0">
+                <?php if ($this->session->userdata('role') == 2): ?>
                 <p style="font-size: 14px; padding: 0; margin: 0 0 4px 0; line-height: 18px">
                   <?php echo $this->session->userdata('branch_name') ?> (<b><?php echo $this->session->userdata('branch_regist') ?></b>)</p>
                 <p style="font-size: 12px; padding: 0; margin: 0; line-height: 14px">
                   <?php echo $this->session->userdata('branch_address') ?>
                 </p>
+                <?php else: ?>
+                <p style="font-size: 12px; padding: 0; margin: 0; line-height: 14px">
+                  Manager
+                </p>
+                <?php endif; ?>
               </div>
               <div class="dropdown-divider"></div>
               <a href="<?php echo base_url() ?>logout" class="dropdown-item has-icon text-danger">
