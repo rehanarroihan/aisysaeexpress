@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->load->view('template_view', $viewData);
 	}
-	
+
 	public function monthly() {
 		echo json_encode(array(
 			'status' => true,

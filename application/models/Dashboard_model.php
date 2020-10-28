@@ -2,11 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard_model extends CI_Model {
+
+    
+    public function __construct() {
+        parent::__construct();
+        
+        $this->load->model('Shipping_model');
+    }
+    
     
     public function getDailyData($date) {
         $branch_id = $this->session->userdata('branch_id');
 
-        $query = $this->db->select('DATE_FORMAT(created_at, "%Y-%m-%d") as date, COUNT(*) as trx_count, SUM(price) as turnover, SUM(stuff_weight) as tonnage, SUM(stuff_colly) as colly')->from('shipping')->group_by('DATE_FORMAT(created_at, "%Y-%m-%d")');
+        $query = $this->db->select('COUNT(*) as trx_count, SUM(price) as turnover, SUM(stuff_weight) as tonnage, SUM(stuff_colly) as colly')
+                            ->from('shipping')
+                            ->group_by('DATE_FORMAT(created_at, "%Y-%m-%d")');
 
         if ($branch_id) {
             $query->where('origin_branch_id', $branch_id);
@@ -44,14 +54,20 @@ class Dashboard_model extends CI_Model {
     public function getMonthlyData($monthNumber) {
         $branch_id = $this->session->userdata('branch_id');
 
-        $query = $this->db->select('DATE_FORMAT(created_at, "%Y-%m-%d") as date, COUNT(*) as trx_count, SUM(price) as turnover, SUM(stuff_weight) as tonnage, SUM(stuff_colly) as colly')->from('shipping')->group_by('DATE_FORMAT(created_at, "%Y-%m-%d")');
+        $query = $this->db->select('DATE_FORMAT(created_at, "%Y-%m-%d") as date, COUNT(*) as trx_count, SUM(price) as turnover, SUM(stuff_weight) as tonnage, SUM(stuff_colly) as colly')
+                            ->from('shipping');
 
         if ($branch_id) {
             $query->where('origin_branch_id', $branch_id);
         }
 
         if ($monthNumber) {
-            $query->where('MONTH(`created_at`)', $monthNumber);
+            $firsdayOfMonth = date('Y-m-d', mktime(0, 0, 0, $monthNumber, 1, date('Y')));
+            $lastDatOfMonth = date('Y-m-d', mktime(0, 0, 0, $monthNumber+1, 0, date('Y')));
+
+            $query->where('shipping.created_at >=', $firsdayOfMonth)
+                ->where('shipping.created_at <=', $lastDatOfMonth);
+
             $result = $query->get()->result();
             $result = count($result) > 0 ? $result[0] : $result;
         }

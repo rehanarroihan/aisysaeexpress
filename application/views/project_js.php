@@ -23,7 +23,6 @@
         $(".monthlyValue").hide();
 
         const result = await getMonthlyDashboardData($(this).attr("monthId"));
-        console.log(result);
         $(".loader").hide();
         $(".monthlyValue").show();
 
