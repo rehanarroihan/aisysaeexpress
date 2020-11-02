@@ -118,6 +118,7 @@
     });
 
     $(".printWaybill").click(function() {
+      console.log('asu');
       Swal.fire({
         title: 'Silahkan Tunggu',
         html: 'Memuat detail pengiriman',

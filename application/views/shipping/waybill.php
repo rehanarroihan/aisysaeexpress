@@ -59,13 +59,13 @@
   </tr>
 </table>
 
-<table width="100%" style="margin-bottom: 10px">
+<table width="100%">
   <tr style="display: block; min-height: 80px; max-height: 80px;">
     <td width="50%" style="padding-left: 12px; padding-right: 2px; vertical-align: top; text-transform: capitalize">
       <b>PENGIRIM :</b> <?php echo $this->ms_variable->textTruncate($data->sender_name, 30) ?> <br>
       <?php
         if ($data->sender_address != "") {
-          echo $this->ms_variable->textTruncate($data->sender_address, 90);
+          echo "<span style='text-transform: uppercase'>".$this->ms_variable->textTruncate($data->sender_address, 90)."</span>";
         } else {
           echo "<span style='color: white; visibility:hidden'>white text</span>";
         }
@@ -83,7 +83,7 @@
       <b>PENERIMA :</b> <?php echo $this->ms_variable->textTruncate($data->receiver_name, 30) ?> <br>
       <?php
         if ($data->receiver_address != "") {
-          echo $this->ms_variable->textTruncate($data->receiver_address, 30);
+          echo "<span style='text-transform: uppercase'>".$this->ms_variable->textTruncate($data->receiver_address, 90)."</span>";
         } else {
           echo "<span style='color: white; visibility:hidden'>white text</span>";
         }
