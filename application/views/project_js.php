@@ -376,14 +376,12 @@
           // and for validation needs
           $('#editSnderName').trigger('paste');
           $('#editSenderAddress').trigger('paste');
-          $('#editDestBranchSelect')
-            .find('option:nth-child(' + res.data.destination_branch_id + ')')
-            .prop('selected',true)
-            .trigger('change');
-          $('#editPayment')
-            .find('option:nth-child(' + res.data.payment_type + ')')
-            .prop('selected',true)
-            .trigger('change');
+          
+          $("#editDestBranchSelect option[value="+res.data.destination_branch_id+"]").prop('selected', true);
+          $('#editDestBranchSelect').change();
+          
+          $("#editPayment option[value="+res.data.payment_type+"]").prop('selected', true);
+          $('#editPayment').change();
           
           $('#modal_edit_shipping').modal('show');
         },
