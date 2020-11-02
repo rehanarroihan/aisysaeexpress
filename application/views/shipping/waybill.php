@@ -47,7 +47,7 @@
   </tr>
 </table>
 
-<table width="100%" style="margin-bottom: 6px">
+<table width="100%" style="margin-top: -16px;">
   <tr>
     <td width="35%"></td>
     <td width="65%">
@@ -60,12 +60,12 @@
 </table>
 
 <table width="100%" style="margin-bottom: 10px">
-  <tr>
-    <td style="padding-left: 12px; vertical-align: top; text-transform: capitalize">
+  <tr style="display: block; min-height: 80px; max-height: 80px;">
+    <td width="50%" style="padding-left: 12px; padding-right: 2px; vertical-align: top; text-transform: capitalize">
       <b>PENGIRIM :</b> <?php echo $this->ms_variable->textTruncate($data->sender_name, 30) ?> <br>
       <?php
         if ($data->sender_address != "") {
-          echo $this->ms_variable->textTruncate($data->sender_address, 30);
+          echo $this->ms_variable->textTruncate($data->sender_address, 90);
         } else {
           echo "<span style='color: white; visibility:hidden'>white text</span>";
         }
@@ -79,7 +79,7 @@
         }
       ?>
     </td>
-    <td style="vertical-align: top;">
+    <td width="50%" style="vertical-align: top;">
       <b>PENERIMA :</b> <?php echo $this->ms_variable->textTruncate($data->receiver_name, 30) ?> <br>
       <?php
         if ($data->receiver_address != "") {

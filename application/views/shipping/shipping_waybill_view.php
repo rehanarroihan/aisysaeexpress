@@ -8,11 +8,12 @@
 	<style>
 		.top-item {
 			border-bottom: 1px solid black;
-			margin-bottom: 40px;
+			margin-bottom: 32px;
 		}
 
 		.bottom-item {
 			border-top: 1px solid black;
+			border-bottom: 1px solid black;
 		}
 
 		.grayscale {

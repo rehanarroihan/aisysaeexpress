@@ -157,4 +157,11 @@ class Shipping extends CI_Controller {
         $this->pdf->filename = "d".time().".pdf";
         $this->load->view('shipping/shipping_waybill_view', $viewData);
     }
+
+    public function printWb($shippingId) {
+        $viewData = array(
+            "data"  => $this->Shipping_model->getShippingById($shippingId)
+        );
+        $this->load->view('shipping/shipping_waybill_view', $viewData);
+    }
 }
