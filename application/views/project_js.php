@@ -1,6 +1,5 @@
 <script>
   $(document).ready(function() {
-    $("#printManifestButton").hide();
 
     $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
       $('body').css('padding-right','0');
@@ -70,14 +69,24 @@
     });
 
     // ----------- Shipping Section ----------- //
-    $("#shippingTable").dataTable({
+    var shippingTable = $("#shippingTable").DataTable({
       responsive: true,
       "columnDefs": [
-        { "sortable": false, "targets": [0, 7] },
+        { "sortable": false, "targets": [0, 8] },
+        {
+          'targets': 0,
+          'checkboxes': {
+            'selectRow': true
+          }
+        }
       ],
+      'select': {
+        'style': 'multi',
+        'selector': 'td:not(:last-child)'
+      },
       "language": {
         "emptyTable": "Belum ada data pengiriman dari cabang <?php echo $this->session->userdata('branch_name') ?> (<?php echo $this->session->userdata('branch_regist') ?>)"
-      }
+      },
     });
 
     $("#adminShippingTable").dataTable({
@@ -117,8 +126,7 @@
       });
     });
 
-    $(".printWaybill").click(function() {
-      console.log('asu');
+    $("#shippingTable tbody").on("click", "tr .printWaybill", function() {
       Swal.fire({
         title: 'Silahkan Tunggu',
         html: 'Memuat detail pengiriman',
@@ -145,7 +153,6 @@
       }).then((result) => {
         
       })
-      
     });
 
     var willUpdateShippingId = "";
@@ -283,26 +290,52 @@
     var ids = "";
     var checkedShippingSts = [];
     $("#printManifestButton").click(function() {
-      // Checking only status 1 that can print manifest
-      for (var i of checkedShippingSts) {
-        if (i != 1) {
-          Swal.fire({
-            title: "Peringatan",
-            text: "Cetak manifest hanya bisa di lakukan untuk pengiriman ber-status Order Masuk",
-            icon: 'error',
-            confirmButtonText: "Oke",
-            allowOutsideClick: false,
-            focusCancel: true
-          });
-          
-          return;
-        }
+      var rowsSelected = shippingTable.column(0).checkboxes.selected();
+      
+      if (rowsSelected.length == 0) {
+        return Swal.fire({
+          title: 'Peringatan',
+          text: "Anda belum mencentang satupun data pada tabel di bawah",
+          icon: 'warning',
+          confirmButtonText: 'Oke',
+          reverseButtons: true
+        });
       }
-      $("#manifestDetailDialogModal").modal('toggle');
+
+      let showModal = true;
+      let manifestIds = [];
+      $.each(rowsSelected, function(index, rowId) {
+         // Create a hidden element
+         const rowData = shippingTable.row(rowId-1).data();
+
+         const shippingStatus = rowData[6];
+         if (shippingStatus != "1") {
+           showModal = false;
+            return Swal.fire({
+              title: "Peringatan",
+              text: "Cetak manifest hanya bisa di lakukan untuk pengiriman ber-status Order Masuk",
+              icon: 'error',
+              confirmButtonText: "Oke",
+              allowOutsideClick: false,
+              focusCancel: true
+            });
+          }
+
+          if (shippingStatus == "1") {
+            manifestIds.push(rowData[7]); //pushing tracking id (resi)
+          }
+      });
+
+      if (showModal) {
+        ids = manifestIds.join();
+        $("#printManifestTitle").html('Cetak Manifes ('+rowsSelected.length+' Resi)')
+        $("#dataCount").html(rowsSelected.length);
+        $("#manifestDetailDialogModal").modal('toggle');
+      }
     });
 
     var willUpdateShipId = "";
-    $(".btnEditShipping").click(function() {
+    $("#shippingTable tbody").on("click", "tr .btnEditShipping", function() {
       const shipid =  $(this).attr("shippingId");
       willUpdateShipId = shipid;
 
@@ -361,7 +394,7 @@
       submitShippingEdit(willUpdateShipId);
     });
 
-    $(".btnDeleteShipping").click(function() {
+    $("#shippingTable tbody").on("click", "tr .btnDeleteShipping", function() {
       const willDeleteShippingId =  $(this).attr("shippingId");
       deleteShippingById(willDeleteShippingId);
     });
@@ -373,7 +406,6 @@
         type: 'POST',
         data: { ids: ids, status: 2, remarks: '' },
         success: function (data, status, xhr) {          
-
           const res = JSON.parse(data);
           
           if (!res.status) {
@@ -413,54 +445,6 @@
         }
       });
 
-    });
-
-    var manifestList = [];
-    $("[data-checkboxes]").each(function() {
-      var me = $(this),
-      group = me.data('checkboxes'),
-      role = me.data('checkbox-role');
-
-      me.change(function() {
-        var all = $('[data-checkboxes="' + group + '"]:not([data-checkbox-role="dad"])'),
-          checked = $('[data-checkboxes="' + group + '"]:not([data-checkbox-role="dad"]):checked'),
-          dad = $('[data-checkboxes="' + group + '"][data-checkbox-role="dad"]'),
-          total = all.length,
-          checked_length = checked.length;
-
-        if(role == 'dad') {
-          if(me.is(':checked')) {
-            all.prop('checked', true);
-          }else{
-            all.prop('checked', false);
-          }
-        }else{
-          if(checked_length >= total) {
-            dad.prop('checked', true);
-          }else{
-            dad.prop('checked', false);
-          }
-        }
-
-        checkedItems = [];
-        checkedIItemsStatus = [];
-        checked.each((index, value) => {
-          checkedItems.push(value.attributes.shipping.value);
-          checkedIItemsStatus.push(value.attributes.status.value);
-        })
-
-        manifestList = checkedItems;
-        ids = manifestList.join();
-        checkedShippingSts = checkedIItemsStatus;
-        if (checkedItems.length == 0) {
-          // hide cetaik manifest button
-          $("#printManifestButton").hide();
-        } else {
-          $("#printManifestButton").show();
-          $("#printManifestButton").html("<i class='fas fa-tag'></i>&nbsp;Cetak Manifes ("+ checkedItems.length +")");
-          $("#dataCount").text(checkedItems.length);
-        }
-      });
     });
 
     // ----------- Report Section ----------- //

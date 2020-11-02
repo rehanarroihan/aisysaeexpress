@@ -33,39 +33,21 @@
                   <thead>
                     <tr>
                       <th class="text-center">
-                        <!-- <div class="custom-checkbox custom-control ml-23">
-                          <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                          <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                        </div> -->
-                      </th>
-                      <th class="text-center">
                         #
                       </th>
-                      <th>No Tracking</th>
+                      <th width="12%">No Tracking</th>
                       <th>Nama Pengirim</th>
                       <th>Cabang Tujuan</th>
                       <th>Tanggal Masuk</th>
                       <th>Status</th>
+                      <th style="display:none">statusid</th>
+                      <th style="display:none">shippingid</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $i=1;foreach($shipping_data_list as $shipping): ?>
                     <tr>
-                      <td class="text-center">
-                        <div class="custom-checkbox custom-control">
-                          <input
-                            type="checkbox"
-                            data-checkboxes="mygroup"
-                            shipping="<?php echo $shipping->id ?>"
-                            status="<?php echo $shipping->status ?>"
-                            resi="<?php echo $shipping->tracking_no ?>"
-                            class="custom-control-input"
-                            id="checkbox<?php echo $i ?>"
-                          >
-                          <label for="checkbox<?php echo $i ?>" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </td>
                       <td><?php echo $i ?></td>
                       <td><?php echo $shipping->tracking_no ?></td>
                       <td><?php echo $shipping->sender_name ?></td>
@@ -76,6 +58,8 @@
                           <?php echo $this->ms_variable->getShppingStatusTitleAndColor($shipping->status)[0] ?>
                         </span>
                       </td>
+                      <td style="display:none"><?php echo $shipping->status ?></td>
+                      <td style="display:none"><?php echo $shipping->id ?></td>
                       <td>
                         <button data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info printWaybill"><i class="fa fa-print"></i></button>
                         <!-- <a href="<?php echo base_url() ?>shipping/printwb/<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info"><i class="fa fa-print"></i></a> -->
@@ -511,7 +495,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Cetak Manifes</h5>
+        <h5 class="modal-title" id="printManifestTitle">Cetak Manifes</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -524,7 +508,7 @@
           <input type="text" id="nopolInput" class="form-control" placeholder="Nopol">
         </div>
         
-        <p>Dengan menekan tombol cetak, maka <span id="dataCount"></span> resi akan di ubah statusnya menjadi <span class="text-info">Perjalanan ke Kota Tujuan</span></p>
+        <p>Dengan menekan tombol cetak, maka <span id="dataCount"></span> resi terpilih akan di ubah statusnya menjadi <span class="text-info">Perjalanan ke Kota Tujuan</span></p>
       </div>
       <div class="modal-footer bg-whitesmoke br">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
