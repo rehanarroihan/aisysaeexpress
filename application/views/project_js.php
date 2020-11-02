@@ -98,7 +98,23 @@
     });
 
     $("#open_shipping_button").click(function() {
-      generateResi();
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'sedang membuat nomor resi baru...',
+        willOpen: async () => {
+          Swal.showLoading();
+          try {
+            const tracking_no = await generateResi();
+            $('#trackingNumber').val(tracking_no);
+            Swal.close();
+            $("#modal_create_shipping").modal('toggle');
+          } catch (e) {
+            Swal.close();
+          }
+        },
+      }).then((result) => {
+        
+      });
     });
 
     $(".printWaybill").click(function() {
@@ -610,41 +626,25 @@ function maskSomeShippingEditForm() {
 }
 
 function generateResi() {
-  $('#trackingNumber').val('Sedang memuat...');
+  return new Promise((resolve, reject) => {
+    $.ajax('<?php echo base_url() ?>dashboard/shipping/resi', {
+      type: 'POST',
+      data: {
+        branch_id: "<?php echo $this->session->userdata('branch_id') ?>",
+      },
+      success: function (data, status, xhr) {
+        const res = JSON.parse(data);
+        if (!res.status) {
+          reject('Gagal mendapatkan data resi, mohon refresh');
+          return;
+        }
 
-  $.ajax('<?php echo base_url() ?>dashboard/shipping/resi', {
-    type: 'POST',
-    data: {
-      branch_id: "<?php echo $this->session->userdata('branch_id') ?>",
-    },
-    success: function (data, status, xhr) {
-      const res = JSON.parse(data);
-      
-      if (!res.status) {
-        new Noty({
-          theme: 'metroui',
-          type: 'error',
-          text: 'Gagal mendapatkan data resi, mohon refresh',
-          timeout: 3000
-        }).show();
-
-        $('#trackingNumber').val("Gagal mendapatkan data, mohon refresh");
-
-        return;
+        resolve(res.data);
+      },
+      error: function (jqXhr, textStatus, errorMessage) {
+        reject(errorMessage);
       }
-
-      $('#trackingNumber').val(res.data);
-    },
-    error: function (jqXhr, textStatus, errorMessage) {
-      new Noty({
-        theme: 'metroui',
-        type: 'error',
-        text: 'Gagal mendapatkan data resi, mohon refresh',
-        timeout: 3000
-      }).show();
-
-      $('#trackingNumber').val("Gagal mendapatkan data, mohon refresh");
-    }
+    });
   });
 }
 

@@ -24,7 +24,7 @@
               <h4 class="text-muted">Daftar Data Pengiriman</h4>
               <div class="d-flex">
                 <button id="printManifestButton" class="btn btn-warning" type="button"><i class="fas fa-tag"></i>&nbsp;Cetak Manifest</button>
-                <button data-toggle="modal" id="open_shipping_button" data-target="#modal_create_shipping" class="btn btn-primary ml-2" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
+                <button id="open_shipping_button" class="btn btn-primary ml-2" type="button"><i class="fas fa-exchange-alt"></i>&nbsp;Tambah Pengiriman Baru</button>
               </div>
             </div>
             <div class="card-body">
