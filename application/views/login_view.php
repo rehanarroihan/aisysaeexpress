@@ -26,8 +26,8 @@
               <img src="https://aisysaeexpress.com/wp-content/uploads/2020/08/cropped-Logo-192x192.jpg" style="border: 4px solid #f4f6f9;" alt="logo" width="125" class="shadow-dark rounded-circle">
             </div>
 
-            <div class="card card-primary">
-              <div class="card-header"><h4>Masuk ke Dashboard</h4></div>
+            <div class="card card-success">
+              <div class="card-header"><h4 class="text-success">Masuk ke Dashboard</h4></div>
 
               <div class="card-body">
                 <form method="POST" action="<?php echo base_url() ?>login/submit">
@@ -51,7 +51,7 @@
                   </div>
 
                   <div class="form-group">
-                    <input type="submit" namespace="login" class="btn btn-primary btn-lg btn-block" tabindex="4" value="Masuk">
+                    <input type="submit" namespace="login" class="btn btn-success btn-lg btn-block" tabindex="4" value="Masuk">
                   </div>
                 </form>
               </div>
