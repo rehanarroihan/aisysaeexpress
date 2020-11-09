@@ -62,6 +62,7 @@
                     <?php $i++;endforeach; ?>
                   </tbody>
                 </table>
+                <div id="waybills" class="print-content"></div>
               </div>
             </div>
           </div>
