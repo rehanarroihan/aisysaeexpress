@@ -56,12 +56,13 @@
                       </td>
                       <td>
                         <button data-toggle="tooltip" shippingId="<?php echo $shipping->id ?>" title="Update Status" class="btn btn-link text-info btnOpenShippingDetail"><i class="fa fa-location-arrow"></i></button>
-                        <a href="<?php echo base_url() ?>dashboard/shipping/print/<?php echo $shipping->id ?>" data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info"><i class="fa fa-print"></i></a>
+                        <button data-toggle="tooltip" shippingid="<?php echo $shipping->id ?>" title="Print Surat Jalan" class="btn btn-link text-info printWaybill"><i class="fa fa-print"></i></button>
                       </td>
                     </tr>
                     <?php $i++;endforeach; ?>
                   </tbody>
                 </table>
+                <div id="waybills" class="print-content"></div>
               </div>
             </div>
           </div>

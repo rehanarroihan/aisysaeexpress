@@ -157,7 +157,7 @@
 
     var willUpdateShippingId = "";
     var updateStatusTo = "";
-    $(".btnOpenShippingDetail").click(function() {
+    $("#incomingShippingTable tbody").on("click", "tr .btnOpenShippingDetail", function() {
       var shippingId = $(this).attr("shippingId");
       willUpdateShippingId = shippingId;
 
@@ -226,6 +226,35 @@
           });
 
           $("#updateStatusModal").modal("show");
+        },
+      }).then((result) => {
+        
+      })
+    });
+
+    $("#incomingShippingTable tbody").on("click", "tr .printWaybill", function() {
+      Swal.fire({
+        title: 'Silahkan Tunggu',
+        html: 'Memuat detail pengiriman',
+        willOpen: async () => {
+          Swal.showLoading();
+          $.ajax('<?php echo base_url() ?>dashboard/shipping/print/'+$(this).attr("shippingId"), {
+            type: 'GET',
+            success: function (data, status, xhr) {
+              Swal.close();
+              $('#waybills').empty();
+              $(data).appendTo('#waybills');
+              printJS({
+                printable: "waybills",
+                type: 'html'
+              });
+              $('#waybills').empty();
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              Swal.close();
+            }
+          });
+          
         },
       }).then((result) => {
         
