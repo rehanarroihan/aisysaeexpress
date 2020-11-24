@@ -31,7 +31,7 @@
     </td>
     <td width="70%" style="vertical-align: top;">
       <div style="text-align: center">
-        <span style="font-size: 48px; color:#363f93; font-style: bold">LISA SEJAHTERA</span>
+        <span style="font-size: 34px; color:#363f93; font-style: bold">PT. LISA AISY SEJAHTERA</span>
         <p style="padding:0; margin:0; font-size: 14px; font-style: bold">
           Kantor pusat JL. Semut Kali, Ruko Semut Indah Blok B No.14 Surabaya <br>
           Tlp: 031-99220818 Email: <span style="color:#363f93"><u>pt.lisaaisysejahtera@gmail.com</u></span> Website: <br>
