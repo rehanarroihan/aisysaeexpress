@@ -18,6 +18,10 @@ class Branch_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    public function get() {
+        return $this->db->get($this->tableName)->result();
+    }
+
     public function getBranchDetailById($branchId) {
         return $this->db
                     ->where('id', $branchId)
