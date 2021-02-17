@@ -26,7 +26,9 @@ class Dashboard_model extends CI_Model {
                             ->group_by('DATE_FORMAT(created_at, "%Y-%m-%d")');
 
         if ($branch_id) {
-            $query->where('origin_branch_id', $branch_id);
+            if ($branch_id != 'all') {
+                $query->where('origin_branch_id', $branch_id);
+            }
         }
 
 
