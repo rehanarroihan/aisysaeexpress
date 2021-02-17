@@ -4,15 +4,15 @@
       <h1>Dashboard Manager</h1>
       <div class="col-auto">
         <?php 
-          $selectedBranchId = 0;
+          $selectedBranchId = 'all';
           if (isset($_GET['branch'])) {
-            $selectedBranchId = isset($_GET['branch']);
+            $selectedBranchId = $_GET['branch'];
           }
         ?>
         <select class="form-control" id="managerBranchOptions">
-          <option value="all" selected="<?php if ($selectedBranchId == 0) { echo 'selected'; } ?>">SEMUA</option>
+          <option value="all" <?php if ($selectedBranchId == 'all') { echo 'selected'; } ?>>SEMUA</option>
           <?php $i=1; foreach($branchList as $brnch): ?>
-          <option value="<?php echo $brnch->id ?>" selected="<?php if ($selectedBranchId == 0) { echo 'selected'; } ?>">
+          <option value="<?php echo $brnch->id ?>" <?php if ($selectedBranchId == $brnch->id) { echo 'selected'; } ?>>
             <?php echo $brnch->name ?>
           </option>
           <?php $i++; endforeach; ?>
