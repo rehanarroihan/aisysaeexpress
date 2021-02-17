@@ -3,10 +3,16 @@
     <div class="section-header">
       <h1>Dashboard Manager</h1>
       <div class="col-auto">
-        <select class="form-control">
-          <option value="all">SEMUA</option>
+        <?php 
+          $selectedBranchId = 0;
+          if (isset($_GET['branch'])) {
+            $selectedBranchId = isset($_GET['branch']);
+          }
+        ?>
+        <select class="form-control" id="managerBranchOptions">
+          <option value="all" selected="<?php if ($selectedBranchId == 0) { echo 'selected'; } ?>">SEMUA</option>
           <?php $i=1; foreach($branchList as $brnch): ?>
-          <option value="<?php echo $brnch->id ?>">
+          <option value="<?php echo $brnch->id ?>" selected="<?php if ($selectedBranchId == 0) { echo 'selected'; } ?>">
             <?php echo $brnch->name ?>
           </option>
           <?php $i++; endforeach; ?>
@@ -85,7 +91,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12">
           <h6>
             Data Bulan
@@ -183,7 +189,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </section>
