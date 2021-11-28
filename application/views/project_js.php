@@ -13,6 +13,11 @@
       }, 100);
     });
 
+    // ----------- Manager Dashboard Section ---------//
+    $('#managerBranchOptions').on('change', function(e) {
+      window.location.replace('<?php echo base_url() ?>dashboard?branch='+$(this).val());
+    });
+
     // ----------- Dashboard Section ----------- //
     $(".month").on('click', async function(event)  {
       $("#orders-month").html($(this).attr("monthName"));

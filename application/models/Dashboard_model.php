@@ -12,15 +12,25 @@ class Dashboard_model extends CI_Model {
     
     
     public function getDailyData($date) {
-        $branch_id = $this->session->userdata('branch_id');
+        $branch_id = null;
+        if ($this->session->userdata('role') == 1) {
+            if (isset($_GET['branch'])) {
+                $branch_id = $_GET['branch'];
+            }
+        } else {
+            $branch_id = $this->session->userdata('branch_id');
+        }
 
         $query = $this->db->select('COUNT(*) as trx_count, SUM(price) as turnover, SUM(stuff_weight) as tonnage, SUM(stuff_colly) as colly')
                             ->from('shipping')
                             ->group_by('DATE_FORMAT(created_at, "%Y-%m-%d")');
 
         if ($branch_id) {
-            $query->where('origin_branch_id', $branch_id);
+            if ($branch_id != 'all') {
+                $query->where('origin_branch_id', $branch_id);
+            }
         }
+
 
         if ($date) {
             $query->where('DATE(`created_at`)', $date);

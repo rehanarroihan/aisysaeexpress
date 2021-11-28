@@ -22,7 +22,8 @@ class Dashboard extends CI_Controller {
 									: 'dashboard/dashboard_view',
 			'daily_data'	=> $this->Dashboard_model->getDailyData(Date('Y-m-d')),
 			'monthly_data'	=> $this->Dashboard_model->getMonthlyData(Date('n')),
-			'unfinished'	=> $this->Dashboard_model->getUnfinishedTasks()
+			'unfinished'	=> $this->Dashboard_model->getUnfinishedTasks(),
+			'branchList' => $this->Branch_model->get()
 		);
 		$this->load->view('template_view', $viewData);
 	}
