@@ -186,7 +186,7 @@ class Shipping_model extends CI_Model {
         $query = $this->db
                     ->where('origin_branch_id', $branchId)
                     ->where('MONTH(shipping.created_at)', Date('m'))
-                    ->where('YEAR(shipping.created_at)', Date('y'))
+                    ->where('YEAR(shipping.created_at)', Date('Y'))
                     ->order_by('id',"DESC")
                     ->get($this->tableName);
 
