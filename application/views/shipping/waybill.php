@@ -27,11 +27,11 @@
 <table width="100%">
   <tr>
     <td width="10%">
-      <img src="<?php echo base_url() ?>assets/img/ase.png" style="height: 116px" alt="">
+      <img src="<?php echo base_url() ?>assets/img/ase1.png" style="height: 116px" alt="">
     </td>
     <td width="70%" style="vertical-align: top;">
       <div style="text-align: center">
-        <span style="font-size: 48px; color:#363f93; font-style: bold">AISY SAE EXPRESS</span>
+        <span style="font-size: 42px; color:#363f93; font-style: bold">AISY SAE BERSAUDARA</span>
         <p style="padding:0; margin:0; font-size: 14px; font-style: bold">
           Kantor pusat JL. Semut Kali, Ruko Semut Indah Blok B No.14 Surabaya <br>
           Tlp: 031-99220818 Email: <span style="color:#363f93"><u>aisysaeexpress1@gmail.com</u></span> Website: <br>
