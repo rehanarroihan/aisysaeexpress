@@ -162,7 +162,7 @@
 
             // Populating histories
             $("#timeline").empty();
-            var statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
+            var statusList = <?php echo json_encode($this->ms_variable->shippingStatusList()) ?>;
             res.data.history.reverse();
             for (var milestone of res.data.history) {
               moment.locale('id');

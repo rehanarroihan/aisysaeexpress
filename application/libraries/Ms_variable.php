@@ -3,33 +3,60 @@
 class Ms_variable {
     public $dbDateTimeFormat = "Y-m-d H:m:s";
 
-    public $shippingStatus = array(
+    private $shippingStatus = array(
         array(
             "id" => 1,
+            "order" => 1,
             "title" => 'Order Masuk',
             "badge_title" => 'Order Masuk'
         ),
         array(
             "id" => 2,
+            "order" => 2,
             "title" => 'Perjalanan ke Kota Tujuan',
             "badge_title" => 'Perjalanan'
         ),
         array(
             "id" => 3,
+            "order" => 3,
             "title" => 'Transit',
             "badge_title" => 'Transit'
         ),
         array(
             "id" => 4,
+            "order" => 6,
             "title" => 'Diterima Dengan Baik',
             "badge_title" => 'Diterima'
         ),
         array(
             "id" => 5,
+            "order" => 7,
             "title" => 'Cancelled',
             "badge_title" => 'Cancelled'
-        )
+        ),
+        array(
+            "id" => 6,
+            "order" => 4,
+            "title" => 'Sampai di Warehouse Kota Tujuan',
+            "badge_title" => 'Warehouse Tujuan'
+        ),
+        array(
+            "id" => 7,
+            "order" => 5,
+            "title" => 'Proses Antar Kurir',
+            "badge_title" => 'Kurir'
+        ),
     );
+
+    public function shippingStatusList() {
+        $statusList = $this->shippingStatus;
+
+        usort($statusList, function($a, $b) {
+            return strcmp($a["order"], $b["order"]);
+        }); 
+
+        return $statusList;
+    }
 
     public $shippingType = array(
         array(
@@ -58,7 +85,7 @@ class Ms_variable {
         array(
             "id" => 4,
             "title" => 'Kapal Laut'
-        )
+        ),
     );
 
     public $shippingPaymentType = array(
@@ -100,6 +127,10 @@ class Ms_variable {
                     $statusBadgeColorClass = "success";
                 } else if ($status['id'] == 5) {
                     $statusBadgeColorClass = "danger";
+                } else if ($status['id'] == 6) {
+                    $statusBadgeColorClass = "info";
+                } else if ($status['id'] == 7) {
+                    $statusBadgeColorClass = "info";
                 }
                 break;
             }

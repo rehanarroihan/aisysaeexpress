@@ -121,7 +121,7 @@
                 <label>Status Pengiriman</label>
                 <select id="statusSelect" class="form-control" readonly>
                   <option value="" disabled>-- Pilih Status Pengiriman --</option>
-                  <?php foreach($this->ms_variable->shippingStatus as $status): ?>
+                  <?php foreach($this->ms_variable->shippingStatusList() as $status): ?>
                     <?php if ($status['id'] == 1): ?>
                       <option value="<?php echo $status['id'] ?>" selected>
                         <?php echo $status['title'] ?>
@@ -325,7 +325,7 @@
                 <label>Status Pengiriman</label>
                 <select id="editStatusSelect" class="form-control" readonly>
                   <option value="" disabled>-- Pilih Status Pengiriman --</option>
-                  <?php foreach($this->ms_variable->shippingStatus as $status): ?>
+                  <?php foreach($this->ms_variable->shippingStatusList() as $status): ?>
                     <?php if ($status['id'] == 1): ?>
                       <option value="<?php echo $status['id'] ?>" selected>
                         <?php echo $status['title'] ?>
