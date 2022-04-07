@@ -187,7 +187,7 @@
           $('#detailReceiverBranch').html(res.data.destination_branch + " ("+res.data.destination_branch_code+")");
 
           var dropdown = $("#updateStatusSelect");
-          statusList = <?php echo json_encode($this->ms_variable->shippingStatus) ?>;
+          statusList = <?php echo json_encode($this->ms_variable->shippingStatusList()) ?>;
           // Clearing previos options 
           $("#updateStatusSelect option").each(function() {
             if ( $(this).val() != "" ) {
@@ -195,16 +195,29 @@
             }
           });
           
-          if (res.data.status == "3") {
-            // if transit, then show "Perjalanan"
-            dropdown.append($("<option />").val("2").text("Perjalanan ke Kota Tujuan"));
-          }
-          $.each(statusList, function() {
-            // Insert status that can be use for update status
+          //// since 6 April 2022, azril requested to allow admin to turn back the status
 
-            if (this.id > res.data.status)
-              dropdown.append($("<option />").val(this.id).text(this.title));
+          // if (res.data.status == "3") {
+          //   // if transit, then show "Perjalanan"
+          //   dropdown.append($("<option />").val("2").text("Perjalanan ke Kota Tujuan"));
+          // }
+          // $.each(statusList, function() {
+          //   // Insert status that can be useful for update status
+
+          //   if (this.id > res.data.status)
+          //     dropdown.append($("<option />").val(this.id).text(this.title));
+
+          //   dropdown.append($("<option />").val(this.id).text(this.title));
+          // });
+
+          $.each(statusList, function() {
+            dropdown.append($("<option />").val(this.id).text(this.title));
           });
+
+          dropdown.find('[value="1"]').remove();
+          dropdown.find('[value="2"]').remove();
+
+          ////
 
           $("#updateStatusCTA").prop('disabled', true);
           $("#updateStatusCTA").removeClass('btn-info');
@@ -297,7 +310,7 @@
 
           $("#updateStatusModal").modal("hide");
 
-          reloadPageInSix();
+          //reloadPageInSix();
         },
         error: function (jqXhr, textStatus, errorMessage) {
           new Noty({
