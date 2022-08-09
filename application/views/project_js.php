@@ -130,6 +130,10 @@
         
       });
     });
+    
+    $("#open_armada_button").click(function() {
+      $("#modal_create_armada").modal('toggle');
+    });
 
     $("#shippingTable tbody").on("click", "tr .printWaybill", function() {
       Swal.fire({
@@ -443,6 +447,20 @@
       const willDeleteShippingId =  $(this).attr("shippingId");
       deleteShippingById(willDeleteShippingId);
     });
+
+    $("#armadaTable tbody").on("click", "tr .btnDeleteArmada", function() {
+      Swal.fire({
+        title: 'Peringatan',
+        text: "Apakah anda yakin ingin menghapus armada ini ?\nData yang tela dihapus tidak dapat dikembalikan",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+      }).then((result) => {
+        
+      })
+    });
       
     $("#goPrintManifestButton").click(function() {
       // Updating status and insert history
@@ -466,7 +484,11 @@
 
           $.ajax('<?php echo base_url() ?>dashboard/shipping/manifest', {
             type: 'POST',
-            data: { ids: ids, driver: $('#driverInput').val(), nopol: $('#nopolInput').val() },
+            data: {
+              ids: ids,
+              driver: $('#driverInput').val(),
+              nopol: $('#nopolInput').val()
+            },
             success: function (data, status, xhr) {
               $("#goPrintManifestButton").removeClass('disabled btn-progress');
               window.open(data);

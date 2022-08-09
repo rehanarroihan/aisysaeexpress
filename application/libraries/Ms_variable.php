@@ -48,6 +48,65 @@ class Ms_variable {
         ),
     );
 
+    public function vehicleList() {
+        return array(
+            (object) array(
+                'id' => 1,
+                'registration_no' => 'B 5567 KL',
+                'brand' => 'Mitsubishi',
+                'model' => 'Colt FE 71',
+                'type' => 'Truck',
+                'manufacture_year' => '2020',
+                'machine_number' => 'OP51E45636677',
+            ),
+            (object) array(
+                'id' => 2,
+                'registration_no' => 'L 345 RND',
+                'brand' => 'Mitsubishi',
+                'model' => 'Fighter FN 61 L HD',
+                'type' => 'Truck',
+                'manufacture_year' => '2012',
+                'machine_number' => 'RQ51E67836679',
+            ),
+            (object) array(
+                'id' => 3,
+                'registration_no' => 'B 3445 KR',
+                'brand' => 'Hino',
+                'model' => 'Dutro Cargo 110 SDR',
+                'type' => 'Truck',
+                'manufacture_year' => '2015',
+                'machine_number' => 'RS51E88936622',
+            ),
+            (object) array(
+                'id' => 4,
+                'registration_no' => 'B 9809 RH',
+                'brand' => 'Fuso',
+                'model' => 'Fighter FM 65 FS Hi-Gear',
+                'type' => 'Truck',
+                'manufacture_year' => '2020',
+                'machine_number' => 'JI51U903766678',
+            ),
+            (object) array(
+                'id' => 5,
+                'registration_no' => 'D 9810 PPR',
+                'brand' => 'Hino',
+                'model' => 'Dutro Cargo 110 SDR',
+                'type' => 'Truck',
+                'manufacture_year' => '2020',
+                'machine_number' => 'JI51U903700678',
+            ),
+            (object) array(
+                'id' => 6,
+                'registration_no' => 'B 4467 QR',
+                'brand' => 'Hino',
+                'model' => 'Dutro Cargo 110 SDR',
+                'type' => 'Truck',
+                'manufacture_year' => '2020',
+                'machine_number' => 'JI91U903700678',
+            ),
+        );
+    }
+
     public function shippingStatusList() {
         $statusList = $this->shippingStatus;
 

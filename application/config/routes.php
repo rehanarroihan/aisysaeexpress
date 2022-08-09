@@ -77,7 +77,12 @@ $route['tracking'] = 'welcome/tracking';
 $route['tracking/check'] = 'welcome/trackingCheck';
 
 $route['dashboard/report/manifest'] = 'report/manifest';
+$route['dashboard/report/vehicle'] = 'report/vehicle';
+$route['dashboard/report/vehicle/(:num)'] = 'report/vehicleDetail';
 $route['dashboard/report/cash-statement'] = 'report/cashStatement';
 $route['dashboard/report/sales-trx'] = 'report/salesTrx';
+
+// Skripsi
+$route['dashboard/armada'] = 'armada/index';
 
 $route['logout'] = 'welcome/logout';

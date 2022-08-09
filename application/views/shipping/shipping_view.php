@@ -507,6 +507,21 @@
         <div class="form-group">
           <input type="text" id="nopolInput" class="form-control" placeholder="Nopol">
         </div>
+        <div class="form-group">
+          <select id="vehicleSelect" class="form-control">
+            <option value="" selected>Pilih armada --></option>
+            <?php foreach($vehicle_list as $vehicle): ?>
+              <option value="<?php echo $vehicle->id ?>">
+                [<?php echo $vehicle->type ?>]&nbsp;
+                <?php echo $vehicle->brand ?>&nbsp;<?php echo $vehicle->model ?>&nbsp;
+                (<?php echo $vehicle->registration_no ?>)
+              </option>
+            <?php endforeach; ?>
+          </select>
+          <div class="invalid-feedback">
+            Cabang Tujuan harus di pilih
+          </div>
+        </div>
         
         <p>Dengan menekan tombol cetak, maka <span id="dataCount"></span> resi terpilih akan di ubah statusnya menjadi <span class="text-info">Perjalanan ke Kota Tujuan</span></p>
       </div>

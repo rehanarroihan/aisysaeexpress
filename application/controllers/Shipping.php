@@ -23,7 +23,8 @@ class Shipping extends CI_Controller {
 			'page_title'            => 'Pengiriman',
             'primary_view'          => 'shipping/shipping_view',
             'dest_branch_list'      => $this->Branch_model->getDestBranchList(),
-			'shipping_data_list'    => $this->Shipping_model->getShippingDataList($this->session->userdata('branch_id'))
+			'shipping_data_list'    => $this->Shipping_model->getShippingDataList($this->session->userdata('branch_id')),
+            'vehicle_list'          => $this->ms_variable->vehicleList()
 		);
 		$this->load->view('template_view', $viewData);
     }

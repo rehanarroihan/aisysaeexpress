@@ -93,6 +93,7 @@
                 <i class="fas fa-chart-bar"></i> <span>Dashboard</span>
               </a>
             </li>
+
             <?php if ($this->session->userdata('role') == 1): ?>
             <li class="menu-header">Data Utama</li>
             <li class="<?php if ($this->uri->segment(2) == 'branch') { echo 'active'; } ?>">
@@ -112,11 +113,17 @@
               </a>
             </li>
             <?php endif; ?>
+
             <?php if ($this->session->userdata('role') == 2): ?>
             <li class="menu-header">Data Utama</li>
             <li class="<?php if ($this->uri->segment(2) == 'shipping' && $this->uri->segment(3) == null) { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/shipping">
                 <i class="fas fa-shipping-fast"></i> <span>Pengiriman</span>
+              </a>
+            </li>
+            <li class="<?php if ($this->uri->segment(2) == 'armada') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/armada">
+                <i class="fas fa-bicycle"></i> <span>Armada</span>
               </a>
             </li>
             <li class="<?php if ($this->uri->segment(2) == 'shipping' && $this->uri->segment(3) == 'incoming') { echo 'active'; } ?>">
@@ -128,6 +135,11 @@
             <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'manifest') { echo 'active'; } ?>">
               <a class="nav-link" href="<?php echo base_url() ?>dashboard/report/manifest">
                 <i class="fas fa-stream"></i> <span>Manifes Tercetak</span>
+              </a>
+            </li>
+            <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'vehicle') { echo 'active'; } ?>">
+              <a class="nav-link" href="<?php echo base_url() ?>dashboard/report/vehicle">
+                <i class="fas fa-bicycle"></i> <span>Aktifitas Armada</span>
               </a>
             </li>
             <li class="<?php if ($this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'cash-statement') { echo 'active'; } ?>">
