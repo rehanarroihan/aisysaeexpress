@@ -61,30 +61,46 @@ class Ms_variable {
     public $shippingType = array(
         array(
             "id" => 1,
-            "title" => 'One Day Service'
+            "title" => 'One Night Service (ONS)',
+            "alias" => 'ONS'
         ),
         array(
             "id" => 2,
-            "title" => 'Cargo'
+            "title" => 'Cargo',
+            "alias" => 'Cargo'
+        ),
+        array(
+            "id" => 3,
+            "title" => 'Carter',
+            "alias" => 'Carter'
+        ),
+        array(
+            "id" => 3,
+            "title" => 'Reguler',
+            "alias" => 'Carter'
         ),
     );
 
     public $shippingMode = array(
         array(
             "id" => 1,
-            "title" => 'Trucking'
+            "title" => 'Trucking',
+            "code" => '01'
         ),
         array(
             "id" => 2,
-            "title" => 'Kereta'
+            "title" => 'Kereta',
+            "code" => '02'
         ),
         array(
             "id" => 3,
-            "title" => 'Pesawat'
+            "title" => 'Pesawat',
+            "code" => '03'
         ),
         array(
             "id" => 4,
-            "title" => 'Kapal Laut'
+            "title" => 'Kapal Laut',
+            "code" => '04'
         ),
     );
 
