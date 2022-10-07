@@ -142,8 +142,25 @@
     </td>
   </tr>
   <tr>
-    <td colspan="3" style="text-align: center; background-color: #ee1d23;">
-      <p style="font-size: 18px; color: white; padding: 4px 0; margin: 0; font-style: bold">ISI TIDAK DIPERIKSA</p>
+    <td colspan="2" style="text-align: center; background-color: #ee1d23;">
+      <p style="font-size: 18px; color: white; padding: 4px 0; margin: 0; font-style: bold">
+        ISI TIDAK DIPERIKSA
+      </p>
+    </td>
+    <td colspan="1" style="text-align: center; background-color: #ee1d23;">
+      <p style="font-size: 18px; color: black; padding: 4px 0; margin: 0; font-style: bold">
+        <?php foreach($this->ms_variable->shippingMode as $mode): ?>
+          <?php if ($mode['id'] == $data->mode): ?>
+            <?php echo $mode['code'] ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
+        -
+        <?php foreach($this->ms_variable->shippingType as $shippingType): ?>
+          <?php if ($shippingType['id'] == $data->service): ?>
+            <?php echo $shippingType['alias'] ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
+      </p>
     </td>
     <td colspan="2" style="background-color: #fff101; max-height: 200px">
       <p style="font-size: 18px;font-style: bold; padding: 0; margin: 0">
